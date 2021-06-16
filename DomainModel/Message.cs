@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    [Table ("Messages")]
     public class Message
     {
         public int MessageId { get; set; }
