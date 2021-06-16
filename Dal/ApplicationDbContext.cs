@@ -29,6 +29,8 @@ namespace WebNursePlanning.Data
             builder.NurseModel();
             builder.PatientModel();
             builder.DirectorModel();
+            builder.AppointementModel();
+            builder.StatusModel();
 
             base.OnModelCreating(builder);
         }
