@@ -18,7 +18,7 @@ namespace DomainModel.ModelBuilders
                 .IsRequired();
 
             builder.Entity<Person>()
-                .Property(p => p.BirthDate)
+                .Property(p => p.BirthDay)
                 .IsRequired();
 
             builder.Entity<Person>()
