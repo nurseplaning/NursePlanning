@@ -9,7 +9,7 @@ namespace DomainModel
 {
     public class Message
     {
-        public int MessageId { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public string Content { get; set; }
 
