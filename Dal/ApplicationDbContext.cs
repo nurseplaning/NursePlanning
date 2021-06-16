@@ -12,6 +12,7 @@ namespace WebNursePlanning.Data
         public DbSet<Nurse> Nurses { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Director> Directors { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -25,6 +26,7 @@ namespace WebNursePlanning.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.IdentityModel();
+            builder.MessageModel();
             builder.PersonModel();
             builder.NurseModel();
             builder.PatientModel();

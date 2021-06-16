@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainModel
@@ -10,5 +11,6 @@ namespace DomainModel
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Adress { get; set; }
+
     }
 }
