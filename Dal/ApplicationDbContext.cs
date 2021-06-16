@@ -26,6 +26,7 @@ namespace WebNursePlanning.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.IdentityModel();
+            builder.MessageModel();
             builder.PersonModel();
             builder.NurseModel();
             builder.PatientModel();
