@@ -12,7 +12,7 @@ namespace DomainModel.ModelBuilders
         public static void StatusModel(this ModelBuilder builder)
         {
             builder.Entity<Status>()
-                .ToTable("Status");
+                .ToTable("statuses");
 
             builder.Entity<Status>()
                 .Property(n => n.StatusName)
