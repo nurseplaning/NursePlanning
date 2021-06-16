@@ -10,6 +10,7 @@ namespace WebNursePlanning.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Person> People { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -20,9 +21,22 @@ namespace WebNursePlanning.Data
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WebNursePlanningBD;Trusted_Connection=True;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder);
         }
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            modelBuilder.Entity<Message>()
+                        .ToTable("Messages");
+
+            modelBuilder.Entity<Message>()
+                        .Property(p => p.Content)
+                        .HasMaxLength(150)
+                        .IsRequired();
+
+            modelBuilder.Entity<Message>()
+                        .Property(p => p.Date)
+                        .IsRequired();
+
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }
