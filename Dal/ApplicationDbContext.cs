@@ -1,15 +1,17 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DomainModel.ModelBuilders;
 
 namespace WebNursePlanning.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Person> People { get; set; }
+        public DbSet<Nurse> Nurses { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Director> Directors { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -22,8 +24,15 @@ namespace WebNursePlanning.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.IdentityModel();
+            builder.PersonModel();
+            builder.NurseModel();
+            builder.PatientModel();
+            builder.DirectorModel();
+
             base.OnModelCreating(builder);
         }
+
 
     }
 }

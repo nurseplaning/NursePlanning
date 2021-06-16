@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNursePlanning.Data;
 
 namespace Dal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210616091757_test-index-2")]
+    partial class testindex2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,6 @@ namespace Dal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -105,11 +106,9 @@ namespace Dal.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -230,56 +229,9 @@ namespace Dal.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("Adress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("People");
-                });
-
-            modelBuilder.Entity("DomainModel.Director", b =>
-                {
-                    b.HasBaseType("DomainModel.Person");
-
-                    b.Property<int>("SiretNumber")
-                        .HasColumnType("int");
-
-                    b.ToTable("Directors");
-                });
-
-            modelBuilder.Entity("DomainModel.Nurse", b =>
-                {
-                    b.HasBaseType("DomainModel.Person");
-
-                    b.Property<int>("SiretNumber")
-                        .HasColumnType("int");
-
-                    b.ToTable("Nurses");
-                });
-
-            modelBuilder.Entity("DomainModel.Patient", b =>
-                {
-                    b.HasBaseType("DomainModel.Person");
-
-                    b.Property<string>("NurseId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("SocialSecurityNumber")
-                        .HasColumnType("int");
-
-                    b.HasIndex("NurseId");
-
-                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -340,42 +292,6 @@ namespace Dal.Migrations
                         .HasForeignKey("DomainModel.Person", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DomainModel.Director", b =>
-                {
-                    b.HasOne("DomainModel.Person", null)
-                        .WithOne()
-                        .HasForeignKey("DomainModel.Director", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DomainModel.Nurse", b =>
-                {
-                    b.HasOne("DomainModel.Person", null)
-                        .WithOne()
-                        .HasForeignKey("DomainModel.Nurse", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DomainModel.Patient", b =>
-                {
-                    b.HasOne("DomainModel.Person", null)
-                        .WithOne()
-                        .HasForeignKey("DomainModel.Patient", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("DomainModel.Nurse", null)
-                        .WithMany("Patients")
-                        .HasForeignKey("NurseId");
-                });
-
-            modelBuilder.Entity("DomainModel.Nurse", b =>
-                {
-                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }
