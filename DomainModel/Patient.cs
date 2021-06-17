@@ -9,8 +9,6 @@ namespace DomainModel
     public class Patient : Person
     {
         public int SocialSecurityNumber { get; set; }
-        public Nurse Nurse { get; set; }
-        public string NurseId { get; set; }
-
+        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }
