@@ -25,22 +25,16 @@ namespace Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("AppointDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("AtHome")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("NurseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("NurseId1")
+                    b.Property<string>("NurseId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("PatientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PatientId1")
+                    b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("StatusId")
@@ -48,9 +42,9 @@ namespace Dal.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NurseId1");
+                    b.HasIndex("NurseId");
 
-                    b.HasIndex("PatientId1");
+                    b.HasIndex("PatientId");
 
                     b.HasIndex("StatusId");
 
@@ -59,10 +53,12 @@ namespace Dal.Migrations
 
             modelBuilder.Entity("DomainModel.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
@@ -93,7 +89,7 @@ namespace Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StatusName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -354,15 +350,50 @@ namespace Dal.Migrations
                 {
                     b.HasBaseType("DomainModel.Person");
 
-                    b.Property<string>("NurseId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("SocialSecurityNumber")
                         .HasColumnType("int");
 
-                    b.HasIndex("NurseId");
-
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DomainModel.Appointment", b =>
+                {
+                    b.HasOne("DomainModel.Nurse", "Nurse")
+                        .WithMany("Appointments")
+                        .HasForeignKey("NurseId");
+
+                    b.HasOne("DomainModel.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+
+                    b.HasOne("DomainModel.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Nurse");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("DomainModel.Message", b =>
+                {
+                    b.HasOne("DomainModel.Appointment", "Appointment")
+                        .WithMany("Messages")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainModel.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("DomainModel.Appointment", b =>
@@ -490,10 +521,11 @@ namespace Dal.Migrations
                         .HasForeignKey("DomainModel.Patient", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("DomainModel.Nurse", null)
-                        .WithMany("Patients")
-                        .HasForeignKey("NurseId");
+            modelBuilder.Entity("DomainModel.Appointment", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("DomainModel.Appointment", b =>
@@ -503,7 +535,12 @@ namespace Dal.Migrations
 
             modelBuilder.Entity("DomainModel.Nurse", b =>
                 {
-                    b.Navigation("Patients");
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("DomainModel.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("DomainModel.Patient", b =>

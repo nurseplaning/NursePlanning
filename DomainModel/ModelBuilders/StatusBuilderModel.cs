@@ -15,10 +15,8 @@ namespace DomainModel.ModelBuilders
                 .ToTable("statuses");
 
             builder.Entity<Status>()
-                .Property(n => n.StatusName)
+                .Property(n => n.Name)
                 .IsRequired();
-
         }
-
     }
 }

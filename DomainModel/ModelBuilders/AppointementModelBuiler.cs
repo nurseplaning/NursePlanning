@@ -15,14 +15,12 @@ namespace DomainModel.ModelBuilders
                 .ToTable("Appointments");
 
             builder.Entity<Appointment>()
-                .Property(n => n.AppointDate)
+                .Property(n => n.Date)
                 .IsRequired();
 
             builder.Entity<Appointment>()
                 .Property(n => n.AtHome)
                 .IsRequired();
-
         }
-
     }
 }

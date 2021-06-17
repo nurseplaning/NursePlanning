@@ -18,6 +18,5 @@ namespace Repository.Interfaces
         public Task Edit(Appointment appointment);
         public Task Delete(Appointment appointment);
 
-
     }
 }
