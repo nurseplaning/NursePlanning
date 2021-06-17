@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfNursePlanning", "WpfNurs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiNursePlanning", "WebApiNursePlanning\WebApiNursePlanning.csproj", "{6DA4C4D3-CCF1-4A66-9CC5-7E94D889E39E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{F4C9B5AB-A344-41D6-B8F8-EA36A4684BE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6DA4C4D3-CCF1-4A66-9CC5-7E94D889E39E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DA4C4D3-CCF1-4A66-9CC5-7E94D889E39E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DA4C4D3-CCF1-4A66-9CC5-7E94D889E39E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C9B5AB-A344-41D6-B8F8-EA36A4684BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C9B5AB-A344-41D6-B8F8-EA36A4684BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C9B5AB-A344-41D6-B8F8-EA36A4684BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C9B5AB-A344-41D6-B8F8-EA36A4684BE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
