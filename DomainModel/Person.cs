@@ -9,8 +9,7 @@ namespace DomainModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime BirthDay { get; set; }
         public string Adress { get; set; }
-
     }
 }

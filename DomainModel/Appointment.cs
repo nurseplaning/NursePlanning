@@ -8,12 +8,15 @@ namespace DomainModel
 {
     public class Appointment
     {
-        public string Id { get; set; }
-        public DateTime AppointDate { get; set; }
+        public Guid Id { get; set; }
+        public DateTime Date { get; set; }
         public bool AtHome { get; set; }
-        public virtual string NurseId { get; set; }
-        public virtual string PatientId { get; set; }
-        public virtual string StatusId { get; set; }
-
+        public Nurse Nurse { get; set; }
+        public string NurseId { get; set; }
+        public Patient Patient { get; set; }
+        public string PatientId { get; set; }
+        public Status Status { get; set; }
+        public Guid StatusId { get; set; }
+        public ICollection<Message> Messages { get; set; }
     }
 }

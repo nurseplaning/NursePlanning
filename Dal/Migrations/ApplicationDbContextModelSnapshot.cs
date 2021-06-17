@@ -19,12 +19,46 @@ namespace Dal.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DomainModel.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AtHome")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NurseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PatientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("StatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NurseId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("DomainModel.Message", b =>
                 {
-                    b.Property<int>("MessageId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -34,9 +68,31 @@ namespace Dal.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MessageId");
+                    b.Property<string>("PersonId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("DomainModel.Status", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("statuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -253,7 +309,7 @@ namespace Dal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -291,15 +347,50 @@ namespace Dal.Migrations
                 {
                     b.HasBaseType("DomainModel.Person");
 
-                    b.Property<string>("NurseId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("SocialSecurityNumber")
                         .HasColumnType("int");
 
-                    b.HasIndex("NurseId");
-
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DomainModel.Appointment", b =>
+                {
+                    b.HasOne("DomainModel.Nurse", "Nurse")
+                        .WithMany("Appointments")
+                        .HasForeignKey("NurseId");
+
+                    b.HasOne("DomainModel.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+
+                    b.HasOne("DomainModel.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Nurse");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("DomainModel.Message", b =>
+                {
+                    b.HasOne("DomainModel.Appointment", "Appointment")
+                        .WithMany("Messages")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainModel.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,15 +478,21 @@ namespace Dal.Migrations
                         .HasForeignKey("DomainModel.Patient", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("DomainModel.Nurse", null)
-                        .WithMany("Patients")
-                        .HasForeignKey("NurseId");
+            modelBuilder.Entity("DomainModel.Appointment", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("DomainModel.Nurse", b =>
                 {
-                    b.Navigation("Patients");
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("DomainModel.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }
