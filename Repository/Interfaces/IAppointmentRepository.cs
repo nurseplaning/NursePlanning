@@ -9,7 +9,7 @@ namespace Repository.Interfaces
 {
     public interface IAppointmentRepository
     {
-        public Task<IEnumerable<Appointment>> List();
+        public Task<IEnumerable<Appointment>> ListAppointments();
 
         public Task<Appointment> Details(string id);
 

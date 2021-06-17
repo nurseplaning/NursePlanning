@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,32 +19,32 @@ namespace Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Appointment>> List()
+        public async Task<IEnumerable<Appointment>> ListAppointments()
         {
-            return await _context.Appointments.ToList();
+            return await _context.Appointments.ToListAsync();
         }
 
         public async Task<Appointment> Details(string id)
         {
-            return await _context.Appointments.Find(id);
+            return await _context.Appointments.FindAsync(id);
         }
 
         public async Task Create(Appointment appointment)
         {
             _context.Appointments.Add(appointment);
-            await _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task Edit(Appointment appointment)
         {
             _context.Update(appointment);
-            await _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(Appointment appointment)
         {
             _context.Remove(appointment);
-            await _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
