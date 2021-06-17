@@ -14,6 +14,7 @@ namespace WebNursePlanning.Data
         public DbSet<Director> Directors { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Status> Statuses { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
