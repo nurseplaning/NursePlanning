@@ -9,15 +9,15 @@ namespace Repository.Interfaces
 {
     public interface IPatientRepository
     {
-        public IEnumerable<Patient> List();
+        public Task<IEnumerable<Patient>> List();
 
-        public Patient Details(string id);
+        public Task<Patient> Details(string id);
 
-        public void Create(Patient patient);
+        public Task Create(Patient patient);
 
-        public void Edit(Patient patient);
+        public Task Edit(Patient patient);
 
-        public void Delete(Patient patient);
+        public Task Delete(Patient patient);
 
     }
 }

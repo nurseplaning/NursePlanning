@@ -18,32 +18,32 @@ namespace Repository
             _context = context;
         }
 
-        public IEnumerable<Patient> List()
+        public async Task<IEnumerable<Patient>> List()
         {
-            return _context.Patients.ToList();
+            return await _context.Patients.ToList();
         }
 
-        public Patient Details(string id)
+        public async Task<Patient> Details(string id)
         {
-            return _context.Patients.Find(id);
+            return await _context.Patients.Find(id);
         }
 
-        public void Create(Patient patient)
+        public async Task Create(Patient patient)
         {
             _context.Patients.Add(patient);
-            _context.SaveChanges();
+            await _context.SaveChanges();
         }
 
-        public void Edit(Patient patient)
+        public async Task Edit(Patient patient)
         {
             _context.Update(patient);
-            _context.SaveChanges();
+            await _context.SaveChanges();
         }
 
-        public void Delete(Patient patient)
+        public async Task Delete(Patient patient)
         {
             _context.Remove(patient);
-            _context.SaveChanges();
+            await _context.SaveChanges();
         }
     }
 }

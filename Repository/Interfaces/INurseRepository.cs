@@ -9,14 +9,14 @@ namespace Repository.Interfaces
 {
     public interface INurseRepository
     {
-        public IEnumerable<Nurse> List();
+        public Task<IEnumerable<Nurse>> List();
 
-        public Nurse Details(string id);
+        public Task<Nurse> Details(string id);
 
-        public void Create(Nurse nurse);
+        public Task Create(Nurse nurse);
 
-        public void Edit(Nurse nurse);
+        public Task Edit(Nurse nurse);
 
-        public void Delete(Nurse nurse);
+        public Task Delete(Nurse nurse);
     }
 }
