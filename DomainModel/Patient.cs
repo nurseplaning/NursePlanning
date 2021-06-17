@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    public class Patient : Person
-    {
-        public int SocialSecurityNumber { get; set; }
-        public virtual ICollection<Appointment> Appointments { get; set; }
-    }
+	public class Patient : Person
+	{
+		public long SocialSecurityNumber { get; set; }
+		public virtual ICollection<Appointment> Appointments { get; set; }
+	}
 }
