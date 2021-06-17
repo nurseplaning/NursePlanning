@@ -60,14 +60,14 @@ namespace WebNursePlanning.Controllers
         }
 
         // GET: Patient/Edit/5
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = _repository.Details((string)id);
+            var patient = await _repository.Details(id);
             if (patient == null)
             {
                 return NotFound();
@@ -78,7 +78,7 @@ namespace WebNursePlanning.Controllers
         // POST: Patient/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("Id,FirstName,LastName,BirthDate,Adress,SocialSecurityNumber")] Patient patient)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,FirstName,LastName,BirthDate,Adress,SocialSecurityNumber")] Patient patient)
         {
             if (id != patient.Id)
             {
@@ -87,20 +87,20 @@ namespace WebNursePlanning.Controllers
 
             if (ModelState.IsValid)
             {
-                _repository.Edit(patient);
+                await _repository.Edit(patient);
                 return RedirectToAction(nameof(Index));
             }
             return View(patient);
         }
         // GET: Patient/Delete/5
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = _repository.Details((string)id);
+            var patient = await _repository.Details(id);
             if (patient == null)
             {
                 return NotFound();
@@ -112,13 +112,15 @@ namespace WebNursePlanning.Controllers
         // POST: Patient/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        
+
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+
+            var patient = await _repository.Details(id);
             await _repository.Delete(patient);
             return RedirectToAction(nameof(Index));
         }
