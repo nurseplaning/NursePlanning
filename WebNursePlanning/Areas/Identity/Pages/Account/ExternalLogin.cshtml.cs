@@ -122,18 +122,18 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
 			if (ModelState.IsValid)
 			{
-				var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+				var user = new Person { UserName = Input.Email, Email = Input.Email };
 
-				var result = await _userManager.CreateAsync((Person)user);
+				var result = await _userManager.CreateAsync(user);
 				if (result.Succeeded)
 				{
-					result = await _userManager.AddLoginAsync((Person)user, info);
+					result = await _userManager.AddLoginAsync(user, info);
 					if (result.Succeeded)
 					{
 						_logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
-						var userId = await _userManager.GetUserIdAsync((Person)user);
-						var code = await _userManager.GenerateEmailConfirmationTokenAsync((Person)user);
+						var userId = await _userManager.GetUserIdAsync(user);
+						var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 						code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 						var callbackUrl = Url.Page(
 							"/Account/ConfirmEmail",
@@ -150,7 +150,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 							return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
 						}
 
-						await _signInManager.SignInAsync((Person)user, isPersistent: false, info.LoginProvider);
+						await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
 
 						return LocalRedirect(returnUrl);
 					}

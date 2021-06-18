@@ -3,7 +3,6 @@ using DomainModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +50,7 @@ namespace WebNursePlanning
 			using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
 			{
 				var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-				context.Initialize(true);
+				context.Initialize();
 			}
 
 			if (env.IsDevelopment())
