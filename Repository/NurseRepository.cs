@@ -29,10 +29,11 @@ namespace Repository
 			return await _context.Nurses.FindAsync(id);
 		}
 
-		public async Task Create(Nurse nurse)
+		public async Task<Nurse> Create(Nurse nurse)
 		{
 			_context.Nurses.Add(nurse);
 			await _context.SaveChangesAsync();
+			return nurse;
 		}
 
 		public async Task Edit(Nurse nurse)
