@@ -11,7 +11,6 @@ namespace WebNursePlanning.Controllers
 {
     public class PatientController : Controller
     {
-
         private readonly IPatientRepository _repository;
         public PatientController(IPatientRepository repository)
         {
@@ -22,7 +21,6 @@ namespace WebNursePlanning.Controllers
         {
             return View(await _repository.ListPatients());
         }
-
         // GET: PatientController/Details/5
         public async Task<IActionResult> Details(string id)
         {
