@@ -37,26 +37,7 @@ namespace WebNursePlanning.Controllers
 
             return View(patient);
         }
-
-        // GET: PatientController/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PatientController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,Adress,SocialSecurityNumber")] Patient patient)
-        {
-            if (ModelState.IsValid)
-            {
-                await _repository.Create(patient);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(patient);
-        }
-
+               
         // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
