@@ -51,9 +51,11 @@ namespace Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Appointment appointment)
+        public async Task Delete(Guid? id)
         {
-            _context.Remove(appointment);
+            var appointment = await _context.Appointments.FindAsync(id);
+            _context.Appointments.Remove(appointment);
+            
             await _context.SaveChangesAsync();
         }
 

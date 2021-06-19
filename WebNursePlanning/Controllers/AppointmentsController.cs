@@ -141,37 +141,31 @@ namespace WebNursePlanning.Controllers
             return View(appointment);
         }
 
-        //    // GET: Appointments/Delete/5
-        //    public async Task<IActionResult> Delete(Guid? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+        // GET: Appointments/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //        var appointment = await _context.Appointments
-        //            .Include(a => a.Nurse)
-        //            .Include(a => a.Patient)
-        //            .Include(a => a.Status)
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (appointment == null)
-        //        {
-        //            return NotFound();
-        //        }
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-        //        return View(appointment);
-        //    }
+            return View(appointment);
+        }
 
-        //    // POST: Appointments/Delete/5
-        //    [HttpPost, ActionName("Delete")]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //    {
-        //        var appointment = await _context.Appointments.FindAsync(id);
-        //        _context.Appointments.Remove(appointment);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
+        // POST: Appointments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _appointmentRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
 
         private bool AppointmentExists(Guid id)
         {

@@ -16,7 +16,7 @@ namespace Repository.Interfaces
         public Task<Appointment> Create(Appointment appointment);
 
         public Task Edit(Appointment appointment);
-        public Task Delete(Appointment appointment);
+        public Task Delete(Guid? id);
         public bool Exists(Guid? id);
     }
 }
