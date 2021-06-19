@@ -18,6 +18,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj" />
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

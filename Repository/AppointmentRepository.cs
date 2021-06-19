@@ -1,4 +1,5 @@
-﻿using DomainModel;
+﻿using Dal;
+using DomainModel;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebNursePlanning.Data;
 
 namespace Repository
 {
@@ -21,22 +21,32 @@ namespace Repository
 
         public async Task<IEnumerable<Appointment>> ListAppointments()
         {
-            return await _context.Appointments.ToListAsync();
+            return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).ToListAsync();
+            //return await _context.Appointments.ToListAsync();
         }
 
-        public async Task<Appointment> Details(string id)
+        public async Task<Appointment> Details(Guid? id)
         {
-            return await _context.Appointments.FindAsync(id);
+            var appointment = await _context.Appointments
+                                    .Include(a => a.Nurse)
+                                    .Include(a => a.Patient)
+                                    .Include(a => a.Status)
+                                    .FirstOrDefaultAsync(m => m.Id == id);
+            return appointment;
         }
 
-        public async Task Create(Appointment appointment)
+        public async Task<Appointment> Create(Appointment appointment)
         {
+
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
+
+            return appointment;
         }
 
         public async Task Edit(Appointment appointment)
         {
+
             _context.Update(appointment);
             await _context.SaveChangesAsync();
         }
@@ -47,6 +57,9 @@ namespace Repository
             await _context.SaveChangesAsync();
         }
 
-
+        public bool Exists(Guid? id)
+        {
+            return _context.Appointments.Any(a => a.Id  == id);
+        }
     }
 }

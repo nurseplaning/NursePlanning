@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DomainModel.ModelBuilders;
 
-namespace WebNursePlanning.Data
+namespace Dal
 {
 	public class ApplicationDbContext : IdentityDbContext
 	{

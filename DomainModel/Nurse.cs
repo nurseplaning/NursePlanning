@@ -8,7 +8,7 @@ namespace DomainModel
 {
     public class Nurse : Person
     {
-        public int SiretNumber { get; set; }
+        public long SiretNumber { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

@@ -17,6 +17,11 @@
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="AtHome" /> @Html.DisplayNameFor(model => model.AtHome)
@@ -24,15 +29,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="NurseId" class="control-label"></label>
-                <select asp-for="NurseId" class ="form-control" asp-items="ViewBag.NurseId"></select>
+                <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
+                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
-                <select asp-for="StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
+                @*<input asp-for="StatusId" type="hidden" />*@
+                <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

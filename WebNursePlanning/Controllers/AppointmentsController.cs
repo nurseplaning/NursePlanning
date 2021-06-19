@@ -6,24 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DomainModel;
-using WebNursePlanning.Data;
+using Repository.Interfaces;
 
 namespace WebNursePlanning.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly INurseRepository _nurseRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IStatusRepository _statusRepository;
 
-        public AppointmentsController(ApplicationDbContext context)
+        public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository)
         {
-            _context = context;
+            _appointmentRepository = appointmentRepository;
+            _nurseRepository = nurseRepository;
+            _patientRepository = patientRepository;
+            _statusRepository = statusRepository;
         }
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status);
-            return View(await applicationDbContext.ToListAsync());
+            var listAppointments = _appointmentRepository.ListAppointments();
+            return View(await listAppointments);
         }
 
         // GET: Appointments/Details/5
@@ -34,11 +40,7 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments
-                .Include(a => a.Nurse)
-                .Include(a => a.Patient)
-                .Include(a => a.Status)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var appointment = await _appointmentRepository.Details(id);
             if (appointment == null)
             {
                 return NotFound();
@@ -48,11 +50,14 @@ namespace WebNursePlanning.Controllers
         }
 
         // GET: Appointments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id");
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name");
+            //recherche de tous les infirmiers , les patients pour creer un rdv "en cours de validation"
+            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id");
+            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id");
+            //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name");
+
             return View();
         }
 
@@ -61,19 +66,19 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                appointment.Id = Guid.NewGuid();
-                _context.Add(appointment);
-                await _context.SaveChangesAsync();
+                //appointment.Id = Guid.NewGuid();
+                await _appointmentRepository.Create(appointment);
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
-            return View(appointment);
+            //ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
+            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
+            //ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
+            return RedirectToAction("Index");
         }
 
         // GET: Appointments/Edit/5
@@ -84,14 +89,15 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments.FindAsync(id);
+            var appointment = await _appointmentRepository.Details(id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
+            
+            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
             return View(appointment);
         }
 
@@ -100,7 +106,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
             if (id != appointment.Id)
             {
@@ -111,8 +117,8 @@ namespace WebNursePlanning.Controllers
             {
                 try
                 {
-                    _context.Update(appointment);
-                    await _context.SaveChangesAsync();
+                    
+                    await _appointmentRepository.Edit(appointment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,47 +133,49 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
-            return View(appointment);
-        }
 
-        // GET: Appointments/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var appointment = await _context.Appointments
-                .Include(a => a.Nurse)
-                .Include(a => a.Patient)
-                .Include(a => a.Status)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
+            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);
         }
 
-        // POST: Appointments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var appointment = await _context.Appointments.FindAsync(id);
-            _context.Appointments.Remove(appointment);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    // GET: Appointments/Delete/5
+        //    public async Task<IActionResult> Delete(Guid? id)
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var appointment = await _context.Appointments
+        //            .Include(a => a.Nurse)
+        //            .Include(a => a.Patient)
+        //            .Include(a => a.Status)
+        //            .FirstOrDefaultAsync(m => m.Id == id);
+        //        if (appointment == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return View(appointment);
+        //    }
+
+        //    // POST: Appointments/Delete/5
+        //    [HttpPost, ActionName("Delete")]
+        //    [ValidateAntiForgeryToken]
+        //    public async Task<IActionResult> DeleteConfirmed(Guid id)
+        //    {
+        //        var appointment = await _context.Appointments.FindAsync(id);
+        //        _context.Appointments.Remove(appointment);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
         private bool AppointmentExists(Guid id)
         {
-            return _context.Appointments.Any(e => e.Id == id);
+            return _appointmentRepository.Exists(id);
         }
     }
 }

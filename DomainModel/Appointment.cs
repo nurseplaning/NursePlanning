@@ -16,6 +16,7 @@ namespace DomainModel
         public Patient Patient { get; set; }
         public string PatientId { get; set; }
         public Status Status { get; set; }
+        public string Description { get; set; }
         public Guid StatusId { get; set; }
         public ICollection<Message> Messages { get; set; }
     }
