@@ -50,6 +50,10 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "E-mail")]
             public string Email { get; set; }
+            [EmailAddress]
+            [Display(Name = "Confirmation E-mail")]
+            [Compare("Email", ErrorMessage = "L'e-mail et la confiramtion d'e-mail ne correspondent pas.")]
+            public string ConfirmEmail { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
