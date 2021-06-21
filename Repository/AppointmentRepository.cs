@@ -24,7 +24,7 @@ namespace Repository
 			return await _context.Appointments.ToListAsync();
 		}
 
-		public async Task<Appointment> Details(string id)
+		public async Task<Appointment> Details(Guid id)
 		{
 			return await _context.Appointments.FindAsync(id);
 		}
