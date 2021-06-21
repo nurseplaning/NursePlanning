@@ -17,7 +17,7 @@ namespace DomainModel.ModelBuilders
             builder.Entity<Appointment>()
                 .Property(n => n.Description)
                 .IsRequired();
-
+            
             builder.Entity<Appointment>()
                 .Property(n => n.Date)
                 .IsRequired();

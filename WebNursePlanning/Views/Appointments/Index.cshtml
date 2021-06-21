@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AtHome)
+                @Html.DisplayName("A domicile")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nurse)
+                @Html.DisplayName("Infirmier(e)")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                @Html.DisplayName("Patient(e)")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -40,10 +40,12 @@
                 @Html.DisplayFor(modelItem => item.AtHome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nurse.Id)
+                @Html.DisplayFor(modelItem => item.Nurse.LastName) 
+                @Html.DisplayFor(modelItem => item.Nurse.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Patient.Id)
+                @Html.DisplayFor(modelItem => item.Patient.LastName)
+                @Html.DisplayFor(modelItem => item.Patient.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Name)

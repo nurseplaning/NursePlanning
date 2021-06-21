@@ -53,8 +53,10 @@ namespace WebNursePlanning.Controllers
         public async Task<IActionResult> Create()
         {
             //recherche de tous les infirmiers , les patients pour creer un rdv "en cours de validation"
-            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id");
-            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id");
+            var listNurses = await _nurseRepository.ListNurses();
+            var dico = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dico, "Key", "Value");
+            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "LastName");
             //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name");
 
@@ -95,8 +97,8 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
             
-            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
-            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
+            ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "LastName", appointment.NurseId);
+            ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "LastName", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
             return View(appointment);
         }
