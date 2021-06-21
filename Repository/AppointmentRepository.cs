@@ -7,17 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebNursePlanning.Data;
 
 namespace Repository
 {
-    public class AppointmentRepository : IAppointmentRepository
-    {
-        private readonly ApplicationDbContext _context;
+	public class AppointmentRepository : IAppointmentRepository
+	{
+		private readonly ApplicationDbContext _context;
 
-        public AppointmentRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+		public AppointmentRepository(ApplicationDbContext context)
+		{
+			_context = context;
+		}
 
         public async Task<IEnumerable<Appointment>> ListAppointments()
         {
@@ -44,12 +45,11 @@ namespace Repository
             return appointment;
         }
 
-        public async Task Edit(Appointment appointment)
-        {
-
-            _context.Update(appointment);
-            await _context.SaveChangesAsync();
-        }
+		public async Task Edit(Appointment appointment)
+		{
+			_context.Update(appointment);
+			await _context.SaveChangesAsync();
+		}
 
         public async Task Delete(Guid? id)
         {

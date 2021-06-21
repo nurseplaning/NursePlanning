@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DomainModel
 {
-    public class Nurse : Person
-    {
-        public long SiretNumber { get; set; }
-        public virtual ICollection<Appointment> Appointments { get; set; }
-    }
+	public class Nurse : Person
+	{
+		public string SiretNumber { get; set; }
+		public virtual ICollection<Appointment> Appointments { get; set; }
+	}
 }
