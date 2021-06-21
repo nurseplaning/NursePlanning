@@ -18,14 +18,14 @@ using System.Threading.Tasks;
 namespace WebNursePlanning.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterNurseModel : PageModel
+    public class RegisterPatienModel : PageModel
     {
         private readonly SignInManager<Person> _signInManager;
         private readonly UserManager<Person> _userManager;
         private readonly ILogger<RegisterNurseModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterNurseModel(
+        public RegisterPatienModel(
             UserManager<Person> userManager,
             SignInManager<Person> signInManager,
             ILogger<RegisterNurseModel> logger,
@@ -89,8 +89,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Siret")]
-            public string SiretNumber { get; set; }
+            [Display(Name = "N° de Securité Sociale")]
+            public string SocialSecurityNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -105,7 +105,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new Nurse
+                var user = new Patient
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
@@ -113,7 +113,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
-                    SiretNumber = Input.SiretNumber,
+                    SocialSecurityNumber = Input.SocialSecurityNumber,
                     PhoneNumber = Input.Phonenumber
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);

@@ -1,5 +1,5 @@
 ﻿@page
-@model RegisterNurseModel
+@model RegisterPatienModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -54,9 +54,9 @@
                 <span asp-validation-for="Input.BirthDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.SiretNumber"></label>
-                <input asp-for="Input.SiretNumber" class="form-control" />
-                <span asp-validation-for="Input.SiretNumber" class="text-danger"></span>
+                <label asp-for="Input.SocialSecurityNumber"></label>
+                <input asp-for="Input.SocialSecurityNumber" class="form-control" />
+                <span asp-validation-for="Input.SocialSecurityNumber" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>
