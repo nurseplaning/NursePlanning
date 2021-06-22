@@ -10,47 +10,48 @@ using Dal;
 
 namespace Repository
 {
-	public class AppointmentRepository : IAppointmentRepository
-	{
-		private readonly ApplicationDbContext _context;
+    public class AppointmentRepository : IAppointmentRepository
+    {
+        private readonly ApplicationDbContext _context;
 
-		public AppointmentRepository(ApplicationDbContext context)
-		{
-			_context = context;
-		}
+        public AppointmentRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-		public async Task<IEnumerable<Appointment>> ListAppointments()
-		{
-			return await _context.Appointments.ToListAsync();
-		}
+        public async Task<IEnumerable<Appointment>> ListAppointments()
+        {
+            return await _context.Appointments.ToListAsync();
+        }
 
-		public async Task<Appointment> Details(Guid id)
-		{
-			return await _context.Appointments.FindAsync(id);
-		}
+        public async Task<Appointment> Details(Guid id)
+        {
+            return await _context.Appointments.FindAsync(id);
+        }
 
-		public async Task Create(Appointment appointment)
-		{
-			_context.Appointments.Add(appointment);
-			await _context.SaveChangesAsync();
-		}
+        public async Task Create(Appointment appointment)
+        {
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+        }
 
-		public async Task Edit(Appointment appointment)
-		{
-			_context.Update(appointment);
-			await _context.SaveChangesAsync();
-		}
+        public async Task Edit(Appointment appointment)
+        {
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+        }
 
-		public async Task Delete(Appointment appointment)
-		{
-			_context.Remove(appointment);
-			await _context.SaveChangesAsync();
-		}
+        public async Task Delete(Appointment appointment)
+        {
+            _context.Remove(appointment);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id)
         {
-			return await _context.Appointments.Where(a=>a.NurseId==id).ToListAsync();
+            var list = await _context.Appointments.Where(a => a.NurseId.Equals(id)).Include(a => a.Patient).ToListAsync();
+            return list;
 
-		}
+        }
     }
 }

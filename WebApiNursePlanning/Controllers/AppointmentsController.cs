@@ -38,14 +38,15 @@ namespace WebApiNursePlanning.Controllers
                 return NotFound();
             }
 
-            return appointment;
+            return Ok(appointment);
         }
 
         // GET: api/Appointments
-        [HttpGet("{NurseId?}")]
-        public async Task<ActionResult<Appointment>> GetAppointmentsByNurseId(string id)
+        [HttpGet("nurse/{NurseId?}")]
+      //  [Route("api/[controller]/nurse/{NurseId?}")]
+        public async Task<ActionResult<Appointment>> GetAppointmentsByNurseId(string NurseId)
         {
-            return Ok(await repository.GetAppointmentsByNurseId(id));
+            return Ok(await repository.GetAppointmentsByNurseId(NurseId));
         }
 
         // PUT: api/Appointments/5
