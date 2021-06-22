@@ -16,19 +16,25 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayName("A domicile")
+                @Html.DisplayNameFor(model => model.AtHome)
             </th>
-            <th>
-                @Html.DisplayName("Infirmier(e)")
-            </th>
-            <th>
-                @Html.DisplayName("Patient(e)")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
+            @if (User.IsInRole("ROLE_USER"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <th>
+                    @Html.DisplayNameFor(model => model.NurseId)
+                </th>
+            }
+            else if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur est un patient (role user)
+                <th>
+                    @Html.DisplayNameFor(model => model.PatientId)
+                </th>
+            }
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+            </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -39,23 +45,29 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AtHome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nurse.LastName) 
-                @Html.DisplayFor(modelItem => item.Nurse.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.LastName)
-                @Html.DisplayFor(modelItem => item.Patient.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            @if (User.IsInRole("ROLE_USER"))
+            {//Si l'utilisateur connecté est patient(role user)
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nurse.LastName)
+                    @Html.DisplayFor(modelItem => item.Nurse.FirstName)
+                </td>
+            }
+            else if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur est un infirmier (role admin)
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.LastName)
+                    @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                </td>
+            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
 }
     </tbody>
 </table>

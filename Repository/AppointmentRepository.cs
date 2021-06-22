@@ -1,5 +1,6 @@
 ﻿using Dal;
 using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
@@ -7,23 +8,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebNursePlanning.Data;
 
 namespace Repository
 {
-	public class AppointmentRepository : IAppointmentRepository
-	{
-		private readonly ApplicationDbContext _context;
+    public class AppointmentRepository : IAppointmentRepository
+    {
+        private readonly ApplicationDbContext _context;
 
-		public AppointmentRepository(ApplicationDbContext context)
-		{
-			_context = context;
-		}
+        public AppointmentRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<IEnumerable<Appointment>> ListAppointments()
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).ToListAsync();
-            //return await _context.Appointments.ToListAsync();
         }
 
         public async Task<Appointment> Details(Guid? id)
@@ -45,23 +44,28 @@ namespace Repository
             return appointment;
         }
 
-		public async Task Edit(Appointment appointment)
-		{
-			_context.Update(appointment);
-			await _context.SaveChangesAsync();
-		}
+        public async Task Edit(Appointment appointment)
+        {
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task Delete(Guid? id)
         {
             var appointment = await _context.Appointments.FindAsync(id);
             _context.Appointments.Remove(appointment);
-            
+
             await _context.SaveChangesAsync();
         }
 
         public bool Exists(Guid? id)
         {
-            return _context.Appointments.Any(a => a.Id  == id);
+            return _context.Appointments.Any(a => a.Id == id);
+        }
+        [Authorize]
+        public async Task<IEnumerable<Appointment>> ListAppointmentsById(string idPerson)
+        {
+            return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
     }
 }

@@ -118,7 +118,7 @@ namespace WebNursePlanning.Controllers
 				};
 
 				IdentityResult chkPatient = await userManager.CreateAsync(patient, password);
-				await userManager.AddToRoleAsync(superNurse, "ROLE_USER");
+				await userManager.AddToRoleAsync(patient, "ROLE_USER");
 			}
 
 			#endregion Default Users Generation
