@@ -18,5 +18,6 @@ namespace Repository.Interfaces
 		public Task Edit(Appointment appointment);
 
 		public Task Delete(Appointment appointment);
-	}
+		public Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id);
+    }
 }

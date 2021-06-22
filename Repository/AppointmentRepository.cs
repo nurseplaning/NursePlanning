@@ -46,5 +46,11 @@ namespace Repository
 			_context.Remove(appointment);
 			await _context.SaveChangesAsync();
 		}
-	}
+
+        public async Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id)
+        {
+			return await _context.Appointments.Where(a=>a.NurseId==id).ToListAsync();
+
+		}
+    }
 }

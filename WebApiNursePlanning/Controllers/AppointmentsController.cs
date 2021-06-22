@@ -8,98 +8,105 @@ using System.Threading.Tasks;
 
 namespace WebApiNursePlanning.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class AppointmentsController : ControllerBase
-	{
-		private readonly IAppointmentRepository repository;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AppointmentsController : ControllerBase
+    {
+        private readonly IAppointmentRepository repository;
 
-		public AppointmentsController(IAppointmentRepository repo)
-		{
-			repository = repo;
-		}
+        public AppointmentsController(IAppointmentRepository repo)
+        {
+            repository = repo;
+        }
 
-		// GET: api/Appointments
-		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
-		{
-			var Appointments = await repository.ListAppointments();
-			return Appointments;
-		}
+        // GET: api/Appointments
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
+        {
+            var Appointments = await repository.ListAppointments();
+            return Ok(Appointments);
+        }
 
-		// GET: api/Appointments/5
-		[HttpGet("{id}")]
-		public async Task<ActionResult<Appointment>> GetAppointment(Guid id)
-		{
-			var appointment = await repository.Details(id);
+        // GET: api/Appointments/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Appointment>> GetAppointment(Guid id)
+        {
+            var appointment = await repository.Details(id);
 
-			if (appointment == null)
-			{
-				return NotFound();
-			}
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-			return appointment;
-		}
+            return appointment;
+        }
 
-		// PUT: api/Appointments/5
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]
-		public async Task<IActionResult> PutAppointment(Guid id, Appointment appointment)
-		{
-			if (id != appointment.Id)
-			{
-				return BadRequest();
-			}
+        // GET: api/Appointments
+        [HttpGet("{NurseId?}")]
+        public async Task<ActionResult<Appointment>> GetAppointmentsByNurseId(string id)
+        {
+            return Ok(await repository.GetAppointmentsByNurseId(id));
+        }
 
-			try
-			{
-				await repository.Edit(appointment);
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!AppointmentExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
+        // PUT: api/Appointments/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAppointment(Guid id, Appointment appointment)
+        {
+            if (id != appointment.Id)
+            {
+                return BadRequest();
+            }
 
-			return NoContent();
-		}
+            try
+            {
+                await repository.Edit(appointment);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppointmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-		// POST: api/Appointments
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPost]
-		public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
-		{
-			await repository.Create(appointment);
+            return NoContent();
+        }
 
-			return CreatedAtAction("GetAppointment", new { id = appointment.Id }, appointment);
-		}
+        // POST: api/Appointments
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
+        {
+            await repository.Create(appointment);
 
-		// DELETE: api/Appointments/5
-		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteAppointment(Guid id)
-		{
-			var appointment = await repository.Details(id);
-			if (appointment == null)
-			{
-				return NotFound();
-			}
+            return CreatedAtAction("GetAppointment", new { id = appointment.Id }, appointment);
+        }
 
-			await repository.Delete(appointment);
+        // DELETE: api/Appointments/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAppointment(Guid id)
+        {
+            var appointment = await repository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-			return NoContent();
-		}
+            await repository.Delete(appointment);
 
-		private bool AppointmentExists(Guid id)
-		{
-			if (repository.Details(id) is null)
-				return false;
-			return true;
-		}
-	}
+            return NoContent();
+        }
+
+        private bool AppointmentExists(Guid id)
+        {
+            if (repository.Details(id) is null)
+                return false;
+            return true;
+        }
+    }
 }
