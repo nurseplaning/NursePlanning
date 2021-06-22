@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebNursePlanning.Data;
+using Dal;
 
 namespace Repository
 {
@@ -24,7 +24,7 @@ namespace Repository
             return await _context.Appointments.ToListAsync();
         }
 
-        public async Task<Appointment> Details(string id)
+        public async Task<Appointment> Details(Guid id)
         {
             return await _context.Appointments.FindAsync(id);
         }
@@ -47,6 +47,11 @@ namespace Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id)
+        {
+            var list = await _context.Appointments.Where(a => a.NurseId.Equals(id)).Include(a => a.Patient).ToListAsync();
+            return list;
 
+        }
     }
 }
