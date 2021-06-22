@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1024" ResizeMode="NoResize">
+    
     <Grid>
+        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="427" Margin="274,83,0,0" VerticalAlignment="Top" Width="694">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="N°Id" Binding="{Binding Path=Id, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Path=LastName, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Prénom" Binding="{Binding Path=FirstName, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Date de Naissance" Binding="{Binding Path=BirthDate, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="N° Siret" Binding="{Binding Path=SiretNumber, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Adresse" Binding="{Binding Path=Adress, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Rôle" Binding="{Binding Path=Role, IsAsync=True}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Button x:Name="btModif" Click="btnEdit_Click" HorizontalAlignment="Left" Height="61" Margin="23,156,0,0" VerticalAlignment="Top" Width="190">
+            <Button.Content>
+                <StackPanel>
+                    <Image x:Name="ImageEdit" Stretch="Uniform"  Source="/Icones/modifier.png"  Width="30" Height="30" />
+                    <TextBlock> Modifier</TextBlock>
+                </StackPanel>
+            </Button.Content>
+        </Button>
 
+        <Button Content="Détail" HorizontalAlignment="Left" Height="58" Margin="23,250,0,0" VerticalAlignment="Top" Width="190"/>
+        <Button Content="Affecter"  HorizontalAlignment="Left" Height="55" Margin="23,351,0,0" VerticalAlignment="Top" Width="190"/>
+        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="113" Margin="62,10,0,0" VerticalAlignment="Top" Width="126" />
+        <Label Content="Liste des Infermiers(es)" Foreground="Blue" FontSize="25" HorizontalAlignment="Left" Height="48" Margin="500,10,0,0" VerticalAlignment="Top" Width="312"/>
     </Grid>
+
 </Window>
