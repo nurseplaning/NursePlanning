@@ -64,8 +64,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(Nurse user)
         {
-            var person = await _userManager.GetUserAsync(HttpContext.User);
-            var nurse = (Nurse)person;
+            var nurse = await _userManager.GetUserAsync(HttpContext.User) as Nurse;
+        //    var nurse = (Nurse)person;
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 

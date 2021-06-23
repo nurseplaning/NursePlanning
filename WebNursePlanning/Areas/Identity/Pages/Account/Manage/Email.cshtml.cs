@@ -92,20 +92,27 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 			var email = await _userManager.GetEmailAsync(user);
 			if (Input.NewEmail != email)
 			{
-				var userId = await _userManager.GetUserIdAsync(user);
-				var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-				code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-				var callbackUrl = Url.Page(
-					"/Account/ConfirmEmailChange",
-					pageHandler: null,
-					values: new { userId = userId, email = Input.NewEmail, code = code },
-					protocol: Request.Scheme);
-				await _emailSender.SendEmailAsync(
-					Input.NewEmail,
-					"Confirm your email",
-					$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-				StatusMessage = "Confirmation link to change email sent. Please check your email.";
+				var person = user;
+				person.Email = Input.NewEmail;
+				person.UserName = Input.NewEmail;
+				var setPatientResult = await _userManager.UpdateAsync(person);
+				StatusMessage = "Your email is changed.";
+
+				//var userId = await _userManager.GetUserIdAsync(user);
+				//var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
+				//code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+				//var callbackUrl = Url.Page(
+				//	"/Account/ConfirmEmailChange",
+				//	pageHandler: null,
+				//	values: new { userId = userId, email = Input.NewEmail, code = code },
+				//	protocol: Request.Scheme);
+				//await _emailSender.SendEmailAsync(
+				//	Input.NewEmail,
+				//	"Confirm your email",
+				//	$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+				//StatusMessage = "Confirmation link to change email sent. Please check your email.";
 				return RedirectToPage();
 			}
 
