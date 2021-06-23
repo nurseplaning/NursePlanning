@@ -91,7 +91,6 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             {
                 var person = user;
                 person.Email = Input.NewEmail;
-                person.UserName = Input.NewEmail;
                 var setPatientResult = await _userManager.UpdateAsync(person);
                 StatusMessage = "Your email is changed.";
 

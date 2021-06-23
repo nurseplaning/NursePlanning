@@ -16,7 +16,7 @@
         <li class="nav-item" ><a class="nav-link @ManageNavPages.IndexNurseNavClass(ViewContext)" id="profile" asp-page="./IndexNurse">Profile</a></li>
     }
 
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+   @* <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>*@
     <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
     @if (hasExternalLogins)
     {
