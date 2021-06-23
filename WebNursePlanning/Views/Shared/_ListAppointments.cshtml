@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<DomainModel.Appointment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Liste des Rdvs";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -16,13 +13,13 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayName("A domicile")
+                @Html.DisplayNameFor(model => model.AtHome)
             </th>
             <th>
-                @Html.DisplayName("Infirmier(e)")
+                @Html.DisplayNameFor(model => model.Nurse)
             </th>
             <th>
-                @Html.DisplayName("Patient(e)")
+                @Html.DisplayNameFor(model => model.Patient)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -40,12 +37,10 @@
                 @Html.DisplayFor(modelItem => item.AtHome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nurse.LastName) 
-                @Html.DisplayFor(modelItem => item.Nurse.FirstName)
+                @Html.DisplayFor(modelItem => item.Nurse.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Patient.LastName)
-                @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                @Html.DisplayFor(modelItem => item.Patient.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Name)

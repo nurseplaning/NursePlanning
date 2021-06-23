@@ -11,12 +11,12 @@ namespace Repository.Interfaces
     {
         public Task<IEnumerable<Appointment>> ListAppointments();
 
-        public Task<Appointment> Details(string id);
+        public Task<Appointment> Details(Guid? id);
 
-        public Task Create(Appointment appointment);
+        public Task<Appointment> Create(Appointment appointment);
 
         public Task Edit(Appointment appointment);
-        public Task Delete(Appointment appointment);
-
+        public Task Delete(Guid? id);
+        public bool Exists(Guid? id);
     }
 }

@@ -24,8 +24,11 @@ namespace WebNursePlanning
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<INurseRepository, NurseRepository>();
-            //	services.AddTransient<IEmailSender, YourEmailSender>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
@@ -48,7 +51,7 @@ namespace WebNursePlanning
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context.Initialize();
+                context.Initialize(false);
             }
 
             if (env.IsDevelopment())
