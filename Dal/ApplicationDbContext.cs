@@ -15,6 +15,7 @@ namespace Dal
 		public DbSet<Message> Messages { get; set; }
 		public DbSet<Appointment> Appointments { get; set; }
 		public DbSet<Status> Statuses { get; set; }
+		public DbSet<Absence> Absences { get; set; }
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)

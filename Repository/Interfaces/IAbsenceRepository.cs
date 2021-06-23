@@ -1,0 +1,22 @@
+﻿using DomainModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repository.Interfaces
+{
+    interface IAbsenceRepository
+    {
+        public Task<IEnumerable<Absence>> ListAbsences();
+
+        public Task<Absence> Details(Guid? id);
+
+        public Task<Absence> Create(Absence appointment);
+
+        public Task Edit(Absence appointment);
+        public Task Delete(Guid? id);
+        public bool Exists(Guid? id);
+    }
+}

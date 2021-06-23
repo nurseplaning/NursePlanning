@@ -10,5 +10,6 @@ namespace DomainModel
     {
         public long SiretNumber { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<Absence> Absences { get; set; }
     }
 }

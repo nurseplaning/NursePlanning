@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DomainModel.ModelBuilders
 {
-    public static class AppointementModelBuiler
+    public static class AppointementModelBuilder
     {
         public static void AppointementModel(this ModelBuilder builder)
         {
