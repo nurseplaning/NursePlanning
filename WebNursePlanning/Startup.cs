@@ -33,9 +33,10 @@ namespace WebNursePlanning
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<Person, IdentityRole>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                  .AddDefaultUI().AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider); 
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider);
 
             services.AddControllersWithViews();
             services.AddRazorPages();

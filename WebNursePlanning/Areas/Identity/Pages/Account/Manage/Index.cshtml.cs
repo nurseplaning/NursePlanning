@@ -64,8 +64,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(Patient user)
         {
-            var person = await _userManager.GetUserAsync(HttpContext.User);
-            var patient = (Patient)person;
+            var patient = await _userManager.GetUserAsync(HttpContext.User) as Patient;
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
@@ -119,8 +118,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             patient.Adress = Input.Adress;
             patient.SocialSecurityNumber = Input.SocialSecurityNumber;
 
-            var setPhoneResult = await _userManager.UpdateAsync(patient);
-            if (!setPhoneResult.Succeeded)
+            var setPatientResult = await _userManager.UpdateAsync(patient);
+            if (!setPatientResult.Succeeded)
             {
                 StatusMessage = "Unexpected error when trying to set profile.";
                 return RedirectToPage();
