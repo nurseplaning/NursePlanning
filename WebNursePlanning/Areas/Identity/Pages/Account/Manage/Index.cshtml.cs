@@ -31,23 +31,28 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Nom")]
             public string FirstName { get; set; }
 
+            [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Prenom")]
             public string LastName { get; set; }
 
+            [Required]
             [DataType(DataType.Date)]
             [Display(Name = "Date naissance")]
             public DateTime BirthDay { get; set; }
 
+            [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Adress")]
             public string Adress { get; set; }
 
             [Phone]
+            [Required]
             [Display(Name = "N° Téléphone")]
             public string PhoneNumber { get; set; }
 
@@ -93,6 +98,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -104,15 +110,20 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            var patient = (Patient)user;
+            patient.Adress = Input.Adress;
+            patient.PhoneNumber = Input.PhoneNumber;
+            patient.FirstName = Input.FirstName;
+            patient.LastName = Input.LastName;
+            patient.BirthDay = Input.BirthDay;
+            patient.Adress = Input.Adress;
+            patient.SocialSecurityNumber = Input.SocialSecurityNumber;
+
+            var setPhoneResult = await _userManager.UpdateAsync(patient);
+            if (!setPhoneResult.Succeeded)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                StatusMessage = "Unexpected error when trying to set profile.";
+                return RedirectToPage();
             }
 
             await _signInManager.RefreshSignInAsync(user);
