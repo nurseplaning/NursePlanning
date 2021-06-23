@@ -5,17 +5,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfNursePlanning.Model;
+
 
 namespace WpfNursePlanning
 {
@@ -24,8 +20,26 @@ namespace WpfNursePlanning
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<MyModel> list = new ObservableCollection<MyModel>();
+        private const string API_URL = "https://localhost:44307/api/Nurses";
+        private static HttpClient client;
 
+        static async Task<string> GetGlobalDataAsync()
+        {
+            var data = string.Empty;
+            var response = await client.GetAsync(API_URL);
+            if (response.IsSuccessStatusCode)
+                data = await response.Content.ReadAsStringAsync();
+
+            return data;
+
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadData();
+            
+        }
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             EditNurse editNurse = new EditNurse();
@@ -33,33 +47,22 @@ namespace WpfNursePlanning
             this.Close();
 
         }
-        public MainWindow()
+        ObservableCollection<Nurse> list = new ObservableCollection<Nurse>();
+        public async Task LoadData()
         {
-            InitializeComponent();
-            LoadData();
-            list.Add(new MyModel { Id = 123, LastName = "aaaa", FirstName = "aaaaaa" });
-            list.Add(new MyModel { Id = 456, LastName = "bbbbb", FirstName = "bbbb" });
-            list.Add(new MyModel { Id = 789, LastName = "ccccc", FirstName = "cccccc" });
-            this.dgr.ItemsSource = list;
-        }
+            client = new HttpClient();
+            var json = await GetGlobalDataAsync();
+            var data = JObject.Parse(json).ToObject<List<Nurse>>();
 
-
-        private void LoadData()
-        {
-
-
-        }
-
-        public class MyModel
-        {
-            public int Id { get; set; }
-            public string LastName { get; set; }
-            public string FirstName { get; set; }
+            foreach (var item in data)
+            {
+                list.Add(new Nurse { LastName = item.LastName, FirstName = item.FirstName });
+            }
+            dgr.ItemsSource = list;
 
 
 
         }
-
 
 
 

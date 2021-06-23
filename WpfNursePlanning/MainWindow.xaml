@@ -10,8 +10,8 @@
     <Grid>
         <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="427" Margin="274,83,0,0" VerticalAlignment="Top" Width="694">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="N°Id" Binding="{Binding Path=Id, IsAsync=True}" Width="*"/>
-                <DataGridTextColumn Header="Nom" Binding="{Binding Path=LastName, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="N°Id" Binding="{Binding Path=Nom, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Path=Code, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Prénom" Binding="{Binding Path=FirstName, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Date de Naissance" Binding="{Binding Path=BirthDate, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="N° Siret" Binding="{Binding Path=SiretNumber, IsAsync=True}" Width="*"/>
@@ -33,6 +33,7 @@
         <Button Content="Affecter"  HorizontalAlignment="Left" Height="55" Margin="23,351,0,0" VerticalAlignment="Top" Width="190"/>
         <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="113" Margin="62,10,0,0" VerticalAlignment="Top" Width="126" />
         <Label Content="Liste des Infermiers(es)" Foreground="Blue" FontSize="25" HorizontalAlignment="Left" Height="48" Margin="500,10,0,0" VerticalAlignment="Top" Width="312"/>
+        
     </Grid>
 
 </Window>

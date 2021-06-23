@@ -25,6 +25,7 @@ namespace WebApiNursePlanning
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<INurseRepository, NurseRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -41,7 +42,7 @@ namespace WebApiNursePlanning
             services.AddCors(opt =>
             {
                 opt.AddPolicy("AllowSpecificOrigin", builder =>
-                    builder.WithOrigins("http://example.com"));
+                    builder.WithOrigins("http://localhost:44307/"));
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
