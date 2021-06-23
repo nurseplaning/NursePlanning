@@ -23,22 +23,24 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AtHome)
+            @Html.DisplayName("A domicile")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AtHome)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nurse)
+            @Html.DisplayNameFor(model=>model.NurseId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nurse.Id)
+            @Html.DisplayFor(model => model.Nurse.LastName)
+            @Html.DisplayFor(model => model.Nurse.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient)
+            @Html.DisplayNameFor(model => model.PatientId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Id)
+            @Html.DisplayFor(model => model.Patient.LastName)
+            @Html.DisplayFor(model => model.Patient.FirstName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Status)

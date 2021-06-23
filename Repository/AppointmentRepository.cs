@@ -1,5 +1,6 @@
 ﻿using Dal;
 using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
@@ -22,7 +23,6 @@ namespace Repository
         public async Task<IEnumerable<Appointment>> ListAppointments()
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).ToListAsync();
-            //return await _context.Appointments.ToListAsync();
         }
 
         public async Task<Appointment> Details(Guid? id)
@@ -46,7 +46,6 @@ namespace Repository
 
         public async Task Edit(Appointment appointment)
         {
-
             _context.Update(appointment);
             await _context.SaveChangesAsync();
         }
@@ -55,13 +54,18 @@ namespace Repository
         {
             var appointment = await _context.Appointments.FindAsync(id);
             _context.Appointments.Remove(appointment);
-            
+
             await _context.SaveChangesAsync();
         }
 
         public bool Exists(Guid? id)
         {
-            return _context.Appointments.Any(a => a.Id  == id);
+            return _context.Appointments.Any(a => a.Id == id);
+        }
+        [Authorize]
+        public async Task<IEnumerable<Appointment>> ListAppointmentsById(string idPerson)
+        {
+            return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
     }
 }
