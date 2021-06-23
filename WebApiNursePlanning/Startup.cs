@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Repository.Interfaces;
+using System.Net.Http;
 using System.Text.Json.Serialization;
 
 namespace WebApiNursePlanning
@@ -33,6 +34,20 @@ namespace WebApiNursePlanning
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiNursePlanning", Version = "v1" });
             });
 
+            //GG
+
+            //services.AddHttpClient("HttpClientWithSSLUntrusted").ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            //{
+            //    ClientCertificateOptions = ClientCertificateOption.Manual,
+            //    ServerCertificateCustomValidationCallback =
+            //(httpRequestMessage, cert, cetChain, policyErrors) =>
+            //{
+            //    return true;
+            //}
+            //});
+
+            ///GG
+
             services.AddMvc()
                 .AddJsonOptions(options =>
                     {
@@ -42,7 +57,7 @@ namespace WebApiNursePlanning
             services.AddCors(opt =>
             {
                 opt.AddPolicy("AllowSpecificOrigin", builder =>
-                    builder.WithOrigins("http://localhost:44307/"));
+                    builder.WithOrigins("https://localhost:44307/"));
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>

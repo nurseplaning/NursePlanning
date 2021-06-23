@@ -32,7 +32,7 @@
         <Button Content="Détail" HorizontalAlignment="Left" Height="58" Margin="23,250,0,0" VerticalAlignment="Top" Width="190"/>
         <Button Content="Affecter"  HorizontalAlignment="Left" Height="55" Margin="23,351,0,0" VerticalAlignment="Top" Width="190"/>
         <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="113" Margin="62,10,0,0" VerticalAlignment="Top" Width="126" />
-        <Label Content="Liste des Infermiers(es)" Foreground="Blue" FontSize="25" HorizontalAlignment="Left" Height="48" Margin="500,10,0,0" VerticalAlignment="Top" Width="312"/>
+        <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="25" HorizontalAlignment="Left" Height="48" Margin="500,10,0,0" VerticalAlignment="Top" Width="312"/>
         
     </Grid>
 

@@ -15,12 +15,9 @@ namespace WpfNursePlanning.Model
         public string SiretNumber { get; set; }
         public string SourceType { get; set; }
 
-        //public string Nom { get; set; }
-        //public string Code { get; set; }
+        public string Nom { get; set; }
+        public string Code { get; set; }
 
-
-        //public string Code { get; set; }
-        //public string Nom { get; set; }
 
     }
 }
