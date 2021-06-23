@@ -7,11 +7,15 @@ namespace DomainModel.ModelBuilders
         public static void PatientModel(this ModelBuilder builder)
         {
             builder.Entity<Patient>()
-                .ToTable("Patients");
+                   .ToTable("Patients");
 
             builder.Entity<Patient>()
-                .Property(p => p.SocialSecurityNumber)
-                .IsRequired();
+                   .Property(p => p.SocialSecurityNumber)
+                   .IsRequired();
+
+            builder.Entity<Patient>()
+                   .HasIndex(p => p.SocialSecurityNumber)
+                   .IsUnique();
         }
     }
 }
