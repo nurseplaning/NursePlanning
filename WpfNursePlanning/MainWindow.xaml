@@ -6,9 +6,28 @@
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1024" ResizeMode="NoResize">
-    
+
     <Grid>
-        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="427" Margin="274,83,0,0" VerticalAlignment="Top" Width="694">
+        <Label Content="Nom" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtLastName"  HorizontalAlignment="Left" Margin="110,182,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+
+        <Label Content="Prènom" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtFirstName"  HorizontalAlignment="Left" Margin="110,221,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+
+        <Label Name="dpBithDay" Content="Date de Naissance :" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Width="110"/>
+        <DatePicker HorizontalAlignment="Left" Margin="140,256,0,0" VerticalAlignment="Top" Width="118"/>
+
+        <Label Content="N° Siret :" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtSiretNumber" HorizontalAlignment="Left" Margin="80,304,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
+
+        <Label Content="Adresse :" HorizontalAlignment="Left" Margin="10,341,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="80,354,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
+
+        <Label Content="Rôle :" HorizontalAlignment="Left" Margin="10,415,0,0" VerticalAlignment="Top" Width="55"/>
+        <ComboBox Name="cbxRole" HorizontalAlignment="Left" Height="26" Margin="80,412,0,0" VerticalAlignment="Top" Width="178"/>
+
+
+        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="429" Margin="274,57,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="N°Id" Binding="{Binding Path=Nom, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Path=Code, IsAsync=True}" Width="*"/>
@@ -17,23 +36,37 @@
                 <DataGridTextColumn Header="N° Siret" Binding="{Binding Path=SiretNumber, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Adresse" Binding="{Binding Path=Adress, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Rôle" Binding="{Binding Path=Role, IsAsync=True}" Width="*"/>
+
+                <DataGridTemplateColumn Header="Modification">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnEditNurse" >Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Suppression">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnDeleteNurse" >Suppr</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
+
         </DataGrid>
-        
-        <Button x:Name="btModif" Click="btnEdit_Click" HorizontalAlignment="Left" Height="61" Margin="23,156,0,0" VerticalAlignment="Top" Width="190">
-            <Button.Content>
-                <StackPanel>
-                    <Image x:Name="ImageEdit" Stretch="Uniform"  Source="/Icones/modifier.png"  Width="30" Height="30" />
-                    <TextBlock> Modifier</TextBlock>
-                </StackPanel>
-            </Button.Content>
+
+        <Button x:Name="btModif" Click="btnEdit_Click" HorizontalAlignment="Left" Height="37" Margin="107,514,0,0" VerticalAlignment="Top" Width="124">
+            <Image Source="Icones\modifier.png"></Image>
         </Button>
 
-        <Button Content="Détail" HorizontalAlignment="Left" Height="58" Margin="23,250,0,0" VerticalAlignment="Top" Width="190"/>
-        <Button Content="Affecter"  HorizontalAlignment="Left" Height="55" Margin="23,351,0,0" VerticalAlignment="Top" Width="190"/>
-        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="113" Margin="62,10,0,0" VerticalAlignment="Top" Width="126" />
-        <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="25" HorizontalAlignment="Left" Height="48" Margin="500,10,0,0" VerticalAlignment="Top" Width="312"/>
-        
+        <Button x:Name="btDetail"  Content="Rendez-vous" HorizontalAlignment="Left" Height="37" Margin="274,514,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button Content="Quitter"  HorizontalAlignment="Left" Height="37" Margin="856,514,0,0" VerticalAlignment="Top" Width="125" />
+        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="81" Margin="80,10,0,0" VerticalAlignment="Top" Width="92" />
+        <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="525,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
+        <Label Name="lblMessage" HorizontalAlignment="Left" Margin="80,460,0,0" VerticalAlignment="Top" Width="178"/>
+
     </Grid>
 
 </Window>

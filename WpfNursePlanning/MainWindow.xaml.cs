@@ -11,14 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfNursePlanning.Model;
-
+using System.Windows.Controls;
 
 namespace WpfNursePlanning
 {
-    
+
     public partial class MainWindow : Window
     {
-        //private const string API_URL = "https://coronavirusapi-france.now.sh/AllLiveData";
+       
         private const string API_URL = "https://localhost:44307/api/Nurses";
         private static HttpClient client = new HttpClient();
 
@@ -40,32 +40,52 @@ namespace WpfNursePlanning
 
 
         }
-       
+
         ObservableCollection<Nurse> list = new ObservableCollection<Nurse>();
         public async Task LoadData()
         {
             var json = await GetGlobalDataAsync();
-            //var data = JObject.Parse(json).SelectToken("allLiveFranceData").ToObject<List<Nurse>>();
             var data = JObject.Parse(json).ToObject<List<Nurse>>();
             foreach (var item in data)
             {
-                list.Add(new Nurse { LastName = item.LastName, FirstName = item.FirstName });
-                //list.Add(new Nurse { Nom = item.Nom, Code = item.Code });
+                list.Add(
+                    new Nurse
+                    {
+                        Id = item.Id,
+                        LastName = item.LastName,
+                        FirstName = item.FirstName,
+                        BirthDay = item.BirthDay,
+                        Adress = item.Adress,
+                        SiretNumber = item.SiretNumber,
+
+                    });
+
             }
             dgr.ItemsSource = list;
-
-
-
         }
 
 
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        
+
+        void btnEditNurse(object sender, RoutedEventArgs e)
         {
-            EditNurse editNurse = new EditNurse();
-            editNurse.Show();
-            this.Close();
+            Nurse nurse = ((FrameworkElement)sender).DataContext as Nurse;
+            txtLastName.Text = nurse.LastName;
+            txtFirstName.Text = nurse.FirstName;
+            dpBithDay.Content = nurse.BirthDay;
+            txtAdress.Text = nurse.Adress;
+            txtSiretNumber.Text = nurse.SiretNumber;
 
         }
 
+        void btnDeleteNurse(object sender, RoutedEventArgs e)
+        {
+            Nurse nurse = ((FrameworkElement)sender).DataContext as Nurse;
+            this.DeleteNurses(nurse.Id);
+        }
+        private async void DeleteNurses(string id)
+        {
+            await client.DeleteAsync("/" + id);
+        }
     }
 }
