@@ -8,20 +8,21 @@ namespace DomainModel.ModelBuilders
         public static void IdentityModel(this ModelBuilder builder)
         {
             builder.Entity<IdentityUser>()
-                .Property(u => u.Email)
-                .IsRequired();
+                   .Property(u => u.Email)
+                   .IsRequired();
 
             builder.Entity<IdentityUser>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+                   .HasIndex(u => u.Email)
+                   .IsUnique();
 
             builder.Entity<IdentityUser>()
-                .Property(u => u.PasswordHash)
-                .IsRequired();
+                   .Property(u => u.PasswordHash)
+                   .IsRequired();
 
             builder.Entity<IdentityUser>()
-                .Property(u => u.PhoneNumber)
-                .IsRequired();
+                   .Property(u => u.PhoneNumber)
+                   .HasMaxLength(10)
+                   .IsRequired();
         }
     }
 }

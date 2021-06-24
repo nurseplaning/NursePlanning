@@ -51,6 +51,11 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
+            [EmailAddress]
+            [Display(Name = "Confirmation E-mail")]
+            [Compare("Email", ErrorMessage = "L'e-mail et la confiramtion d'e-mail ne correspondent pas.")]
+            public string ConfirmEmail { get; set; }
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -73,7 +78,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.Date)]
+            [DataType(DataType.DateTime)]
             [Display(Name = "Date naissance")]
             public DateTime BirthDay { get; set; }
 
@@ -83,7 +88,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string Adress { get; set; }
 
             [Required]
-            [DataType(DataType.Text)]
+            [DataType(DataType.PhoneNumber)]
             [Display(Name = "N° Téléphone")]
             public string Phonenumber { get; set; }
 
@@ -119,6 +124,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    // add Role Admin to Nurse
+                    await _userManager.AddToRoleAsync(user, "ROLE_ADMIN");
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

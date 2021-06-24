@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+    public partial class IndexNurseModel : PageModel
     {
         private readonly UserManager<Person> _userManager;
         private readonly SignInManager<Person> _signInManager;
 
-        public IndexModel(
+        public IndexNurseModel(
             UserManager<Person> userManager,
             SignInManager<Person> signInManager)
         {
@@ -58,13 +58,14 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Securité Sociale")]
-            public string SocialSecurityNumber { get; set; }
+            [Display(Name = "N° de Siret")]
+            public string SiretNumber { get; set; }
         }
 
-        private async Task LoadAsync(Patient user)
+        private async Task LoadAsync(Nurse user)
         {
-            var patient = await _userManager.GetUserAsync(HttpContext.User) as Patient;
+            var nurse = await _userManager.GetUserAsync(HttpContext.User) as Nurse;
+        //    var nurse = (Nurse)person;
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
@@ -73,24 +74,24 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                FirstName = patient.FirstName,
-                LastName = patient.LastName,
-                BirthDay = patient.BirthDay,
-                Adress = patient.Adress,
-                SocialSecurityNumber = patient.SocialSecurityNumber
+                FirstName = nurse.FirstName,
+                LastName = nurse.LastName,
+                BirthDay = nurse.BirthDay,
+                Adress = nurse.Adress,
+                SiretNumber = nurse.SiretNumber
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            var patient = (Patient)user;
+          //  var patient = (Nurse)user;
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync((Patient)user);
+            await LoadAsync((Nurse)user);
             return Page();
         }
 
@@ -105,21 +106,21 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync((Patient)user);
+                await LoadAsync((Nurse)user);
                 return Page();
             }
 
-            var patient = (Patient)user;
-            patient.Adress = Input.Adress;
-            patient.PhoneNumber = Input.PhoneNumber;
-            patient.FirstName = Input.FirstName;
-            patient.LastName = Input.LastName;
-            patient.BirthDay = Input.BirthDay;
-            patient.Adress = Input.Adress;
-            patient.SocialSecurityNumber = Input.SocialSecurityNumber;
+            var nurse = (Nurse)user;
+            nurse.Adress = Input.Adress;
+            nurse.PhoneNumber = Input.PhoneNumber;
+            nurse.FirstName = Input.FirstName;
+            nurse.LastName = Input.LastName;
+            nurse.BirthDay = Input.BirthDay;
+            nurse.Adress = Input.Adress;
+            nurse.SiretNumber = Input.SiretNumber;
 
-            var setPatientResult = await _userManager.UpdateAsync(patient);
-            if (!setPatientResult.Succeeded)
+            var setPhoneResult = await _userManager.UpdateAsync(nurse);
+            if (!setPhoneResult.Succeeded)
             {
                 StatusMessage = "Unexpected error when trying to set profile.";
                 return RedirectToPage();

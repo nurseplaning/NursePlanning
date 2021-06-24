@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainModel.ModelBuilders
 {
@@ -15,16 +10,32 @@ namespace DomainModel.ModelBuilders
                 .ToTable("Appointments");
 
             builder.Entity<Appointment>()
-                .Property(n => n.Description)
-                .IsRequired();
-            
-            builder.Entity<Appointment>()
-                .Property(n => n.Date)
+                .Property(a => a.Description)
                 .IsRequired();
 
             builder.Entity<Appointment>()
-                .Property(n => n.AtHome)
+                .Property(a => a.Date)
+                .HasColumnType("datetime")
                 .IsRequired();
+
+            builder.Entity<Appointment>()
+                .Property(a => a.AtHome)
+                .HasColumnName("A domicile")
+                .IsRequired();
+
+            builder.Entity<Appointment>()
+                .Property(a => a.NurseId)
+                .HasColumnName("Infirmier(e)")
+                .IsRequired();
+
+            builder.Entity<Appointment>()
+               .Property(a => a.PatientId)
+               .HasColumnName("Patient(e)")
+               .IsRequired();
+
+            builder.Entity<Appointment>()
+              .Property(a => a.StatusId)
+              .IsRequired();
         }
     }
 }
