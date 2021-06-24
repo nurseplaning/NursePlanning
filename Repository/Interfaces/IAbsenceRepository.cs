@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-    interface IAbsenceRepository
+    public interface IAbsenceRepository
     {
         public Task<IEnumerable<Absence>> ListAbsences();
+        public Task<IEnumerable<Absence>> ListAbsenceById(string id);
 
         public Task<Absence> Details(Guid? id);
 

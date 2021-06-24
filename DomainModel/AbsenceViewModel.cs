@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    public class Absence
+    public class AbsenceViewModel
     {
-        public Guid Id { get; set; }
-
         [DataType(DataType.Date)]
         public DateTime DateStart { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime TimeStart { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateEnd { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime TimeEnd { get; set; }
         public string Motif { get; set; }
-
-        public virtual Nurse Nurse { get; set; }
         [Display(Name = "Infirmier(e)")]
         public virtual string NurseId { get; set; }
     }

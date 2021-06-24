@@ -1,0 +1,82 @@
+﻿@model DomainModel.AbsenceViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<DomainModel.Person> SignInManager
+@inject UserManager<DomainModel.Person> UserManager
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Absence</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="DateStart" class="control-label"></label>
+                    <input asp-for="DateStart" min="2021-06-24" class="form-control" />
+                    <span asp-validation-for="DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TimeStart" class="control-label"></label>
+                    <input asp-for="TimeStart" class="form-control" />
+                    <span asp-validation-for="TimeStart" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateEnd" class="control-label"></label>
+                    <input asp-for="DateEnd" min="2021-06-24" class="form-control" />
+                    <span asp-validation-for="DateEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TimeEnd" class="control-label"></label>
+                    <input asp-for="TimeEnd" class="form-control" />
+                    <span asp-validation-for="TimeEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Motif" class="control-label"></label>
+                    <input asp-for="Motif" class="form-control" />
+                    <span asp-validation-for="Motif" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+                <div>
+                    <p>Vous n'êtes pas infirmier, vous n'avez rien à faire ici !</p>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("Input_Date").setAttribute("min", today);
+</script>
+}

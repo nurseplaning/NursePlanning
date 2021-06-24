@@ -19,7 +19,11 @@ namespace DomainModel.ModelBuilders
                 .IsRequired();
 
             builder.Entity<Absence>()
-                .Property(n => n.Date)
+                .Property(n => n.DateStart)
+                .IsRequired();
+
+            builder.Entity<Absence>()
+                .Property(n => n.DateEnd)
                 .IsRequired();
 
             builder.Entity<Absence>()

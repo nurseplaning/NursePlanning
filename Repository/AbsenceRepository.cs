@@ -1,6 +1,8 @@
 ﻿using Dal;
+using Microsoft.AspNetCore.Authorization;
 using DomainModel;
 using Microsoft.EntityFrameworkCore;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    class AbsenceRepository
+    public class AbsenceRepository : IAbsenceRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -58,6 +60,11 @@ namespace Repository
         public bool Exists(Guid? id)
         {
             return _context.Absences.Any(a => a.Id == id);
+        }
+        [Authorize]
+        public async Task<IEnumerable<Absence>> ListAbsenceById(string idNurse)
+        {
+            return await _context.Absences.Include(a => a.Nurse).Where(p => p.NurseId == idNurse).ToListAsync();
         }
     }
 }
