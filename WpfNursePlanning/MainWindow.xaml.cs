@@ -1,17 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfNursePlanning.Model;
-using System.Windows.Controls;
 
 namespace WpfNursePlanning
 {
@@ -37,6 +30,9 @@ namespace WpfNursePlanning
         {
             InitializeComponent();
             LoadData();
+            cbxRole.Items.Add("Utilisateur");
+            cbxRole.Items.Add("Admin");
+            cbxRole.Items.Add("Super Admin");
 
 
         }
@@ -49,9 +45,9 @@ namespace WpfNursePlanning
             foreach (var item in data)
             {
                 list.Add(
-                    new Nurse
+                    new Nurse   
                     {
-                        Id = item.Id,
+                       Id=item.Id,
                         LastName = item.LastName,
                         FirstName = item.FirstName,
                         BirthDay = item.BirthDay,
@@ -62,30 +58,29 @@ namespace WpfNursePlanning
 
             }
             dgr.ItemsSource = list;
+           
+            
         }
 
-
-        
-
-        void btnEditNurse(object sender, RoutedEventArgs e)
+        void btnEditNurse(object sender, RoutedEventArgs e) 
         {
-            Nurse nurse = ((FrameworkElement)sender).DataContext as Nurse;
+            
+            Nurse nurse = dgr.SelectedItem as Nurse;
+
             txtLastName.Text = nurse.LastName;
             txtFirstName.Text = nurse.FirstName;
-            dpBithDay.Content = nurse.BirthDay;
-            txtAdress.Text = nurse.Adress;
+            dpBithDay.SelectedDate = nurse.BirthDay;
+            txtAdress.Text = nurse.Adress;  
             txtSiretNumber.Text = nurse.SiretNumber;
 
         }
 
-        void btnDeleteNurse(object sender, RoutedEventArgs e)
+        private void btnAppointement(object sender, RoutedEventArgs e)
         {
-            Nurse nurse = ((FrameworkElement)sender).DataContext as Nurse;
-            this.DeleteNurses(nurse.Id);
-        }
-        private async void DeleteNurses(string id)
-        {
-            await client.DeleteAsync("/" + id);
+            AppointmentList rdvList = new AppointmentList();
+            Nurse nurse = dgr.SelectedItem as Nurse;
+            rdvList.lblPatient.Content = nurse.Id;
+            rdvList.Show();
         }
     }
 }
