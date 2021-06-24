@@ -15,10 +15,12 @@ namespace WpfNursePlanning
         private const string API_URL = "https://localhost:44307/api/Appointments";
         private static HttpClient client = new HttpClient();
 
-        static async Task<string> GetAppointmentAsync(string Nurseid)
+       // static async Task<string> GetAppointmentAsync()
+         static async Task<string> GetAppointmentAsync(string Nurseid)
         {
             var data = string.Empty;
-            var response = await client.GetAsync(API_URL + "/nurse/" + Nurseid);
+           var response = await client.GetAsync(API_URL + "/nurse/" + Nurseid);
+            //var response = await client.GetAsync(API_URL);
             if (response.IsSuccessStatusCode)
                 data = await response.Content.ReadAsStringAsync();
 
@@ -28,16 +30,18 @@ namespace WpfNursePlanning
         public AppointmentList()
         {
             InitializeComponent();
+            LoadAppointmentData();
         }
 
         ObservableCollection<Appointment> list = new ObservableCollection<Appointment>();
         public async Task LoadAppointmentData()
         {
             MainWindow main = new MainWindow();
-            Nurse nurse = new Nurse();
-            nurse.Id = (string)lblPatient.Content;
             
-            var json = await GetAppointmentAsync(nurse.Id);
+            string Id = (string)lblPatient.Content;
+
+            var json = await GetAppointmentAsync(Id);
+            //var json = await GetAppointmentAsync();
             var data = JObject.Parse(json).ToObject<List<Appointment>>();
             foreach (var item in data)
             {
@@ -53,7 +57,7 @@ namespace WpfNursePlanning
                     });
 
             }
-            dgrRdv.ItemsSource = list;
+           dgrRdv.ItemsSource = list;
            // dgrRdv.ItemsSource = list.Where(n => n.NurseId == lblPatient.Content);
             
             
