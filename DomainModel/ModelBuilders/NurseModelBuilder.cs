@@ -11,6 +11,7 @@ namespace DomainModel.ModelBuilders
 
             builder.Entity<Nurse>()
                    .Property(n => n.SiretNumber)
+                   .HasMaxLength(14)
                    .IsRequired();
 
             builder.Entity<Nurse>()

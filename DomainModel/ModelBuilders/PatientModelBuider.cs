@@ -11,6 +11,7 @@ namespace DomainModel.ModelBuilders
 
             builder.Entity<Patient>()
                    .Property(p => p.SocialSecurityNumber)
+                   .HasMaxLength(13)
                    .IsRequired();
 
             builder.Entity<Patient>()
