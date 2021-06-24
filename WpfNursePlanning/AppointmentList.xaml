@@ -7,17 +7,43 @@
         mc:Ignorable="d"
         Title="AppointmentList" Height="600" Width="1024" ResizeMode="NoResize">
     <Grid>
-        <DataGrid Name="dgrRdv" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="429" Margin="274,57,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
+        <DataGrid Name="dgrRdv" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="336" Margin="56,57,0,0" VerticalAlignment="Top" Width="946" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Domicile" Binding="{Binding Path=AtHome, IsAsync=True}" Width="*"/>
-                <DataGridTextColumn Header="Infirmier" Binding="{Binding Path=Nurse, IsAsync=True}" Width="*"/>
-                <DataGridTextColumn Header="Patient" Binding="{Binding Path=Patient, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Infirmier" Binding="{Binding Path=NurseId, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Patient" Binding="{Binding Path=patientId, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status, IsAsync=True}" Width="*"/>
-
+                <DataGridTemplateColumn Header="Modification">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnDetailPatient" >Patient</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
         </DataGrid>
-        <Label Name="lblPatient"  HorizontalAlignment="Left" Height="32" Margin="76,510,0,0" VerticalAlignment="Top" Width="143"/>
+
+
+        <Label Content="Nom" HorizontalAlignment="Left" Margin="59,432,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtLastName"  HorizontalAlignment="Left" Margin="159,435,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+
+        <Label Content="Prènom" HorizontalAlignment="Left" Margin="374,429,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtFirstName"  HorizontalAlignment="Left" Margin="474,432,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+
+        <Label  Content="Date de Naissance :" HorizontalAlignment="Left" Margin="59,484,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.552,0.944"/>
+        <DatePicker  Name="dpBithDay" HorizontalAlignment="Left" Margin="189,484,0,0" VerticalAlignment="Top" Width="118" Height="26"/>
+
+        <Label Content="N°S.Social :" HorizontalAlignment="Left" Margin="372,484,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtSsNumber" HorizontalAlignment="Left" Margin="442,489,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
+
+        <Label Content="Adresse :" HorizontalAlignment="Left" Margin="754,429,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="824,442,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="43"/>
+        <Label Content="Liste des rendez-vous de l'infirmier(e)" FontSize="20" HorizontalAlignment="Left" Height="42" Margin="59,10,0,0" VerticalAlignment="Top" Width="361"/>
+
+
+
+
     </Grid>
 </Window>

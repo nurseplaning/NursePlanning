@@ -18,5 +18,6 @@ namespace Repository.Interfaces
         public Task Edit(Appointment appointment);
         public Task Delete(Guid? id);
         public bool Exists(Guid? id);
+        public Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id);
     }
 }

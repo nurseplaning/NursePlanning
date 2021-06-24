@@ -67,5 +67,12 @@ namespace Repository
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
+        public async Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id)
+        {
+            var list = await _context.Appointments.Where(a => a.NurseId.Equals(id)).Include(a => a.Patient).ToListAsync();
+            return list;
+
+        }
+      
     }
 }

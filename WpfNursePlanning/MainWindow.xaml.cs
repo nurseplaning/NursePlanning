@@ -11,10 +11,8 @@ namespace WpfNursePlanning
 
     public partial class MainWindow : Window
     {
-       
         private const string API_URL = "https://localhost:44307/api/Nurses";
         private static HttpClient client = new HttpClient();
-
         static async Task<string> GetGlobalDataAsync()
         {
             var data = string.Empty;
@@ -23,7 +21,6 @@ namespace WpfNursePlanning
                 data = await response.Content.ReadAsStringAsync();
 
             return data;
-
         }
 
         public MainWindow()
@@ -33,8 +30,6 @@ namespace WpfNursePlanning
             cbxRole.Items.Add("Utilisateur");
             cbxRole.Items.Add("Admin");
             cbxRole.Items.Add("Super Admin");
-
-
         }
 
         ObservableCollection<Nurse> list = new ObservableCollection<Nurse>();
@@ -53,33 +48,26 @@ namespace WpfNursePlanning
                         BirthDay = item.BirthDay,
                         Adress = item.Adress,
                         SiretNumber = item.SiretNumber,
-
                     });
-
             }
             dgr.ItemsSource = list;
-           
-            
         }
 
         void btnEditNurse(object sender, RoutedEventArgs e) 
         {
-            
             Nurse nurse = dgr.SelectedItem as Nurse;
-
             txtLastName.Text = nurse.LastName;
             txtFirstName.Text = nurse.FirstName;
             dpBithDay.SelectedDate = nurse.BirthDay;
             txtAdress.Text = nurse.Adress;  
             txtSiretNumber.Text = nurse.SiretNumber;
-
         }
 
         private void btnAppointement(object sender, RoutedEventArgs e)
         {
-            AppointmentList rdvList = new AppointmentList();
-            Nurse nurse = dgr.SelectedItem as Nurse;
-            rdvList.lblPatient.Content = nurse.Id;
+            Nurse nurse = dgr.SelectedItem as Nurse; 
+            AppointmentList rdvList = new AppointmentList(nurse.Id);
+            //rdvList.lblPatient.Content = nurse.Id;
             rdvList.Show();
         }
     }

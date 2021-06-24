@@ -9,39 +9,33 @@ using System.Linq;
 
 namespace WpfNursePlanning
 {
-    
+
     public partial class AppointmentList : Window
     {
         private const string API_URL = "https://localhost:44307/api/Appointments";
         private static HttpClient client = new HttpClient();
-
-       // static async Task<string> GetAppointmentAsync()
-         static async Task<string> GetAppointmentAsync(string Nurseid)
+        static async Task<string> GetAppointmentAsync(string Nurseid)
         {
             var data = string.Empty;
-           var response = await client.GetAsync(API_URL + "/nurse/" + Nurseid);
-            //var response = await client.GetAsync(API_URL);
+            var response = await client.GetAsync(API_URL + "/nurse/" + Nurseid);
+
             if (response.IsSuccessStatusCode)
                 data = await response.Content.ReadAsStringAsync();
 
             return data;
-
         }
-        public AppointmentList()
+        public AppointmentList(string nurseId)
         {
             InitializeComponent();
-            LoadAppointmentData();
+            LoadAppointmentData(nurseId);
         }
 
         ObservableCollection<Appointment> list = new ObservableCollection<Appointment>();
-        public async Task LoadAppointmentData()
+        public async Task LoadAppointmentData(string nurseId)
         {
             MainWindow main = new MainWindow();
-            
-            string Id = (string)lblPatient.Content;
-
-            var json = await GetAppointmentAsync(Id);
-            //var json = await GetAppointmentAsync();
+            //string Id = (string)lblPatient.Content;
+            var json = await GetAppointmentAsync(nurseId);
             var data = JObject.Parse(json).ToObject<List<Appointment>>();
             foreach (var item in data)
             {
@@ -55,12 +49,24 @@ namespace WpfNursePlanning
                         Nurse = item.Nurse,
                         NurseId = item.NurseId,
                     });
-
             }
-           dgrRdv.ItemsSource = list;
-           // dgrRdv.ItemsSource = list.Where(n => n.NurseId == lblPatient.Content);
-            
-            
+            dgrRdv.ItemsSource = list;
         }
+
+        void btnDetailPatient(object sender, RoutedEventArgs e)
+        {
+            Appointment appointment = dgrRdv.SelectedItem as Appointment;
+            txtLastName.Text = appointment.Patient.LastName;
+            txtFirstName.Text = appointment.Patient.FirstName;
+            dpBithDay.SelectedDate = appointment.Patient.BirthDay;
+            txtAdress.Text = appointment.Patient.Adress;
+            txtSsNumber.Text = appointment.Patient.SocialSecurityNumber;
+
+
+
+
+
+        }
+
     }
 }
