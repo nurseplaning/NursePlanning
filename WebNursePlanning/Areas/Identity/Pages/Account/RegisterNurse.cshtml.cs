@@ -70,11 +70,13 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Nom")]
+            [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Prenom")]
+            [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string LastName { get; set; }
 
             [Required]
@@ -90,11 +92,13 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "N° Téléphone")]
+            [RegularExpression(@"\d{10}|\+33\d{9}|\+33\s\d{1}\s\d{2}\s\d{2}\s\d{2}\s\d{2}|\d{2}\s\d{2}\s\d{2}\s\d{2}\s\d{2}", ErrorMessage = "Characters are not allowed.")]
             public string Phonenumber { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "N° de Siret")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
             public string SiretNumber { get; set; }
         }
 
