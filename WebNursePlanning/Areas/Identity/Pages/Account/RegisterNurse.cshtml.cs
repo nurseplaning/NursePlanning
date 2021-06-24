@@ -124,6 +124,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    // add Role Admin to Nurse
+                    await _userManager.AddToRoleAsync(user, "ROLE_ADMIN");
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
