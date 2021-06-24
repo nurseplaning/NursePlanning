@@ -1,12 +1,16 @@
 ﻿@model DomainModel.Appointment
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<DomainModel.Person> SignInManager
+@inject UserManager<DomainModel.Person> UserManager
 
 @{
     ViewData["Title"] = "Create";
+
 }
 
-<h1>Create</h1>
+<h1>Prise de Rdv</h1>
 
-<h4>Appointment</h4>
+<h4>Rendez-Vous</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,28 +21,45 @@
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AtHome" /> @Html.DisplayNameFor(model => model.AtHome)
+                    <input class="form-check-input" asp-for="AtHome" />@Html.DisplayNameFor(model => model.AtHome)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="NurseId" class="control-label"></label>
-                <select asp-for="NurseId" class ="form-control" asp-items="ViewBag.NurseId"></select>
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <div class="form-group">
+                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PatientId" class="control-label"></label>
+                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                </div>
+            }
+            else if (User.IsInRole("ROLE_USER"))
+            {//Si l'utilisateur est un patient (role user)
+                <div class="form-group">
+                    <label asp-for="NurseId" class="control-label"></label>
+                    <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId"></select>
+                </div>
+                <div class="form-group">
+                    <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
+                </div>
+            } 
+
+            <div class= "form-group" >
+                <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId"/>
             </div>
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
-                <select asp-for="StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
+    </form>
+</div>
 </div>
 
 <div>
