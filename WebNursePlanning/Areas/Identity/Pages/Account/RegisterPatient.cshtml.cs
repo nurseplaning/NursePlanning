@@ -86,8 +86,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Display(Name = "Adress")]
             public string Adress { get; set; }
 
+            [DataType(DataType.PhoneNumber)]
             [Required]
-            [DataType(DataType.Text)]
             [Display(Name = "N° Téléphone")]
             public string Phonenumber { get; set; }
 

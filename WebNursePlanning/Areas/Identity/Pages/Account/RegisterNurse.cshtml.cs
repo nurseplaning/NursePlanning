@@ -78,7 +78,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.Date)]
+            [DataType(DataType.DateTime)]
             [Display(Name = "Date naissance")]
             public DateTime BirthDay { get; set; }
 
@@ -88,7 +88,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string Adress { get; set; }
 
             [Required]
-            [DataType(DataType.Text)]
+            [DataType(DataType.PhoneNumber)]
             [Display(Name = "N° Téléphone")]
             public string Phonenumber { get; set; }
 

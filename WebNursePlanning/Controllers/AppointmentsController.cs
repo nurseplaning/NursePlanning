@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DomainModel;
 using Repository.Interfaces;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebNursePlanning.Controllers
 {
@@ -31,13 +31,13 @@ namespace WebNursePlanning.Controllers
             return View(await listAppointments);
         }
 
-		// GET: Appointments/Details/5
-		public async Task<IActionResult> Details(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             var appointment = await _appointmentRepository.Details(id);
             if (appointment == null)
@@ -45,8 +45,8 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
-			return View(appointment);
-		}
+            return View(appointment);
+        }
 
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
@@ -87,13 +87,13 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction("Index");
         }
 
-		// GET: Appointments/Edit/5
-		public async Task<IActionResult> Edit(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             var appointment = await _appointmentRepository.Details(id);
             if (appointment == null)
@@ -160,13 +160,13 @@ namespace WebNursePlanning.Controllers
             return View(appointment);
         }
 
-		// GET: Appointments/Delete/5
-		public async Task<IActionResult> Delete(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             var appointment = await _appointmentRepository.Details(id);
             if (appointment == null)
@@ -174,8 +174,8 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
-			return View(appointment);
-		}
+            return View(appointment);
+        }
 
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]

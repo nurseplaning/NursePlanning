@@ -21,6 +21,7 @@ namespace DomainModel.ModelBuilders
 
             builder.Entity<IdentityUser>()
                    .Property(u => u.PhoneNumber)
+                   .HasMaxLength(10)
                    .IsRequired();
         }
     }
