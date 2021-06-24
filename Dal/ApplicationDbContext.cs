@@ -11,7 +11,6 @@ namespace Dal
 		public DbSet<Person> People { get; set; }
 		public DbSet<Nurse> Nurses { get; set; }
 		public DbSet<Patient> Patients { get; set; }
-		public DbSet<Director> Directors { get; set; }
 		public DbSet<Message> Messages { get; set; }
 		public DbSet<Appointment> Appointments { get; set; }
 		public DbSet<Status> Statuses { get; set; }

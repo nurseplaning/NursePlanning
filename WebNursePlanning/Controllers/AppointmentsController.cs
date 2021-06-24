@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace WebNursePlanning.Controllers
 {
