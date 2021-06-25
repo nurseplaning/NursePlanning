@@ -124,7 +124,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
                     SocialSecurityNumber = Input.SocialSecurityNumber,
-                    PhoneNumber = Input.Phonenumber
+                    PhoneNumber = Input.Phonenumber,
+                    IsActive = true
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

@@ -123,7 +123,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
                     SiretNumber = Input.SiretNumber,
-                    PhoneNumber = Input.Phonenumber
+                    PhoneNumber = Input.Phonenumber,
+                    IsActive = false
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

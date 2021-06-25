@@ -28,6 +28,10 @@ namespace DomainModel.ModelBuilders
                 .Property(p => p.Adress)
                 .HasMaxLength(150)
                 .IsRequired();
+
+            builder.Entity<Person>()
+                .Property(p => p.IsActive)
+                .IsRequired();
         }
     }
 }
