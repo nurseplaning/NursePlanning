@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using WebNursePlanning.Models;
+using System.Threading.Tasks;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebNursePlanning.Controllers
 {
@@ -15,21 +17,28 @@ namespace WebNursePlanning.Controllers
         private readonly INurseRepository _nurseRepository;
         private readonly IPatientRepository _patientRepository;
         private readonly IStatusRepository _statusRepository;
+        private readonly UserManager<Person> _userManager;
+        private readonly SignInManager<Person> _signInManager;
 
-        public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository)
+        public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository, UserManager<Person> userManager, SignInManager<Person> signInManager)
         {
             _appointmentRepository = appointmentRepository;
             _nurseRepository = nurseRepository;
             _patientRepository = patientRepository;
             _statusRepository = statusRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var listAppointments = _appointmentRepository.ListAppointments();
-            return View(await listAppointments);
+            var user = await _userManager.GetUserAsync(User);
+
+            var listAppointments = await _appointmentRepository.ListAppointmentsById(user.Id);
+            return View(listAppointments);
         }
+
 
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -62,7 +71,8 @@ namespace WebNursePlanning.Controllers
             ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value");
 
             //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
-            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name");
+            var liste = await _statusRepository.ListStatuses();
+            ViewData["StatusId"] =  liste.FirstOrDefault(s => s.Name == "En attente").Id;
 
             return View();
         }
@@ -72,18 +82,24 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public async Task<IActionResult> Create(AppointmentViewModel appointment)
         {
             if (ModelState.IsValid)
             {
+                var a = new Appointment()
+                {
+                    Date = appointment.Date,
+                    AtHome = appointment.AtHome,
+                    NurseId = appointment.NurseId,
+                    PatientId = appointment.PatientId,
+                    Description = appointment.Description,
+                    StatusId = appointment.StatusId
+                };
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(appointment);
+                await _appointmentRepository.Create(a);
 
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
-            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            //ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
             return RedirectToAction("Index");
         }
 
@@ -111,6 +127,7 @@ namespace WebNursePlanning.Controllers
             ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             //ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
+           
             return View(appointment);
         }
 

@@ -1,0 +1,45 @@
+﻿@model WebNursePlanning.Models.AppointmentViewModel
+
+<h1>Calendrier des RDVs</h1>
+
+<table class="table table-responsive-md">
+    <thead classe="thead-light">
+        @{int maxLength = 0;}
+        <tr>
+            @foreach (var item in ViewBag.AppointmentsAvailables)
+            {
+                <th>
+                    <label>@item.Key</label><br>
+                </th>
+                @if (item.Value.Count > maxLength)
+                {
+                    maxLength = item.Value.Count;
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int appTime = 0; appTime < maxLength; appTime++)
+        {
+            <tr>
+                @foreach (var item in ViewBag.AppointmentsAvailables)
+                {
+                    @if (item.Value[appTime] != new TimeSpan())
+                    {
+                        <td>
+                            <input asp-for="Date" type="radio" class="form-control btn btn-primary" value="@item.Key @item.Value[appTime]">
+                            <label asp-for="Date" class="control-label">@item.Value[appTime]</label><br>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <label>--</label><br>
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
