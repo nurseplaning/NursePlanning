@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-	public interface IAppointmentRepository
-	{
-		public Task<IEnumerable<Appointment>> ListAppointments();
+    public interface IAppointmentRepository
+    {
+        public Task<IEnumerable<Appointment>> ListAppointments();
+        public Task<IEnumerable<Appointment>> ListAppointmentsById(string id);
+        public Task<Appointment> Details(Guid? id);
 
-		public Task<Appointment> Details(Guid id);
+        public Task<Appointment> Create(Appointment appointment);
 
-		public Task Create(Appointment appointment);
-
-		public Task Edit(Appointment appointment);
-
-		public Task Delete(Appointment appointment);
-		public Task<IEnumerable<Appointment>> GetAppointmentsByNurseId(string id);
+        public Task Edit(Appointment appointment);
+        public Task Delete(Guid? id);
+        public bool Exists(Guid? id);
     }
 }
