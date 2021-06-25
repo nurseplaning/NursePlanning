@@ -67,7 +67,10 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 				}
 			}
 
-			var result = await _userManager.DeleteAsync(user);
+			user.IsActive = false;
+
+			var result = await _userManager.UpdateAsync(user);
+
 			var userId = await _userManager.GetUserIdAsync(user);
 			if (!result.Succeeded)
 			{

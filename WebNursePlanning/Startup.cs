@@ -36,9 +36,10 @@ namespace WebNursePlanning
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<Person, IdentityRole>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                  .AddDefaultUI().AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider); 
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -50,7 +51,7 @@ namespace WebNursePlanning
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context.Initialize();
+                context.Initialize(true);
             }
 
             if (env.IsDevelopment())

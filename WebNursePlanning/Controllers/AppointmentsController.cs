@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DomainModel;
 using Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using WebNursePlanning.Models;
+using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace WebNursePlanning.Controllers
 {
