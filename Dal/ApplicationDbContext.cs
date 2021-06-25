@@ -6,14 +6,15 @@ using DomainModel.ModelBuilders;
 
 namespace Dal
 {
-    public class ApplicationDbContext : IdentityDbContext
-    {
-        public DbSet<Person> People { get; set; }
-        public DbSet<Nurse> Nurses { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Status> Statuses { get; set; }
+	public class ApplicationDbContext : IdentityDbContext
+	{
+		public DbSet<Person> People { get; set; }
+		public DbSet<Nurse> Nurses { get; set; }
+		public DbSet<Patient> Patients { get; set; }
+		public DbSet<Message> Messages { get; set; }
+		public DbSet<Appointment> Appointments { get; set; }
+		public DbSet<Status> Statuses { get; set; }
+		public DbSet<Absence> Absences { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
