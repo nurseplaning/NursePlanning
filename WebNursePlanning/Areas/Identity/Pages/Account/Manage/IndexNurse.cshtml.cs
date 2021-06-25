@@ -34,11 +34,13 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Nom")]
+            [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Prenom")]
+            [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string LastName { get; set; }
 
             [Required]
@@ -54,18 +56,20 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Required]
             [Display(Name = "N° Téléphone")]
+            [RegularExpression(@"\d{10}|\+33\d{9}|\+33\s\d{1}\s\d{2}\s\d{2}\s\d{2}\s\d{2}|\d{2}\s\d{2}\s\d{2}\s\d{2}\s\d{2}", ErrorMessage = "Characters are not allowed.")]
             public string PhoneNumber { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "N° de Siret")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
             public string SiretNumber { get; set; }
         }
 
         private async Task LoadAsync(Nurse user)
         {
             var nurse = await _userManager.GetUserAsync(HttpContext.User) as Nurse;
-        //    var nurse = (Nurse)person;
+            //    var nurse = (Nurse)person;
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
@@ -85,7 +89,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-          //  var patient = (Nurse)user;
+            //  var patient = (Nurse)user;
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

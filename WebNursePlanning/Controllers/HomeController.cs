@@ -73,6 +73,7 @@ namespace WebNursePlanning.Controllers
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = false,
 					AccessFailedCount = 0,
+					IsActive = true
 				};
 				IdentityResult chkSuperNurse = await userManager.CreateAsync(superNurse, password);
 
@@ -93,7 +94,8 @@ namespace WebNursePlanning.Controllers
 					TwoFactorEnabled = false,
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = false,
-					AccessFailedCount = 0
+					AccessFailedCount = 0,
+					IsActive = true
 				};
 
 				IdentityResult chkNurse = await userManager.CreateAsync(nurse, password);
@@ -114,7 +116,8 @@ namespace WebNursePlanning.Controllers
 					TwoFactorEnabled = false,
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = true,
-					AccessFailedCount = 0
+					AccessFailedCount = 0,
+					IsActive = true
 				};
 
 				IdentityResult chkPatient = await userManager.CreateAsync(patient, password);

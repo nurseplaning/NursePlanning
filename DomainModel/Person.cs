@@ -9,5 +9,6 @@ namespace DomainModel
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
         public string Adress { get; set; }
+        public bool IsActive { get; set; }
     }
 }

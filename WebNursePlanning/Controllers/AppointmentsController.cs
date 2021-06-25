@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using WebNursePlanning.Models;
 using System.Threading.Tasks;
 using System;
 using System.Linq;

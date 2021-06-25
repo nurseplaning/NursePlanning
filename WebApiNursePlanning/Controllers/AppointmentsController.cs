@@ -46,7 +46,7 @@ namespace WebApiNursePlanning.Controllers
       //  [Route("api/[controller]/nurse/{NurseId?}")]
         public async Task<ActionResult<Appointment>> GetAppointmentsByNurseId(string NurseId)
         {
-            return Ok(await repository.GetAppointmentsByNurseId(NurseId));
+            return Ok(await repository.ListAppointmentsById(NurseId));
         }
 
         // PUT: api/Appointments/5
@@ -98,7 +98,7 @@ namespace WebApiNursePlanning.Controllers
                 return NotFound();
             }
 
-            await repository.Delete(appointment);
+            await repository.Delete(id);
 
             return NoContent();
         }

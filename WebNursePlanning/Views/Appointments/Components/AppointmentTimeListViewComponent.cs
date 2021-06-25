@@ -70,7 +70,7 @@ namespace WebNursePlanning.Shared.Components
 
         public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay, TimeSpan appointmentTime)
         {
-            bool isAvailable = false;
+            bool isAvailable = true;
             foreach (var item in appointments)
             {
                 if (item.Date.Day == appointmentDay.Day && item.Date.Hour == appointmentTime.Hours && item.Date.Minute == appointmentTime.Minutes)
