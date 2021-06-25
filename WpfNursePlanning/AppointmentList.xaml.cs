@@ -61,12 +61,7 @@ namespace WpfNursePlanning
             dpBithDay.SelectedDate = appointment.Patient.BirthDay;
             txtAdress.Text = appointment.Patient.Adress;
             txtSsNumber.Text = appointment.Patient.SocialSecurityNumber;
-
-
-
-
-
         }
-
+       
     }
 }

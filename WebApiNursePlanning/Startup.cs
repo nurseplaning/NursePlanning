@@ -27,9 +27,10 @@ namespace WebApiNursePlanning
         {
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<INurseRepository, NurseRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiNursePlanning", Version = "v1" });
             });

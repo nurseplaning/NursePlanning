@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WpfNursePlanning.Model
 {
-	public class Patient 
+	public class Patient : Person
 	{
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
-		public DateTime BirthDay { get; set; }
-		public string Adress { get; set; }
+		//public string FirstName { get; set; }
+		//public string LastName { get; set; }
+		//public DateTime BirthDay { get; set; }
+		//public string Adress { get; set; }
 		public string SocialSecurityNumber { get; set; }
 		public virtual ICollection<Appointment> Appointments { get; set; }
 	}

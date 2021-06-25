@@ -67,8 +67,13 @@ namespace WpfNursePlanning
         {
             Nurse nurse = dgr.SelectedItem as Nurse; 
             AppointmentList rdvList = new AppointmentList(nurse.Id);
-            //rdvList.lblPatient.Content = nurse.Id;
             rdvList.Show();
+        }
+
+        private void btnListPatient(object sender, RoutedEventArgs e)
+        {
+            PatientList patientList = new PatientList();
+            patientList.Show();
         }
     }
 }

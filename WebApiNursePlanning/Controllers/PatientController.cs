@@ -7,57 +7,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebApiNursePlanning.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NursesController : ControllerBase
+    public class PatientController : Controller
     {
+        private readonly IPatientRepository repository;
 
-        private readonly INurseRepository repository;
-
-        public NursesController(INurseRepository nurseRepository)
+        public PatientController(IPatientRepository patientRepository)
         {
-            repository = nurseRepository;
+            repository = patientRepository;
         }
-        // GET: api/Appointments
+        // GET: api/Patients
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Nurse>>> GetNurses()
+        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
-            return Ok(await repository.ListNurses());
+            return Ok(await repository.ListPatients());
         }
 
         // GET: api/Appointments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Nurse>> GetAppointment(string id)
+        public async Task<ActionResult<Patient>> GetPatient(string id)
         {
-            var nurse = await repository.Details(id);
+            var patient = await repository.Details(id);
 
-            if (nurse == null)
+            if (patient == null)
             {
                 return NotFound();
             }
 
-            return Ok(nurse);
+            return Ok(patient);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNurse(string id, Nurse nurse)
+        public async Task<IActionResult> PutPatient(string id, Patient patient)
         {
-            if (id != nurse.Id)
+            if (id != patient.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await repository.Edit(nurse);
+                await repository.Edit(patient);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NurseExists(id))
+                if (!PatientExists(id))
                 {
                     return NotFound();
                 }
@@ -70,7 +67,7 @@ namespace WebApiNursePlanning.Controllers
             return NoContent();
         }
 
-        private bool NurseExists(string id)
+        private bool PatientExists(string id)
         {
             if (repository.Details(id) is null)
                 return false;
