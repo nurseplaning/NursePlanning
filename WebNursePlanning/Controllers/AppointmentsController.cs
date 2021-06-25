@@ -8,7 +8,6 @@ using WebNursePlanning.Models;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
