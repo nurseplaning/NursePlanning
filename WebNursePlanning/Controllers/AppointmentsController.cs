@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
@@ -81,18 +82,24 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public async Task<IActionResult> Create(AppointmentViewModel appointment)
         {
             if (ModelState.IsValid)
             {
+                var a = new Appointment()
+                {
+                    Date = appointment.Date,
+                    AtHome = appointment.AtHome,
+                    NurseId = appointment.NurseId,
+                    PatientId = appointment.PatientId,
+                    Description = appointment.Description,
+                    StatusId = appointment.StatusId
+                };
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(appointment);
+                await _appointmentRepository.Create(a);
 
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["NurseId"] = new SelectList(_context.Nurses, "Id", "Id", appointment.NurseId);
-            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
-            //ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
             return RedirectToAction("Index");
         }
 
