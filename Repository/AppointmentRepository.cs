@@ -49,6 +49,17 @@ namespace Repository
             _context.Update(appointment);
             await _context.SaveChangesAsync();
         }
+        public async Task EditNurse(string NurseId)
+        {
+            _context.Update(NurseId);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Transfer(Appointment appointment)
+        {
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task Delete(Guid? id)
         {
@@ -67,5 +78,7 @@ namespace Repository
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
+        
+        
     }
 }

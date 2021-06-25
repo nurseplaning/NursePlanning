@@ -1,0 +1,42 @@
+﻿@model DomainModel.Appointment
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<DomainModel.Person> SignInManager
+@inject UserManager<DomainModel.Person> UserManager
+
+@{
+    ViewData["Title"] = "Transfer";
+
+}
+
+<h1>Transfert de Rdv</h1>
+
+<h4>Rendez-Vous</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Transfer">  
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <div class="form-group">
+                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="NurseId" class="control-label"></label>
+                    <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId"></select>
+                </div>
+            }
+           
+            <div class="form-group">
+                <input type="submit" value="Transfer" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

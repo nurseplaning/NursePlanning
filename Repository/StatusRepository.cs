@@ -17,14 +17,20 @@ namespace Repository
         {
             _context = context;
         }
-        public async Task<Status> GetStatusId(string statusName)
+        public async Task<Guid> GetStatusId(string statusName)
         {
-            return await _context.Statuses.FindAsync(statusName);
+            var liste = await ListStatuses();
+            return liste.FirstOrDefault(s => s.Name == statusName).Id;
         }
 
         public async Task<IEnumerable<Status>> ListStatuses()
         {
             return await _context.Statuses.ToListAsync();
+        }
+        public async Task Edit(Status status)
+        {
+            _context.Update(status);
+            await _context.SaveChangesAsync();
         }
     }
 }

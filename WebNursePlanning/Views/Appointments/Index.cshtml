@@ -58,16 +58,24 @@
                     @Html.DisplayFor(modelItem => item.Patient.LastName)
                     @Html.DisplayFor(modelItem => item.Patient.FirstName)
                 </td>
+              
             }
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>  |
+                @if (User.IsInRole("ROLE_ADMIN"))
+                {
+                <a asp-action="Transfer" asp-route-id="@item.Id">Transfer</a>
+                <a asp-action="ValidateStatus" asp-route-id="@item.Id">Valider</a>
+                <a asp-action="RejectStatus" asp-route-id="@item.Id">Rejeter</a>
+                }
+
+            </td>           
+        </tr>
 }
     </tbody>
 </table>

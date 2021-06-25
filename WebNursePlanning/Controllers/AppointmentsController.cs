@@ -39,6 +39,7 @@ namespace WebNursePlanning.Controllers
         }
 
 
+
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -55,7 +56,6 @@ namespace WebNursePlanning.Controllers
 
             return View(appointment);
         }
-
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
@@ -71,7 +71,7 @@ namespace WebNursePlanning.Controllers
 
             //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
             var liste = await _statusRepository.ListStatuses();
-            ViewData["StatusId"] =  liste.FirstOrDefault(s => s.Name == "En attente").Id;
+            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
 
             return View();
         }
@@ -94,6 +94,64 @@ namespace WebNursePlanning.Controllers
             //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", appointment.PatientId);
             //ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", appointment.StatusId);
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Transfer(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
+            //ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+            return View(appointment);
+        }
+
+        // POST: Appointments/Transfer
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Transfer(Guid id, [Bind("NurseId")] Appointment appointment)
+        {
+            if (id != appointment.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _appointmentRepository.EditNurse(appointment.NurseId);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppointmentExists(appointment.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
+            //ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+            return View(appointment);
         }
 
         // GET: Appointments/Edit/5
@@ -199,6 +257,64 @@ namespace WebNursePlanning.Controllers
         private bool AppointmentExists(Guid id)
         {
             return _appointmentRepository.Exists(id);
+        }
+        public async Task<IActionResult> ValidateStatus(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            return View(appointment);
+        }
+        // POST: Appointments/Validation
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ValidateStatus(Guid id)
+        {
+                var app = await _appointmentRepository.Details(id);
+                var statusId = await _statusRepository.GetStatusId("Validé");
+                app.StatusId = statusId;
+                await _appointmentRepository.Edit(app);
+                return RedirectToAction(nameof(Index));
+             
+        }
+        public async Task<IActionResult> RejectStatus(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            return View(appointment);
+        }
+        // POST: Appointments/Validation
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectStatus(Guid id)
+        {
+            var app = await _appointmentRepository.Details(id);
+            var statusId = await _statusRepository.GetStatusId("Rejeté");
+            app.StatusId = statusId;
+            await _appointmentRepository.Edit(app);
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }
