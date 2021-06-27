@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
+@inject WebNursePlanning.Services.AppointmentsService MyAppointment
 
 @{
     ViewData["Title"] = "Create";
@@ -17,14 +18,13 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                
+
                 @await Component.InvokeAsync("AppointmentTimeList", UserManager.GetUserId(User))
-                
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -38,14 +38,20 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="PatientId" class="control-label"></label>
-                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                    <select asp-for="PatientId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
+                        <option value="">Please select one</option>
+                    </select>
                 </div>
             }
             else if (User.IsInRole("ROLE_USER"))
             {//Si l'utilisateur est un patient (role user)
                 <div class="form-group">
                     <label asp-for="NurseId" class="control-label"></label>
-                    <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId"></select>
+                    <select asp-for="NurseId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
+                        <option value="">Please select one</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
@@ -65,7 +71,6 @@
 <div>
     <a asp-action="Index">Retour à la liste</a>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
