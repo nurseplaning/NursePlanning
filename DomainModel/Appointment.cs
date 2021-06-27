@@ -7,7 +7,7 @@ namespace DomainModel
     public class Appointment
     {
         public Guid Id { get; set; }
-        [DataType(DataType.Date)]
+      
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public bool AtHome { get; set; }

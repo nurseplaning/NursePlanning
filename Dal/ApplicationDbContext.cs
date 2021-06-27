@@ -1,8 +1,7 @@
 ﻿using DomainModel;
-using Microsoft.AspNetCore.Identity;
+using DomainModel.ModelBuilders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using DomainModel.ModelBuilders;
 
 namespace Dal
 {
@@ -16,32 +15,31 @@ namespace Dal
 		public DbSet<Status> Statuses { get; set; }
 		public DbSet<Absence> Absences { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+			: base(options)
+		{
+		}
 
-        public ApplicationDbContext()
-        {
-        }
+		public ApplicationDbContext()
+		{
+		}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WebNursePlanningBD;Trusted_Connection=True;MultipleActiveResultSets=true");
-            base.OnConfiguring(optionsBuilder);
-        }
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			base.OnConfiguring(optionsBuilder);
+		}
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.IdentityModel();
-            builder.MessageModel();
-            builder.PersonModel();
-            builder.NurseModel();
-            builder.PatientModel();
-            builder.AppointementModel();
-            builder.StatusModel();
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			builder.IdentityModel();
+			builder.MessageModel();
+			builder.PersonModel();
+			builder.NurseModel();
+			builder.PatientModel();
+			builder.AppointementModel();
+			builder.StatusModel();
 
-            base.OnModelCreating(builder);
-        }
-    }
+			base.OnModelCreating(builder);
+		}
+	}
 }
