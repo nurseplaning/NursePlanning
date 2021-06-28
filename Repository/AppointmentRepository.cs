@@ -49,11 +49,6 @@ namespace Repository
             _context.Update(appointment);
             await _context.SaveChangesAsync();
         }
-        public async Task EditNurse(string NurseId)
-        {
-            _context.Update(NurseId);
-            await _context.SaveChangesAsync();
-        }
 
         public async Task Transfer(Appointment appointment)
         {

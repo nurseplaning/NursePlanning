@@ -107,7 +107,8 @@ namespace WebNursePlanning.Controllers
             {
                 return NotFound();
             }
-
+            var liste = await _statusRepository.ListStatuses();
+            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
             ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
@@ -120,7 +121,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Transfer(Guid id, [Bind("NurseId")] Appointment appointment)
+        public async Task<IActionResult> Transfer(Guid id, Appointment appointment)
         {
             if (id != appointment.Id)
             {
@@ -131,7 +132,7 @@ namespace WebNursePlanning.Controllers
             {
                 try
                 {
-                    await _appointmentRepository.EditNurse(appointment.NurseId);
+                    await _appointmentRepository.Edit(appointment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -147,10 +148,6 @@ namespace WebNursePlanning.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var listNurses = await _nurseRepository.ListNurses();
-            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
-            //ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
             return View(appointment);
         }
 
