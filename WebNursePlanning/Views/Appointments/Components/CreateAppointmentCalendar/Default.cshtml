@@ -1,0 +1,43 @@
+﻿@model DomainModel.Appointment
+
+<table class="table">
+    <thead classe="thead-light">
+        @{int maxLength = 0;}
+        <tr>
+            @foreach (var item in ViewBag.AppointmentsAvailables)
+            {
+                <th>
+                    <label>@item.Key</label><br>
+                </th>
+                @if (item.Value.Count > maxLength)
+                {
+                    maxLength = item.Value.Count;
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int appTime = 0; appTime < maxLength; appTime++)
+        {
+            <tr>
+                @foreach (var item in ViewBag.AppointmentsAvailables)
+                {
+                    @if (item.Value[appTime] != new TimeSpan())
+                    {
+                        <td class="text-center">
+                            <input asp-for="Date" type="radio" class="form-control" value="@item.Key @item.Value[appTime]">
+                            <label asp-for="Date" class="control-label">@item.Value[appTime]</label>
+                            <br />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <label>--</label><br />
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
