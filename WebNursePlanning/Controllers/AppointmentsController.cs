@@ -110,7 +110,9 @@ namespace WebNursePlanning.Controllers
             }
 
             var appointment = await _appointmentRepository.Details(id);
-            var c = await _appointmentRepository.CheckAvailabilityAppointment(appointment);
+            var appointmentDay
+            if (appointment.Date.Day == )
+            var c = await _appointmentRepository.CheckAvailabilityAppointment(appointmentDay);
             if (appointment == null)
             {
                 return NotFound();

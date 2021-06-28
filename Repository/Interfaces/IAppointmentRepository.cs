@@ -17,6 +17,7 @@ namespace Repository.Interfaces
         public Task Transfer(Appointment appointment);
         public Task Delete(Guid? id);
         public bool Exists(Guid? id);
-        public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay, TimeSpan appointmentTime);
+        //public Task<Dictionary<string, List<TimeSpan>>> GetListAvailableAppointments(string personId, List<Appointment> appToEdit = null);
+        public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay);
     }
 }
