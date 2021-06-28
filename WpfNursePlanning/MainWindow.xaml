@@ -5,29 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1024" ResizeMode="NoResize">
+        Title="MainWindow" Height="650" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
     <Grid>
         <Label Content="Nom" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtLastName"  HorizontalAlignment="Left" Margin="110,182,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <TextBox Name="txtLastName" IsEnabled="False"  HorizontalAlignment="Left" Margin="110,182,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
         <Label Content="Prènom" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtFirstName"  HorizontalAlignment="Left" Margin="110,221,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <TextBox Name="txtFirstName" IsEnabled="False" HorizontalAlignment="Left" Margin="110,221,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
         <Label  Content="Date de Naissance :" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Width="110"/>
-        <DatePicker  Name="dpBithDay" HorizontalAlignment="Left" Margin="140,256,0,0" VerticalAlignment="Top" Width="118"/>
+        <DatePicker  Name="dpBithDay" IsEnabled="False" HorizontalAlignment="Left" Margin="140,256,0,0" VerticalAlignment="Top" Width="118"/>
 
         <Label Content="N° Siret :" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtSiretNumber" HorizontalAlignment="Left" Margin="80,304,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
+        <TextBox Name="txtSiretNumber" IsEnabled="False" HorizontalAlignment="Left" Margin="80,304,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
 
         <Label Content="Adresse :" HorizontalAlignment="Left" Margin="10,341,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="80,354,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
+        <TextBox Name="txtAdress" IsEnabled="False" HorizontalAlignment="Left" Margin="80,354,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
 
-        <Label Content="Rôle :" HorizontalAlignment="Left" Margin="10,415,0,0" VerticalAlignment="Top" Width="55"/>
-        <ComboBox Name="cbxRole" HorizontalAlignment="Left" Height="26" Margin="80,412,0,0" VerticalAlignment="Top" Width="178"/>
+        <!--<Label Content="Rôle :" HorizontalAlignment="Left" Margin="10,415,0,0" VerticalAlignment="Top" Width="55"/>
+        <ComboBox Name="cbxRole"  HorizontalAlignment="Left" Height="26" Margin="80,412,0,0" VerticalAlignment="Top" Width="178" SelectionChanged="cbxRole_SelectionChanged"/>-->
 
 
-        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="429" Margin="274,57,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
+        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="461" Margin="274,57,0,0" VerticalAlignment="Top" 
+                  Width="728"
+              IsReadOnly="true"
+              ItemsSource="{Binding}"
+              MouseDoubleClick="Row_MouseDoubleClick" SelectionMode="Extended" SelectionUnit="FullRow" >
+
+
+
+
+
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Path=LastName, IsAsync=True}" Width="*"/>
@@ -44,11 +54,15 @@
 
         </DataGrid>
 
-        <Button x:Name="Modifier" Content="Modifier" Click="btnEditNurse" HorizontalAlignment="Left" Height="37" Margin="94,514,0,0" VerticalAlignment="Top" Width="124"/>
 
-        <Button x:Name="btRdv"  Content="Rendez-vous" Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="497,514,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button Content="Liste Patient" Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="877,514,0,0" VerticalAlignment="Top" Width="125" />
-        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="109" Margin="80,10,0,0" VerticalAlignment="Top" Width="115" />
+        <Button x:Name="btRdv"  Content="Rendez-vous" Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="292,556,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button Content="Liste Patient" Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="469,556,0,0" VerticalAlignment="Top" Width="125" />
+        <Button  Click="btnQuitter" HorizontalAlignment="Left" Height="37" Margin="923,556,0,0" VerticalAlignment="Top" Width="79" >
+            <Button.Background>
+                <ImageBrush ImageSource="/quitter.png" Stretch="Uniform" TileMode="None"/>
+            </Button.Background>
+        </Button>
+        <Image Source="/infermiere.png" HorizontalAlignment="Left" Height="152" Margin="-29,10,0,0" VerticalAlignment="Top" Width="213" />
         <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="525,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
         <Label Name="lblMessage" HorizontalAlignment="Left" Margin="80,460,0,0" VerticalAlignment="Top" Width="178"/>
 

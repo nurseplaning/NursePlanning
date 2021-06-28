@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfNursePlanning.Model;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System;
 
 namespace WpfNursePlanning
 {
@@ -22,14 +25,15 @@ namespace WpfNursePlanning
 
             return data;
         }
-
         public MainWindow()
         {
             InitializeComponent();
+            dgr.SelectedIndex = 0;
             LoadData();
-            cbxRole.Items.Add("Utilisateur");
-            cbxRole.Items.Add("Admin");
-            cbxRole.Items.Add("Super Admin");
+            //cbxRole.Items.Add("Utilisateur");
+            //cbxRole.Items.Add("Admin");
+            //cbxRole.Items.Add("Super Admin");
+
         }
 
         ObservableCollection<Nurse> list = new ObservableCollection<Nurse>();
@@ -40,9 +44,9 @@ namespace WpfNursePlanning
             foreach (var item in data)
             {
                 list.Add(
-                    new Nurse   
+                    new Nurse
                     {
-                       Id=item.Id,
+                        Id = item.Id,
                         LastName = item.LastName,
                         FirstName = item.FirstName,
                         BirthDay = item.BirthDay,
@@ -52,28 +56,46 @@ namespace WpfNursePlanning
             }
             dgr.ItemsSource = list;
         }
+        
 
-        void btnEditNurse(object sender, RoutedEventArgs e) 
+        private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+           
+            var row = ItemsControl.ContainerFromElement((DataGrid)sender,
+                                                e.OriginalSource as DependencyObject) as DataGridRow;
+
+            if (row == null) return;
+
             Nurse nurse = dgr.SelectedItem as Nurse;
             txtLastName.Text = nurse.LastName;
             txtFirstName.Text = nurse.FirstName;
             dpBithDay.SelectedDate = nurse.BirthDay;
-            txtAdress.Text = nurse.Adress;  
+            txtAdress.Text = nurse.Adress;
             txtSiretNumber.Text = nurse.SiretNumber;
         }
 
         private void btnAppointement(object sender, RoutedEventArgs e)
         {
-            Nurse nurse = dgr.SelectedItem as Nurse; 
+
+            Nurse nurse = dgr.SelectedItem as Nurse;
             AppointmentList rdvList = new AppointmentList(nurse.Id);
             rdvList.Show();
+            this.Close();
+
+
         }
 
         private void btnListPatient(object sender, RoutedEventArgs e)
         {
             PatientList patientList = new PatientList();
             patientList.Show();
+            this.Close();
+
+        }
+
+        private void btnQuitter(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

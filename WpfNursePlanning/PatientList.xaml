@@ -5,17 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
-        Title="PatientList" Height="600" Width="1024" ResizeMode="NoResize">
+        Title="PatientList" Height="650" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None">
     <Grid>
-        <Label Content="Liste des Patients" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="274,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
-        <Image Source="/Icones/patient.png" HorizontalAlignment="Left" Height="139" Margin="46,10,0,0" VerticalAlignment="Top" Width="148" />
-        <DataGrid Name="dgrPatient" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="429" Margin="274,57,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
+        <Label Content="Liste des Patients" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="274,32,0,0" VerticalAlignment="Top" Width="281" RenderTransformOrigin="0.499,0.282"/>
+        <Image Source="/patient.png" HorizontalAlignment="Left" Height="139" Margin="10,10,0,0" VerticalAlignment="Top" Width="148" />
+        <DataGrid Name="dgrPatient" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="466" Margin="274,80,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Path=LastName, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Prénom" Binding="{Binding Path=FirstName, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Date de Naissance" Binding="{Binding Path=BirthDay, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="N° S.S" Binding="{Binding Path=SocialSecurityNumber, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Adresse" Binding="{Binding Path=Adress, IsAsync=True}" Width="*"/>
+                <DataGridTextColumn Header="Adresse" Visibility="Hidden" Binding="{Binding Path=UseEmailrName, IsAsync=True}" Width="*"/>
 
                 <DataGridTemplateColumn Header="Active">
                     <DataGridTemplateColumn.CellTemplate>
@@ -31,22 +32,46 @@
         </DataGrid>
 
         <Label Content="Nom" HorizontalAlignment="Left" Margin="14,189,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtLastName"  HorizontalAlignment="Left" Margin="114,192,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <TextBox Name="txtLastName" IsEnabled="False" HorizontalAlignment="Left" Margin="114,192,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
         <Label Content="Prènom" HorizontalAlignment="Left" Margin="14,228,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtFirstName"  HorizontalAlignment="Left" Margin="114,231,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <TextBox Name="txtFirstName"  IsEnabled="False" HorizontalAlignment="Left" Margin="114,231,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
         <Label  Content="Date de Naissance :" HorizontalAlignment="Left" Margin="14,266,0,0" VerticalAlignment="Top" Width="110"/>
-        <DatePicker  Name="dpBithDay" HorizontalAlignment="Left" Margin="144,266,0,0" VerticalAlignment="Top" Width="118"/>
+        <DatePicker  Name="dpBithDay" IsEnabled="False" HorizontalAlignment="Left" Margin="144,266,0,0" VerticalAlignment="Top" Width="118"/>
 
         <Label Content="N° S.S :" HorizontalAlignment="Left" Margin="14,309,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtSocialSecurityNumber" HorizontalAlignment="Left" Margin="84,314,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
+        <TextBox Name="txtSocialSecurityNumber" IsEnabled="False" HorizontalAlignment="Left" Margin="84,314,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
 
         <Label Content="Adresse :" HorizontalAlignment="Left" Margin="14,351,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="84,364,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
-        <Button Name="btnValidPatient" Content="Valider" HorizontalAlignment="Left" Margin="99,452,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="34" Width="104"/>
+        <TextBox Name="txtAdress" IsEnabled="False" HorizontalAlignment="Left" Margin="84,364,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
+        <Button Name="btnValidPatient"  Content="Désactiver" HorizontalAlignment="Left" Margin="99,452,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="34" Width="104"/>
 
 
-        <!--<Button Content="Valider" HorizontalAlignment="Left" Margin="34,453,0,0" VerticalAlignment="Top" Height="33" Width="202" Click="Button_Click"/>-->
+        <Button  HorizontalAlignment="Left" Margin="800,569,0,0" VerticalAlignment="Top" Height="56" Width="202" Click="btnRetour_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/back.png" Stretch="Uniform" TileMode="Tile"/>
+            </Button.Background>
+        </Button>
+
+
+        <TextBox Name="txtmailurl" Visibility="Hidden"  Text ="{Binding Path=UseEmailrName, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtUserName" Visibility="Hidden" Text="{Binding Path=UserName, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPhoneNumber" Visibility="Hidden" Text="{Binding Path=PhoneNumber, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPasswordHash" Visibility="Hidden" Text="{Binding Path=PasswordHash, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPhoneNumberConfirmed" Visibility="Hidden" Text="{Binding Path=PhoneNumberConfirmed, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtEmailConfirmed" Visibility="Hidden" Text="{Binding Path=EmailConfirmed, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtSecurityStamp" Visibility="Hidden" Text="{Binding Path=SecurityStamp, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtConcurrencyStamp" Visibility="Hidden" Text="{Binding Path=ConcurrencyStamp, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtTwoFactorEnabled" Visibility="Hidden" Text="{Binding Path=TwoFactorEnabled, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtNormalizedUserName" Visibility="Hidden" Text="{Binding Path=NormalizedUserName, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtEmail" Visibility="Hidden" Text="{Binding Path=Email, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtNormalizedEmail" Visibility="Hidden" Text="{Binding Path=NormalizedEmail, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtLockoutEnabled" Visibility="Hidden" Text="{Binding Path=LockoutEnabled, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtAccessFailedCount" Visibility="Hidden" Text="{Binding Path=AccessFailedCount, IsAsync=True}" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+
+
+
     </Grid>
 </Window>

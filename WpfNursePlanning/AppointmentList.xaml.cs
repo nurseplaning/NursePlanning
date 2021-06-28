@@ -62,6 +62,12 @@ namespace WpfNursePlanning
             txtAdress.Text = appointment.Patient.Adress;
             txtSsNumber.Text = appointment.Patient.SocialSecurityNumber;
         }
-       
+
+        private void btnRetourRdv(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainList = new MainWindow();
+            mainList.Show();
+            this.Close();
+        }
     }
 }

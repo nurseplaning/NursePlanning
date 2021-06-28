@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
-        Title="AppointmentList" Height="600" Width="1024" ResizeMode="NoResize">
+        Title="AppointmentList" Height="650" Width="1024" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <DataGrid Name="dgrRdv" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="336" Margin="56,57,0,0" VerticalAlignment="Top" Width="946" CanUserDeleteRows="False" CanUserAddRows="False">
+        <DataGrid Name="dgrRdv" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="336" Margin="56,91,0,0" VerticalAlignment="Top" Width="946" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Domicile" Binding="{Binding Path=AtHome, IsAsync=True}" Width="*"/>
@@ -25,23 +25,33 @@
 
         </DataGrid>
 
+        <Button x:Name="btnRetour"  Click="btnRetourRdv" HorizontalAlignment="Left" Height="43" Margin="865,577,0,0" VerticalAlignment="Top" Width="137">
+            <Button.Background>
+                <ImageBrush ImageSource="/back.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Image Source="/rdv.jpg" HorizontalAlignment="Left" Height="86" Margin="56,0,0,0" VerticalAlignment="Top" Width="105" >
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="/rdv.jpg"/>
+            </Image.OpacityMask>
+        </Image>
 
-        <Label Content="Nom" HorizontalAlignment="Left" Margin="58,463,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtLastName"  HorizontalAlignment="Left" Margin="158,466,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <Label Content="Nom" HorizontalAlignment="Left" Margin="58,503,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtLastName" IsEnabled="False"  HorizontalAlignment="Left" Margin="158,506,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
-        <Label Content="Prènom" HorizontalAlignment="Left" Margin="58,505,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
-        <TextBox Name="txtFirstName"  HorizontalAlignment="Left" Margin="158,508,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
+        <Label Content="Prènom" HorizontalAlignment="Left" Margin="58,545,0,0" VerticalAlignment="Top" Width="65" Height="26" RenderTransformOrigin="-0.057,0.554"/>
+        <TextBox Name="txtFirstName"  IsEnabled="False" HorizontalAlignment="Left" Margin="158,548,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
-        <Label  Content="Date de Naissance :" HorizontalAlignment="Left" Margin="370,508,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.552,0.944"/>
-        <DatePicker  Name="dpBithDay" HorizontalAlignment="Left" Margin="500,508,0,0" VerticalAlignment="Top" Width="118" Height="26"/>
+        <Label  Content="Date de Naissance :" HorizontalAlignment="Left" Margin="324,549,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.552,0.944"/>
+        <DatePicker  Name="dpBithDay" IsEnabled="False" HorizontalAlignment="Left" Margin="454,549,0,0" VerticalAlignment="Top" Width="118" Height="26"/>
 
-        <Label Content="N°S.Social :" HorizontalAlignment="Left" Margin="370,463,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtSsNumber" HorizontalAlignment="Left" Margin="440,468,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
+        <Label Content="N°S.Social :" HorizontalAlignment="Left" Margin="324,504,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtSsNumber" IsEnabled="False" HorizontalAlignment="Left" Margin="394,509,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="21"/>
 
-        <Label Content="Adresse :" HorizontalAlignment="Left" Margin="728,462,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="798,475,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="43"/>
-        <Label Content="Liste des rendez-vous infirmier(e)" FontSize="20" HorizontalAlignment="Left" Height="42" Margin="52,10,0,0" VerticalAlignment="Top" Width="360"/>
-        <Label Content="Informations Patient :" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="56,412,0,0" VerticalAlignment="Top" Width="226"/>
+        <Label Content="Adresse :" HorizontalAlignment="Left" Margin="682,503,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtAdress" IsEnabled="False" HorizontalAlignment="Left" Margin="752,516,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="43"/>
+        <Label Content="Liste des rendez-vous infirmier(e)" FontSize="20" Foreground="Blue" HorizontalAlignment="Left" Height="42" Margin="349,22,0,0" VerticalAlignment="Top" Width="360"/>
+        <Label Content="Informations Patient :" FontSize="20" HorizontalAlignment="Left" Height="33" Margin="56,452,0,0" VerticalAlignment="Top" Width="226"/>
 
 
 
