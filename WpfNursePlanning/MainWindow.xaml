@@ -38,7 +38,7 @@
                 <!--<DataGridTextColumn Header="Rôle" Binding="{Binding Path=Role, IsAsync=True}" Width="*"/>-->
 
 
-               
+
 
             </DataGrid.Columns>
 
@@ -48,7 +48,7 @@
 
         <Button x:Name="btRdv"  Content="Rendez-vous" Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="497,514,0,0" VerticalAlignment="Top" Width="125"/>
         <Button Content="Liste Patient" Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="877,514,0,0" VerticalAlignment="Top" Width="125" />
-        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="81" Margin="80,10,0,0" VerticalAlignment="Top" Width="92" />
+        <Image Source="/Icones/Nurse2.png" HorizontalAlignment="Left" Height="109" Margin="80,10,0,0" VerticalAlignment="Top" Width="115" />
         <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="525,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
         <Label Name="lblMessage" HorizontalAlignment="Left" Margin="80,460,0,0" VerticalAlignment="Top" Width="178"/>
 

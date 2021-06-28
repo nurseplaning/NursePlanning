@@ -8,7 +8,7 @@
         Title="PatientList" Height="600" Width="1024" ResizeMode="NoResize">
     <Grid>
         <Label Content="Liste des Patients" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="274,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
-
+        <Image Source="/Icones/patient.png" HorizontalAlignment="Left" Height="139" Margin="46,10,0,0" VerticalAlignment="Top" Width="148" />
         <DataGrid Name="dgrPatient" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="429" Margin="274,57,0,0" VerticalAlignment="Top" Width="728" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Path=LastName, IsAsync=True}" Width="*"/>
@@ -16,7 +16,7 @@
                 <DataGridTextColumn Header="Date de Naissance" Binding="{Binding Path=BirthDay, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="N° S.S" Binding="{Binding Path=SocialSecurityNumber, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Adresse" Binding="{Binding Path=Adress, IsAsync=True}" Width="*"/>
-                
+
                 <DataGridTemplateColumn Header="Active">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -26,7 +26,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
 
-            
+
 
         </DataGrid>
 
@@ -44,7 +44,7 @@
 
         <Label Content="Adresse :" HorizontalAlignment="Left" Margin="14,351,0,0" VerticalAlignment="Top" Width="95"/>
         <TextBox Name="txtAdress" HorizontalAlignment="Left" Margin="84,364,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
-        <Button Name="btnValidPatient" Content="Valider" HorizontalAlignment="Left" Margin="92,484,0,0" VerticalAlignment="Top" Click="btnActivePatient"/>
+        <Button Name="btnValidPatient" Content="Valider" HorizontalAlignment="Left" Margin="99,452,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="34" Width="104"/>
 
 
         <!--<Button Content="Valider" HorizontalAlignment="Left" Margin="34,453,0,0" VerticalAlignment="Top" Height="33" Width="202" Click="Button_Click"/>-->

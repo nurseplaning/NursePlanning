@@ -26,7 +26,7 @@ namespace WpfNursePlanning
         public PatientList()
         {
             InitializeComponent();
-            btnValidPatient.IsEnabled = false;
+            btnValidPatient.IsEnabled = true;
             LoadPatientData();
         }
 
@@ -64,13 +64,6 @@ namespace WpfNursePlanning
                 txtSocialSecurityNumber.Text = patient.SocialSecurityNumber;
                 btnValidPatient.IsEnabled = true;
 
-                //patient.IsActive = true;
-                //patient.LastName = txtLastName.Text;
-                //patient.FirstName = txtFirstName.Text;
-                //patient.BirthDay = (DateTime)dpBithDay.SelectedDate;
-                //patient.Adress = txtAdress.Text;
-                //patient.SocialSecurityNumber = txtSocialSecurityNumber.Text;
-
                 MessageBox.Show("aaaaaa");
                 
             }
@@ -80,11 +73,29 @@ namespace WpfNursePlanning
         void btnActivePatient(object sender, RoutedEventArgs e)
         {
             Patient patient = new Patient();
+            //patient.IsActive = true;
+            //patient.LastName = txtLastName.Text;
+            //patient.FirstName = txtFirstName.Text;
+            //patient.BirthDay = (DateTime)dpBithDay.SelectedDate;
+            //patient.Adress = txtAdress.Text;
+            //patient.SocialSecurityNumber = txtSocialSecurityNumber.Text;
+
+            patient.IsActive = true;
+            patient.LastName = "AAAA";
+            patient.FirstName = "xxxxxx";
+           // patient.BirthDay = (DateTime)dpBithDay.SelectedDate;
+            patient.Adress = "zzzzzz";
+            patient.SocialSecurityNumber = "8884567898765";
             this.UpdatePatient(patient);
         }
-        private async void UpdatePatient(Patient patient)
+        private async Task<Patient> UpdatePatient(Patient patient)
         {
             await client.PutAsJsonAsync("Patient/" + patient.Id, patient);
+            HttpResponseMessage response = await client.PutAsJsonAsync(
+        $"Patient/{patient.Id}", patient);
+            response.EnsureSuccessStatusCode();
+            patient = await response.Content.ReadAsAsync<Patient>();
+            return patient;
 
         }
 
