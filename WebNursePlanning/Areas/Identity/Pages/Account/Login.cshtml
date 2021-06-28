@@ -2,7 +2,7 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Connectez-vous";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                <h4>Utilisez vos identifiants pour vous connecter : </h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -24,6 +24,9 @@
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                     <small id="Input.Password" class="form-text text-muted">mdp = Superpassword.0</small>
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Vous avez oublié votre mot de passe ?</a>
+                    </p>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
@@ -34,18 +37,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary">Connexion</button>
                 </div>
                 <div class="form-group">
+                    @*<p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Vous avez oublié votre mot de passe ?</a>
+                    </p>*@
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Vous n'avez pas de compte ? Inscrivez-vous !</a>
                     </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                    @*<p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Renvoi d'email de confirmation</a>
+                    </p>*@
                 </div>
             </form>
         </section>
