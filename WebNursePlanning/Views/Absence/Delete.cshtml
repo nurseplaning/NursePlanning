@@ -1,0 +1,45 @@
+﻿@model DomainModel.Absence
+
+@{
+    ViewData["Title"] = "DeleteConfirmed";
+}
+
+<h1>DeleteConfirmed</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Absence</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateStart)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateStart)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateEnd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateEnd)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Motif)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Motif)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nurse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nurse.Id)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

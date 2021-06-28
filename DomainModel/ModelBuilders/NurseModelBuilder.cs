@@ -7,11 +7,16 @@ namespace DomainModel.ModelBuilders
         public static void NurseModel(this ModelBuilder builder)
         {
             builder.Entity<Nurse>()
-                .ToTable("Nurses");
+                   .ToTable("Nurses");
 
             builder.Entity<Nurse>()
-                .Property(n => n.SiretNumber)
-                .IsRequired();
+                   .Property(n => n.SiretNumber)
+                   .HasMaxLength(14)
+                   .IsRequired();
+
+            builder.Entity<Nurse>()
+                   .HasIndex(n => n.SiretNumber)
+                   .IsUnique();
         }
     }
 }

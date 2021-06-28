@@ -11,18 +11,26 @@ namespace DomainModel.ModelBuilders
 
             builder.Entity<Person>()
                 .Property(p => p.FirstName)
+                .HasMaxLength(30)
                 .IsRequired();
 
             builder.Entity<Person>()
                 .Property(p => p.LastName)
+                .HasMaxLength(30)
                 .IsRequired();
 
             builder.Entity<Person>()
                 .Property(p => p.BirthDay)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("date");
 
             builder.Entity<Person>()
                 .Property(p => p.Adress)
+                .HasMaxLength(150)
+                .IsRequired();
+
+            builder.Entity<Person>()
+                .Property(p => p.IsActive)
                 .IsRequired();
         }
     }
