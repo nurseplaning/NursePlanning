@@ -8,7 +8,6 @@ using WebNursePlanning.Models;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
@@ -115,12 +114,18 @@ namespace WebNursePlanning.Controllers
             {
                 return NotFound();
             }
-            var liste = await _statusRepository.ListStatuses();
-            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
+
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
             ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
             //ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
+            //ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
+
             return View(appointment);
         }
 
@@ -129,7 +134,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Transfer(Guid id, Appointment appointment)
+        public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
             if (id != appointment.Id)
             {
@@ -155,6 +160,17 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
+            //ViewData["NurseId"] = new SelectList(await _nurseRepository.ListNurses(), "Id", "Id", appointment.NurseId);
+
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
+            //ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);
         }
@@ -183,7 +199,7 @@ namespace WebNursePlanning.Controllers
             ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             //ViewData["PatientId"] = new SelectList(await _patientRepository.ListPatients(), "Id", "Id", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
-           
+
             return View(appointment);
         }
 
@@ -320,6 +336,13 @@ namespace WebNursePlanning.Controllers
             await _appointmentRepository.Edit(app);
             return RedirectToAction(nameof(Index));
 
+        }
+        public async Task<IActionResult> CompareAppointment(Guid id)
+        {
+            var app = await _appointmentRepository.Details(id);
+            var l = await _nurseRepository.ListNursesWithAppointment();
+            if (app.Date != l.All);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

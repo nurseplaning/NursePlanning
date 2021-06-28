@@ -12,9 +12,7 @@ namespace Repository.Interfaces
         public Task<IEnumerable<Appointment>> ListAppointments();
         public Task<IEnumerable<Appointment>> ListAppointmentsById(string id);
         public Task<Appointment> Details(Guid? id);
-
         public Task<Appointment> Create(Appointment appointment);
-
         public Task Edit(Appointment appointment);
         public Task Transfer(Appointment appointment);
         public Task Delete(Guid? id);
