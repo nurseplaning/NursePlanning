@@ -4,25 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Liste de vos asbences</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Création d'une absence</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateStart)
+                @*Html.DisplayNameFor(model => model.DateStart)*@
+                @Html.DisplayName("Date début")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateEnd)
+                @*@Html.DisplayNameFor(model => model.DateEnd)*@
+                @Html.DisplayName("Date fin")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Motif)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NurseId)
+                @*@Html.DisplayNameFor(model => model.NurseId)*@
+                @Html.DisplayName("Infirmier(e)")
             </th>
             <th></th>
         </tr>
@@ -43,9 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Nurse.LastName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
             </td>
         </tr>
 }

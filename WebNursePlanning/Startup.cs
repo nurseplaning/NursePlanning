@@ -53,7 +53,7 @@ namespace WebNursePlanning
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context.Initialize(true);
+                context.Initialize();
             }
 
             if (env.IsDevelopment())

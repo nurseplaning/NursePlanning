@@ -1,25 +1,29 @@
 ﻿@model IEnumerable<DomainModel.Appointment>
 
 @{
-    ViewData["Title"] = "Liste des Rdvs";
+    ViewData["Title"] = "Liste des Rendez-vous";
 }
 
-<h1>Index</h1>
+<h1>Liste de vos Rendez-vous</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @*@Html.DisplayNameFor(model => model.Date)*@
+                Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AtHome)
+                @*@Html.DisplayNameFor(model => model.AtHome)*@
+                A Domicile
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nurse)
+                @*@Html.DisplayNameFor(model => model.Nurse)*@
+                Infirmier(e)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                @*@Html.DisplayNameFor(model => model.Patient)*@
+                Patient(e)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -46,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Modification</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
             </td>
         </tr>
 }

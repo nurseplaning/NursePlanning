@@ -23,20 +23,22 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayName("A domicile")
+            @Html.DisplayName("À domicile")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AtHome)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model=>model.NurseId)
+            @*@Html.DisplayNameFor(model => model.NurseId)*@
+            @Html.DisplayName("Infirmier(e)")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nurse.LastName)
             @Html.DisplayFor(model => model.Nurse.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PatientId)
+            @*@Html.DisplayNameFor(model => model.PatientId)*@
+            @Html.DisplayName("Patient(e)")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Patient.LastName)
@@ -51,6 +53,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editer</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Modifier</a> |
     <a asp-action="Index">Retour à la liste</a>
 </div>
