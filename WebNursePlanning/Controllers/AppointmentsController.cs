@@ -110,6 +110,7 @@ namespace WebNursePlanning.Controllers
             }
 
             var appointment = await _appointmentRepository.Details(id);
+            var c = await _appointmentRepository.CheckAvailabilityAppointment(appointment);
             if (appointment == null)
             {
                 return NotFound();
@@ -337,12 +338,12 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public async Task<IActionResult> CompareAppointment(Guid id)
-        {
-            var app = await _appointmentRepository.Details(id);
-            var l = await _nurseRepository.ListNursesWithAppointment();
-            if (app.Date != l.All);
-            return RedirectToAction(nameof(Index));
-        }
+        //public async Task<IActionResult> CompareAppointment(Guid id, Appointment appointment)
+        //{
+        //    var app = await _appointmentRepository.Details(id);
+        //    var l = await _appointmentRepository.CheckAvailabilityAppointment(appointment);
+            
+            
+        //}
     }
 }

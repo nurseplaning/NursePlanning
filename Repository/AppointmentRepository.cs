@@ -72,6 +72,20 @@ namespace Repository
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
+        public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay, TimeSpan appointmentTime)
+        {
+            //Par default, il considere que le rdv est disponible, cas d'une comparaison avec une liste de rdvs vide passée en parametre
+            bool isAvailable = true;
+            DateTime appointmentDate = appointmentDay.Add(appointmentTime);
+            foreach (var item in appointments)
+            {
+                if (item.Date.Day == appointmentDate.Day && item.Date.Hour == appointmentDate.Hour && item.Date.Minute == appointmentDate.Minute)
+                    isAvailable = false;
+                else
+                    isAvailable = true;
+            }
+            return isAvailable;
+        }
     }
 }
 
