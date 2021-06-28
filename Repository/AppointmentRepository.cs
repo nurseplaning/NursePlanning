@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Repository
 {
     public class AppointmentRepository : IAppointmentRepository
@@ -167,3 +166,4 @@ namespace Repository
         }
     }
 }
+

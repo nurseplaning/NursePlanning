@@ -73,7 +73,7 @@ namespace WebNursePlanning.Controllers
         }
 
         // GET: MessageController/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             //Asynchrone
             if (id == null)

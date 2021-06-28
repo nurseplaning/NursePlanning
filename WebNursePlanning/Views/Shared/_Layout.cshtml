@@ -27,7 +27,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Appointments</a>
                         </li>
-                    </ul>
+                        @if (User.IsInRole("ROLE_ADMIN"))
+                        {//Si l'utilisateur connecté est infirmier(role admin)
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Absence" asp-action="Index">Absences</a>
+                            </li>
+                        }
+                        </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

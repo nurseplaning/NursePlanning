@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository;
 using Repository.Interfaces;
+using System;
 
 namespace WebNursePlanning
 {
@@ -29,6 +30,7 @@ namespace WebNursePlanning
             services.AddScoped<INurseRepository, NurseRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IAbsenceRepository, AbsenceRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
@@ -36,9 +38,10 @@ namespace WebNursePlanning
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<Person, IdentityRole>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                  .AddDefaultUI().AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider); 
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider);
 
             services.AddControllersWithViews();
             services.AddRazorPages();

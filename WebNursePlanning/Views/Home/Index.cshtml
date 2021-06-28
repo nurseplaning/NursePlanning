@@ -10,3 +10,9 @@
 <p>
     <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un infirmier</a>
 </p>
+<p>
+    @if (User.IsInRole("ROLE_ADMIN"))
+    {//Si l'utilisateur connecté est infirmier(role admin)
+        <a asp-action="Index" asp-controller="Absence">Liste des absences</a>
+    }
+    </p>

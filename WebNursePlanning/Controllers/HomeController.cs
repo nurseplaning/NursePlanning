@@ -73,6 +73,7 @@ namespace WebNursePlanning.Controllers
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = false,
 					AccessFailedCount = 0,
+					IsActive = true
 				};
 				IdentityResult chkSuperNurse = await userManager.CreateAsync(superNurse, password);
 
@@ -85,7 +86,7 @@ namespace WebNursePlanning.Controllers
 					LastName = "Lopez",
 					BirthDay = new DateTime(1990, 12, 12),
 					Adress = "1 rue principale 34000 Montpellier",
-					SiretNumber = "12345678987654",
+					SiretNumber = "12345678987658",
 					Email = "lolalopez@nurse.fr",
 					PhoneNumber = "0600000000",
 					PasswordHash = "mdpNurse",
@@ -93,7 +94,8 @@ namespace WebNursePlanning.Controllers
 					TwoFactorEnabled = false,
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = false,
-					AccessFailedCount = 0
+					AccessFailedCount = 0,
+					IsActive = true
 				};
 
 				IdentityResult chkNurse = await userManager.CreateAsync(nurse, password);
@@ -114,7 +116,8 @@ namespace WebNursePlanning.Controllers
 					TwoFactorEnabled = false,
 					PhoneNumberConfirmed = true,
 					LockoutEnabled = true,
-					AccessFailedCount = 0
+					AccessFailedCount = 0,
+					IsActive = true
 				};
 
 				IdentityResult chkPatient = await userManager.CreateAsync(patient, password);
