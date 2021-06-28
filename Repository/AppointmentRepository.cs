@@ -86,56 +86,7 @@ namespace Repository
             }
             return isAvailable;
         }
-
-        //public async Task<Dictionary<string, List<TimeSpan>>> GetListAvailableAppointments(string personId, List<Appointment> appToEdit = null)
-        //{
-        //    //En mode Edition de rdv on doit garder le rdv (appToEdit) à editer dans le dico renvoyé
-
-        //    //En mode Create car pas de rdv à editer, c'est normal
-
-        //    //En mode Edit car appToEdit existe
-
-        //    //Define start time and end time for taking appointments
-        //    TimeSpan startTime = new(8, 0, 0);
-        //    TimeSpan endTime = new(17, 30, 0);
-        //    DateTime dateOfWeek = DateTime.Now.Date;
-        //    TimeSpan delayAppointment = new(0, 30, 0);
-
-        //    //Get Total minutes of a day
-        //    TimeSpan timeInterval = endTime.Subtract(startTime);
-        //    List<TimeSpan> listTimes = new();
-
-        //    //Calculate how many time slots  of appointments in a day
-        //    double nbAppointments = timeInterval.Divide(delayAppointment);
-        //    //Get existing appointments from database
-        //    List<Appointment> listAppointments = (List<Appointment>)await ListAppointmentsById(personId);
-        //    if (appToEdit != null)
-        //        if (listAppointments.Contains(appToEdit.FirstOrDefault()))
-        //            listAppointments.Remove(appToEdit.FirstOrDefault());
-
-        //    //Create List of Appointments
-        //    Dictionary<string, List<TimeSpan>> dicoAppointments = new();
-        //    for (int day = 0; day < 7; day++)
-        //    {
-        //        for (int timeappointment = 0; timeappointment < nbAppointments; timeappointment++)
-        //        {
-        //            if (CheckAvailabilityAppointment(listAppointments, dateOfWeek, startTime) && !IsPast(dateOfWeek, startTime))
-        //                listTimes.Add(startTime);
-        //            else
-        //                listTimes.Add(new TimeSpan());
-
-        //            startTime = startTime.Add(delayAppointment);
-        //        }
-        //        if (!dicoAppointments.ContainsKey(dateOfWeek.ToString("dddd dd MMMM yyyy")))
-        //            dicoAppointments.Add(dateOfWeek.ToString("dddd dd MMMM yyyy"), listTimes);
-
-        //        //Preparation des variables pour le jour suivant
-        //        listTimes = new List<TimeSpan>();
-        //        dateOfWeek = dateOfWeek.AddDays(1);
-        //        startTime = new TimeSpan(8, 0, 0);
-        //    }
-        //    return dicoAppointments;
-        //}
+       
     }
 }
 

@@ -8,6 +8,7 @@ using WebNursePlanning.Models;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace WebNursePlanning.Controllers
 {
@@ -108,16 +109,17 @@ namespace WebNursePlanning.Controllers
             {
                 return NotFound();
             }
-
+            
+            //var appointments = await _appointmentRepository.ListAppointments();
             var appointment = await _appointmentRepository.Details(id);
-            var appointmentDay
-            if (appointment.Date.Day == )
-            var c = await _appointmentRepository.CheckAvailabilityAppointment(appointmentDay);
+            //var list = _nurseRepository.ListNursesWithAppointment();
+            //var dateOfWeek = appointment.Date;
+            //var c = _appointmentRepository.CheckAvailabilityAppointment(appointments, dateOfWeek);
             if (appointment == null)
             {
                 return NotFound();
             }
-
+            
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
             ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
@@ -148,6 +150,7 @@ namespace WebNursePlanning.Controllers
             {
                 try
                 {
+                    if (c != true)
                     await _appointmentRepository.Edit(appointment);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -163,6 +166,10 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+                      
+            var listAppointments = _appointmentRepository.ListAppointmentsById(appointment.NurseId);
+            //var dateOfWeek = appointment.Date;
+            var c = _appointmentRepository.CheckAvailabilityAppointment(listAppointments, dateOfWeek);
 
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
