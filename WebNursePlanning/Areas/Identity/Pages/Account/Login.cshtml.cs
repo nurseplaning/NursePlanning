@@ -90,7 +90,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 var user = _context.People.FirstOrDefault(p => p.Email == Input.Email);
                 if (user.IsActive)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");

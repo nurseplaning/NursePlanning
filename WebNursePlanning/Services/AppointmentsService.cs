@@ -19,20 +19,6 @@ namespace WebNursePlanning.Services
 			_patientRepository = patientRepository;
 		}
 
-		//public async Task<SelectList> GetSelectListNursesAsync()
-		//{
-		//	var listNurses = await _nurseRepository.ListNurses();
-		//	var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-		//	return new SelectList(dicoNurses, "Key", "Value");
-		//}
-
-		//public async Task<SelectList> GetSelectListPatientsAsync()
-		//{
-		//	var listPatients = await _patientRepository.ListPatients();
-		//	var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-		//	return new SelectList(dicoPatients, "Key", "Value");
-		//}
-
 		public async Task<SelectList> GetSelectListNursesAsync(string id = null)
 		{
 			var listNurses = await _nurseRepository.ListNurses();
