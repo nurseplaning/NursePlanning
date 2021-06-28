@@ -71,16 +71,11 @@ namespace Repository
         public async Task<Dictionary<string, List<TimeSpan>>> GetListAvailableAppointments(string personId, List<Appointment> appToEdit = null)
         {
             //En mode Edition de rdv on doit garder le rdv (appToEdit) à editer dans le dico renvoyé
-            if (appToEdit is null)
-            {
-                //Nous sommes en mode Create car pas de rdv à editer, c'est normal
-            }
-            else
-            {
-                //Nous sommes en mode Edit car appToEdit existe
-            }
-
-
+            
+            //En mode Create car pas de rdv à editer, c'est normal
+            
+            //En mode Edit car appToEdit existe
+            
             //Define start time and end time for taking appointments
             TimeSpan startTime = new(8, 0, 0);
             TimeSpan endTime = new(17, 30, 0);
@@ -109,8 +104,6 @@ namespace Repository
                         listTimes.Add(startTime);
                     else
                         listTimes.Add(new TimeSpan());
-                    //if (appToEdit is not null && CheckAvailabilityAppointment(appToEdit, wholeDate, startTime))
-                    //    listTimes.Add(startTime);
 
                     startTime = startTime.Add(delayAppointment);
                 }
