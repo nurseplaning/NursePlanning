@@ -8,15 +8,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace Repository
 {
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAbsenceRepository _absenceRepository;
 
-        public AppointmentRepository(ApplicationDbContext context)
+        public AppointmentRepository(ApplicationDbContext context, IAbsenceRepository absenceRepository)
         {
             _context = context;
+            _absenceRepository = absenceRepository;
         }
 
         public async Task<IEnumerable<Appointment>> ListAppointments()
@@ -70,11 +73,11 @@ namespace Repository
         public async Task<Dictionary<string, List<TimeSpan>>> GetListAvailableAppointments(string personId, List<Appointment> appToEdit = null)
         {
             //En mode Edition de rdv on doit garder le rdv (appToEdit) à editer dans le dico renvoyé
-            
+
             //En mode Create car pas de rdv à editer, c'est normal
-            
+
             //En mode Edit car appToEdit existe
-            
+
             //Define start time and end time for taking appointments
             TimeSpan startTime = new(8, 0, 0);
             TimeSpan endTime = new(17, 30, 0);
@@ -83,12 +86,16 @@ namespace Repository
 
             //Get Total minutes of a day
             TimeSpan timeInterval = endTime.Subtract(startTime);
+            //Va contenir la liste des heures de rdv sur une journée
             List<TimeSpan> listTimes = new();
 
             //Calculate how many time slots  of appointments in a day
             double nbAppointments = timeInterval.Divide(delayAppointment);
             //Get existing appointments from database
             List<Appointment> listAppointments = (List<Appointment>)await ListAppointmentsById(personId);
+            //Get existing absences from database
+            var listAbsences = (List<Absence>)await _absenceRepository.ListAbsenceById(personId);
+
             if (appToEdit != null)
                 if (listAppointments.Contains(appToEdit.FirstOrDefault()))
                     listAppointments.Remove(appToEdit.FirstOrDefault());
@@ -99,13 +106,16 @@ namespace Repository
             {
                 for (int timeappointment = 0; timeappointment < nbAppointments; timeappointment++)
                 {
-                    if (CheckAvailabilityAppointment(listAppointments, dateOfWeek, startTime) && !IsPast(dateOfWeek, startTime))
+                    if (CheckAvailabilityAppointment(listAppointments, dateOfWeek, startTime) 
+                        && CheckAvailabilityAbsences(listAbsences, dateOfWeek, startTime, delayAppointment)
+                        && !IsPast(dateOfWeek, startTime))
                         listTimes.Add(startTime);
                     else
                         listTimes.Add(new TimeSpan());
 
                     startTime = startTime.Add(delayAppointment);
                 }
+                //Ajout dans le dictionnaire des dates de rdvs
                 if (!dicoAppointments.ContainsKey(dateOfWeek.ToString("dddd dd MMMM yyyy")))
                     dicoAppointments.Add(dateOfWeek.ToString("dddd dd MMMM yyyy"), listTimes);
 
@@ -114,6 +124,8 @@ namespace Repository
                 dateOfWeek = dateOfWeek.AddDays(1);
                 startTime = new TimeSpan(8, 0, 0);
             }
+            //Une fois les rdvs dispo verifiés, on verifie les absences avec les rdvs dispos
+            
             return dicoAppointments;
         }
 
@@ -132,6 +144,24 @@ namespace Repository
             return isAvailable;
         }
 
+        public bool CheckAvailabilityAbsences(List<Absence> absences, DateTime appointmentDay, TimeSpan appointmentTime, TimeSpan appointmentDuration)
+        {
+            bool isAvailable = true;
+            DateTime appointmentDate = appointmentDay.Add(appointmentTime);
+            foreach (var absence in absences)
+            {
+                if (absence.DateEnd.CompareTo(appointmentDate) == -1 || absence.DateStart.CompareTo(appointmentDate.Add(appointmentDuration)) == 1)
+                    isAvailable = true;
+                else
+                {
+                    isAvailable = false;
+                    break;
+                }
+            }
+
+            return isAvailable;
+        }
+        
         public bool IsPast(DateTime appointmentDate, TimeSpan appointmentTime)
         {
             DateTime date = appointmentDate.Add(appointmentTime);
