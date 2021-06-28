@@ -11,171 +11,173 @@ using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
-	public class AppointmentsController : Controller
-	{
-		private readonly IAppointmentRepository _appointmentRepository;
-		private readonly INurseRepository _nurseRepository;
-		private readonly IPatientRepository _patientRepository;
-		private readonly IStatusRepository _statusRepository;
-		private readonly UserManager<Person> _userManager;
-		private readonly SignInManager<Person> _signInManager;
+    public class AppointmentsController : Controller
+    {
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly INurseRepository _nurseRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IStatusRepository _statusRepository;
+        private readonly UserManager<Person> _userManager;
+        private readonly SignInManager<Person> _signInManager;
 
-		public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository, UserManager<Person> userManager, SignInManager<Person> signInManager)
-		{
-			_appointmentRepository = appointmentRepository;
-			_nurseRepository = nurseRepository;
-			_patientRepository = patientRepository;
-			_statusRepository = statusRepository;
-			_userManager = userManager;
-			_signInManager = signInManager;
-		}
+        public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository, UserManager<Person> userManager, SignInManager<Person> signInManager)
+        {
+            _appointmentRepository = appointmentRepository;
+            _nurseRepository = nurseRepository;
+            _patientRepository = patientRepository;
+            _statusRepository = statusRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
 
-		// GET: Appointments
-		public async Task<IActionResult> Index()
-		{
-			var user = await _userManager.GetUserAsync(User);
+        // GET: Appointments
+        public async Task<IActionResult> Index(string id = null)
+        {
+            
+            var user = await _userManager.GetUserAsync(User);
+            var listAppointments = await _appointmentRepository.ListAppointmentsById(id is null ? user.Id : id);
+            return View(listAppointments);
+        }
 
-			var listAppointments = await _appointmentRepository.ListAppointmentsById(user.Id);
-			return View(listAppointments);
-		}
 
-		// GET: Appointments/Details/5
-		public async Task<IActionResult> Details(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
 
-			var appointment = await _appointmentRepository.Details(id);
-			if (appointment == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-			return View(appointment);
-		}
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-		// GET: Appointments/Create
-		public async Task<IActionResult> Create()
-		{
-			//ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
-			var liste = await _statusRepository.ListStatuses();
-			ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
+            return View(appointment);
+        }
 
-			return View();
-		}
+        // GET: Appointments/Create
+        public async Task<IActionResult> Create()
+        {
+            //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
+            var liste = await _statusRepository.ListStatuses();
+            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
 
-		// POST: Appointments/Create
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(AppointmentViewModel appointment)
-		{
-			if (ModelState.IsValid)
-			{
-				var a = new Appointment()
-				{
-					Date = appointment.Date,
-					AtHome = appointment.AtHome,
-					NurseId = appointment.NurseId,
-					PatientId = appointment.PatientId,
-					Description = appointment.Reason,
-					StatusId = appointment.StatusId
-				};
-				//appointment.Id = Guid.NewGuid();
-				await _appointmentRepository.Create(a);
+            return View();
+        }
 
-				return RedirectToAction(nameof(Index));
-			}
-			return RedirectToAction("Index");
-		}
+        // POST: Appointments/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(AppointmentViewModel appointment)
+        {
+            if (ModelState.IsValid)
+            {
+                var a = new Appointment()
+                {
+                    Date = appointment.Date,
+                    AtHome = appointment.AtHome,
+                    NurseId = appointment.NurseId,
+                    PatientId = appointment.PatientId,
+                    Description = appointment.Reason,
+                    StatusId = appointment.StatusId
+                };
+                //appointment.Id = Guid.NewGuid();
+                await _appointmentRepository.Create(a);
 
-		// GET: Appointments/Edit/5
-		public async Task<IActionResult> Edit(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("Index");
+        }
 
-			var appointment = await _appointmentRepository.Details(id);
-			if (appointment == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-			ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-			return View(appointment);
-		}
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
-		// POST: Appointments/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
-		{
-			if (id != appointment.Id)
-			{
-				return NotFound();
-			}
+            return View(appointment);
+        }
 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					await _appointmentRepository.Edit(appointment);
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!AppointmentExists(appointment.Id))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
+        // POST: Appointments/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        {
+            if (id != appointment.Id)
+            {
+                return NotFound();
+            }
 
-			return View(appointment);
-		}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _appointmentRepository.Edit(appointment);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppointmentExists(appointment.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
-		// GET: Appointments/Delete/5
-		public async Task<IActionResult> Delete(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+            return View(appointment);
+        }
 
-			var appointment = await _appointmentRepository.Details(id);
-			if (appointment == null)
-			{
-				return NotFound();
-			}
+        // GET: Appointments/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-			return View(appointment);
-		}
+            var appointment = await _appointmentRepository.Details(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
 
-		// POST: Appointments/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(Guid id)
-		{
-			await _appointmentRepository.Delete(id);
-			return RedirectToAction(nameof(Index));
-		}
+            return View(appointment);
+        }
 
-		private bool AppointmentExists(Guid id)
-		{
-			return _appointmentRepository.Exists(id);
-		}
-	}
+        // POST: Appointments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _appointmentRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool AppointmentExists(Guid id)
+        {
+            return _appointmentRepository.Exists(id);
+        }
+    }
 }
