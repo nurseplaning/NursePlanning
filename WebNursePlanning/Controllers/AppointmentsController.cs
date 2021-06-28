@@ -32,13 +32,11 @@ namespace WebNursePlanning.Controllers
 
         // GET: Appointments
         public async Task<IActionResult> Index(string id = null)
-        {
-            
+        {            
             var user = await _userManager.GetUserAsync(User);
             var listAppointments = await _appointmentRepository.ListAppointmentsById(id is null ? user.Id : id);
             return View(listAppointments);
         }
-
 
 
         // GET: Appointments/Details/5

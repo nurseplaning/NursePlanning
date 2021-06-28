@@ -13,7 +13,7 @@
 
     @if (User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_SUPER_ADMIN"))
     {
-        <li class="nav-item" ><a class="nav-link @ManageNavPages.IndexNurseNavClass(ViewContext)" id="profile" asp-page="./IndexNurse">Profile</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNurseNavClass(ViewContext)" id="profile" asp-page="./IndexNurse">Profile</a></li>
     }
 
     <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
@@ -22,6 +22,6 @@
     {
         <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
     }
-   @* <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>*@
+    @* <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>*@
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Données personnelless</a></li>
 </ul>

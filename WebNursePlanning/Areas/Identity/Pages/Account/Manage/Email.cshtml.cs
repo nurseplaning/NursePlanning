@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -36,6 +35,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
         [TempData]
         public string StatusMessage { get; set; }
+
         [TempData]
         public string ErrorMessage { get; set; }
 
@@ -89,10 +89,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-
-
             var email = await _userManager.GetEmailAsync(user);
-
 
             if (Input.NewEmail != email)
             {
@@ -102,7 +99,6 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 {
                     ErrorMessage = "Ce mail existe deja.";
                     return RedirectToPage();
-
                 }
                 user.Email = Input.NewEmail;
                 var setPersonResult = await _userManager.UpdateAsync(user);
