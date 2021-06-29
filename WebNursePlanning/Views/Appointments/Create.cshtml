@@ -3,6 +3,7 @@
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
 @inject WebNursePlanning.Services.AppointmentsService MyAppointment
+@addTagHelper *,WebNursePlanning
 
 @{
     ViewData["Title"] = "Create";
@@ -12,64 +13,111 @@
 <h1>Prise de Rendez-vous</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
 
-                @await Component.InvokeAsync("AppointmentTimeList", UserManager.GetUserId(User))
-            </div>
-            <div class="form-group">
-                <label asp-for="Reason" class="control-label"></label>
-                <input asp-for="Reason" class="form-control" />
-                <span asp-validation-for="Reason" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AtHome" />@Html.DisplayNameFor(model => model.AtHome)
-                </label>
-            </div>
-            @if (User.IsInRole("ROLE_ADMIN"))
-            {//Si l'utilisateur connecté est infirmier(role admin)
-                <div class="form-group">
-                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="PatientId" class="control-label"></label>
-                    <select asp-for="PatientId" class="form-control"
-                            asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
-                        <option value="">Please select one</option>
-                    </select>
-                </div>
-            }
-            else if (User.IsInRole("ROLE_USER"))
-            {//Si l'utilisateur est un patient (role user)
-                <div class="form-group">
-                    <label asp-for="NurseId" class="control-label"></label>
-                    <select asp-for="NurseId" class="form-control"
-                            asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
-                        <option value="">Please select one</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
-                </div>
-            }
+    <button id="Previous" name="Previous">precedent</button>
+    <input type="button" id="Next" name="Next" value="suivant" />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+        <div id="Calendar" class="form-group">
+            @await Component.InvokeAsync("CreateAppointmentCalendar", UserManager.GetUserId(User))
+        </div>
+        @*<div class="form-group">
+                @await Component.InvokeAsync("CreateAppointmentCalendar", new { id = UserManager.GetUserId(User), decalage = 1 })
+            </div>*@
+
+
+        <a asp-action="GenerateCalendar"
+           asp-route-personId="@UserManager.GetUserId(User)"
+           asp-route-decalage="1">text</a>
+
+        <div class="form-group">
+            <label asp-for="Reason" class="control-label"></label>
+            <input asp-for="Reason" class="form-control" />
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="AtHome" />@Html.DisplayNameFor(model => model.AtHome)
+            </label>
+        </div>
+        @if (User.IsInRole("ROLE_ADMIN"))
+        {//Si l'utilisateur connecté est infirmier(role admin)
             <div class="form-group">
-                <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId" />
+                <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control"
+                        asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
+                    <option value="">Please select one</option>
+                </select>
             </div>
-        </form>
-    </div>
+        }
+        else if (User.IsInRole("ROLE_USER"))
+        {//Si l'utilisateur est un patient (role user)
+            <div class="form-group">
+                <label asp-for="NurseId" class="control-label"></label>
+                <select asp-for="NurseId" class="form-control"
+                        asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
+                    <option value="">Please select one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
+            </div>
+        }
+
+        <div class="form-group">
+            <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
+
+
 
 <div>
     <a asp-action="Index">Retour à la liste de vos rendez-vous</a>
 </div>
+<div hidden id="User">@UserManager.GetUserId(User)</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var user = $("#User").val();
+        var decalage = 0;
+        $(function () {
+            $("#Next").click(function (e) {
+                e.preventDefault();
+                decalage++;
+                $.get('/Appointments/GenerateCalendar', {
+                    personId: user,
+                    decalage: decalage
+                }
+                    , function (data) { // data => PartialView
+                        $('#Calendar').html(data);
+                    });
+            });
+        });
+        $(function () {
+            $("#Previous").click(function (e) {
+                e.preventDefault();
+                if (decalage > 0) {
+                    decalage--;
+                    $.get('/Appointments/GenerateCalendar', {
+                        personId: user,
+                        decalage: decalage
+                    }
+                        , function (data) { // data => PartialView
+                            $('#Calendar').html(data);
+                        });
+                }
+            });
+        });
+    </script>
+
 }

@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebNursePlanning.Models;
+using WebNursePlanning.Shared.Components;
 
 namespace WebNursePlanning.Controllers
     {
@@ -22,7 +23,12 @@ namespace WebNursePlanning.Controllers
         private readonly UserManager<Person> _userManager;
         private readonly SignInManager<Person> _signInManager;
 
-        public AppointmentsController(IAppointmentRepository appointmentRepository, INurseRepository nurseRepository, IPatientRepository patientRepository, IStatusRepository statusRepository, UserManager<Person> userManager, SignInManager<Person> signInManager)
+        public AppointmentsController(IAppointmentRepository appointmentRepository,
+                                        INurseRepository nurseRepository,
+                                        IPatientRepository patientRepository, 
+                                        IStatusRepository statusRepository,
+                                        UserManager<Person> userManager, 
+                                        SignInManager<Person> signInManager)
         {
             _appointmentRepository = appointmentRepository;
             _nurseRepository = nurseRepository;
@@ -92,6 +98,11 @@ namespace WebNursePlanning.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult GenerateCalendar(string personId, int decalage)
+        {
+            return ViewComponent("CreateAppointmentCalendar", new { id = personId, decalage });
         }
 
         // GET: Appointments/Edit/5

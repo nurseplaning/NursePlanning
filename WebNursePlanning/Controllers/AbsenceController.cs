@@ -10,7 +10,7 @@ using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
-	[Authorize(Roles = "ROLE_SUPERADMIN, ROLE_ADMIN")]
+	[Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN")]
 	public class AbsenceController : Controller
 	{
 		private readonly IAbsenceRepository _absenceRepository;

@@ -36,8 +36,6 @@ namespace WebNursePlanning.Controllers
             return View(listNurse);
         }
 
-
-
         // GET: SuperAdminController/ActivateNurse/5
         public async Task<ActionResult> ActivateNurseAsync(string id)
         {
