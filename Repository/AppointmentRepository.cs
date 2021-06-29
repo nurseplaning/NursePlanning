@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository
@@ -22,43 +23,42 @@ namespace Repository
             _absenceRepository = absenceRepository;
         }
 
-        public async Task<IEnumerable<Appointment>> ListAppointments()
-        {
-            return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).ToListAsync();
-        }
+		public async Task<IEnumerable<Appointment>> ListAppointments()
+		{
+			return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).ToListAsync();
+		}
 
-        public async Task<Appointment> Details(Guid? id)
-        {
-            var appointment = await _context.Appointments
-                                    .Include(a => a.Nurse)
-                                    .Include(a => a.Patient)
-                                    .Include(a => a.Status)
-                                    .FirstOrDefaultAsync(m => m.Id == id);
-            return appointment;
-        }
+		public async Task<Appointment> Details(Guid? id)
+		{
+			var appointment = await _context.Appointments
+									.Include(a => a.Nurse)
+									.Include(a => a.Patient)
+									.Include(a => a.Status)
+									.FirstOrDefaultAsync(m => m.Id == id);
+			return appointment;
+		}
 
-        public async Task<Appointment> Create(Appointment appointment)
-        {
+		public async Task<Appointment> Create(Appointment appointment)
+		{
+			_context.Appointments.Add(appointment);
+			await _context.SaveChangesAsync();
 
-            _context.Appointments.Add(appointment);
-            await _context.SaveChangesAsync();
+			return appointment;
+		}
 
-            return appointment;
-        }
+		public async Task Edit(Appointment appointment)
+		{
+			_context.Update(appointment);
+			await _context.SaveChangesAsync();
+		}
 
-        public async Task Edit(Appointment appointment)
-        {
-            _context.Update(appointment);
-            await _context.SaveChangesAsync();
-        }
+		public async Task Delete(Guid? id)
+		{
+			var appointment = await _context.Appointments.FindAsync(id);
+			_context.Appointments.Remove(appointment);
 
-        public async Task Delete(Guid? id)
-        {
-            var appointment = await _context.Appointments.FindAsync(id);
-            _context.Appointments.Remove(appointment);
-
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
 
         public bool Exists(Guid? id)
         {

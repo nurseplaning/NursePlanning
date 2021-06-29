@@ -36,6 +36,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -87,11 +90,19 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             }
 
             var email = await _userManager.GetEmailAsync(user);
+
             if (Input.NewEmail != email)
             {
-                var person = user;
-                person.Email = Input.NewEmail;
-                var setPatientResult = await _userManager.UpdateAsync(person);
+                var mailExiste = await _userManager.FindByEmailAsync(Input.NewEmail);
+
+                if (mailExiste is not null)
+                {
+                    ErrorMessage = "Ce mail existe deja.";
+                    return RedirectToPage();
+                }
+                user.Email = Input.NewEmail;
+                var setPersonResult = await _userManager.UpdateAsync(user);
+
                 StatusMessage = "Your email is changed.";
 
                 //var userId = await _userManager.GetUserIdAsync(user);

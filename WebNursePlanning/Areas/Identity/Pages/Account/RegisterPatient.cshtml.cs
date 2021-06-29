@@ -42,6 +42,12 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
@@ -50,6 +56,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "E-mail")]
             public string Email { get; set; }
+
             [EmailAddress]
             [Display(Name = "Confirmation E-mail")]
             [Compare("Email", ErrorMessage = "L'e-mail et la confiramtion d'e-mail ne correspondent pas.")]
@@ -93,7 +100,6 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "N° Téléphone")]
             [RegularExpression(@"\d{10}|\+33\d{9}|\+33\s\d{1}\s\d{2}\s\d{2}\s\d{2}\s\d{2}|\d{2}\s\d{2}\s\d{2}\s\d{2}\s\d{2}", ErrorMessage = "Characters are not allowed.")]
-
             public string Phonenumber { get; set; }
 
             [Required]
@@ -117,7 +123,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             {
                 var user = new Patient
                 {
-                    UserName = Input.Email,
+                    UserName = $"{Input.LastName}{Input.FirstName}{DateTime.Now:yyyyymmddHHmmss}",
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
@@ -127,6 +133,34 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     PhoneNumber = Input.Phonenumber,
                     IsActive = true
                 };
+                var mailExiste = await _userManager.FindByEmailAsync(Input.Email);
+                if (mailExiste is not null)
+                {
+                    ErrorMessage = "Ce mail existe deja.";
+                    return Page();
+                }
+
+                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_ADMIN");
+                var admins = await _userManager.GetUsersInRoleAsync("ROLE_SUPER_ADMIN");
+
+                foreach (var item in nurses)
+                {
+                    var patient = item as Patient;
+                    if (patient.SocialSecurityNumber == Input.SocialSecurityNumber)
+                    {
+                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        return Page();
+                    }
+                }
+                foreach (var item in admins)
+                {
+                    var patient = item as Patient;
+                    if (patient.SocialSecurityNumber == Input.SocialSecurityNumber)
+                    {
+                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        return Page();
+                    }
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

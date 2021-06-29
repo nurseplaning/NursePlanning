@@ -11,6 +11,6 @@ namespace Repository.Interfaces
     {
         public Task<Guid> GetStatusId(string statusname);
 
-        public Task<IEnumerable<Status>> ListStatuses();
-    }
+		public Task<IEnumerable<Status>> ListStatuses();
+	}
 }

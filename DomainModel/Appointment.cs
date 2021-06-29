@@ -7,9 +7,9 @@ namespace DomainModel
     public class Appointment
     {
         public Guid Id { get; set; }
-        
+      
         public DateTime Date { get; set; }
-        public string Description { get; set; }
+        public string Reason { get; set; }
         [Display(Name ="A domicile")]
         public bool AtHome { get; set; }
         public Nurse Nurse { get; set; }
