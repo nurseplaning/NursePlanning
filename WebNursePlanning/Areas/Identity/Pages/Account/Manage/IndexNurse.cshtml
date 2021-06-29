@@ -15,36 +15,36 @@
             <input asp-for="Username" type="hidden" />
 
             <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
+                <label>Nom</label>
                 <input asp-for="Input.FirstName" class="form-control" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.LastName"></label>
+                <label>Prénom</label>
                 <input asp-for="Input.LastName" class="form-control" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
+                <label>Téléphone</label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Adress"></label>
+                <label>Adresse</label>
                 <input asp-for="Input.Adress" class="form-control" />
                 <span asp-validation-for="Input.Adress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.BirthDay"></label>
+                <label>Date de naissance</label>
                 <input asp-for="Input.BirthDay" max='2000-13-13' class="form-control" />
                 <span asp-validation-for="Input.BirthDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.SiretNumber"></label>
+                <label>N° sécurité sociale</label>
                 <input asp-for="Input.SiretNumber" class="form-control" />
                 <span asp-validation-for="Input.SiretNumber" class="text-danger" minlength="14" maxlength="14"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Sauvegarder</button>
         </form>
     </div>
 </div>
