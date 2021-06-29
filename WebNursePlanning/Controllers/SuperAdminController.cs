@@ -1,13 +1,13 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using WebApiNursePlanning.Controllers;
-using WebPatientPlanning.Controllers;
 
 namespace WebNursePlanning.Controllers
 {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN")]
     public class SuperAdminController : Controller
     {
         private readonly ILogger<HomeController> logger;

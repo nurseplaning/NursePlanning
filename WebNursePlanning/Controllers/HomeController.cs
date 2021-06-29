@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,7 @@ using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
