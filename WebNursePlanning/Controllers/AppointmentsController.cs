@@ -7,7 +7,6 @@ using Repository.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
@@ -61,10 +60,18 @@ namespace WebNursePlanning.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
-            //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
-            var liste = await _statusRepository.ListStatuses();
-            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
+            //recherche de tous les infirmiers , les patients pour creer un rdv "en cours de validation"
+            //var listNurses = ;
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value");
 
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value");
+
+            ViewData["StatusId"] = await _statusRepository.GetStatusId("En attente");
+            
             return View();
         }
 
@@ -73,21 +80,12 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AppointmentViewModel appointment)
+        public async Task<IActionResult> Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                var a = new Appointment()
-                {
-                    Date = appointment.Date,
-                    AtHome = appointment.AtHome,
-                    NurseId = appointment.NurseId,
-                    PatientId = appointment.PatientId,
-                    Description = appointment.Reason,
-                    StatusId = appointment.StatusId
-                };
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(a);
+                await _appointmentRepository.Create(appointment);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -108,6 +106,13 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
+
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);
@@ -144,6 +149,14 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            var listNurses = await _nurseRepository.ListNurses();
+            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
+
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);

@@ -10,7 +10,7 @@ namespace DomainModel.ModelBuilders
 				.ToTable("Appointments");
 
 			builder.Entity<Appointment>()
-				.Property(a => a.Description)
+				.Property(a => a.Reason)
 				.IsRequired();
 
 			builder.Entity<Appointment>()
