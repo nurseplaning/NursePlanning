@@ -1,13 +1,12 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using WebNursePlanning.Models;
-using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebNursePlanning.Controllers
@@ -32,22 +31,24 @@ namespace WebNursePlanning.Controllers
 			_signInManager = signInManager;
 		}
 
-		// GET: Appointments
-		public async Task<IActionResult> Index()
-		{
-			var user = await _userManager.GetUserAsync(User);
+        // GET: Appointments
+        public async Task<IActionResult> Index(string id = null)
+        {
+            
+            var user = await _userManager.GetUserAsync(User);
+            var listAppointments = await _appointmentRepository.ListAppointmentsById(id is null ? user.Id : id);
+            return View(listAppointments);
+        }
 
-			var listAppointments = await _appointmentRepository.ListAppointmentsById(user.Id);
-			return View(listAppointments);
-		}
 
-		// GET: Appointments/Details/5
-		public async Task<IActionResult> Details(Guid? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+
+        // GET: Appointments/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
 			var appointment = await _appointmentRepository.Details(id);
 			if (appointment == null)
@@ -111,20 +112,20 @@ namespace WebNursePlanning.Controllers
 			var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
 			ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
 
-			var listPatients = await _patientRepository.ListPatients();
-			var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-			ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
-			ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
+            var listPatients = await _patientRepository.ListPatients();
+            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
+            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
+            ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
-			return View(appointment);
-		}
+            return View(appointment);
+        }
 
 		// POST: Appointments/Edit/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+		public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
 		{
 			if (id != appointment.Id)
 			{

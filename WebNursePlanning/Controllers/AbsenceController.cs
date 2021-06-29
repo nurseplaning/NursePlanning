@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
@@ -70,13 +69,24 @@ namespace WebNursePlanning.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var dateStart = new DateTime(absence.DateStart.Year, absence.DateStart.Month, absence.DateStart.Day, absence.TimeStart.Hour, absence.TimeStart.Minute, absence.TimeStart.Second);
-				var dateEnd = new DateTime(absence.DateEnd.Year, absence.DateEnd.Month, absence.DateEnd.Day, absence.TimeEnd.Hour, absence.TimeEnd.Minute, absence.TimeEnd.Second);
+				var dateStart = new DateTime(absence.DateStart.Year,
+											absence.DateStart.Month,
+											absence.DateStart.Day,
+											absence.TimeStart.Hour,
+											absence.TimeStart.Minute,
+											absence.TimeStart.Second);
+
+				var dateEnd = new DateTime(absence.DateEnd.Year,
+											absence.DateEnd.Month,
+											absence.DateEnd.Day,
+											absence.TimeEnd.Hour,
+											absence.TimeEnd.Minute,
+											absence.TimeEnd.Second);
 				var a = new Absence()
 				{
 					DateEnd = dateEnd,
 					DateStart = dateStart,
-					Motif = absence.Motif,
+					Reason = absence.Motif,
 					NurseId = absence.NurseId
 				};
 				await _absenceRepository.Create(a);

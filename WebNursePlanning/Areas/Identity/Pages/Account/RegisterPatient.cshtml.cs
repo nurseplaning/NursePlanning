@@ -117,7 +117,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             {
                 var user = new Patient
                 {
-                    UserName = Input.Email,
+                    UserName = $"{Input.LastName}{Input.FirstName}{DateTime.Now:yyyyymmddHHmmss}",
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,

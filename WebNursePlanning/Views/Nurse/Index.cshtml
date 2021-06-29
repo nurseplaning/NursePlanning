@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<DomainModel.Nurse>
 
-<h1>Desserts</h1>
-<a asp-action="Create" class="btn btn-primary float-right m-1">New Dessert</a>
+<h1>Nurses</h1>
 
 <table class="table  table-striped">
     <thead>
@@ -57,9 +56,16 @@
                 </td>
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="">
-                        @*   <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>*@
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                        @*   <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>*@
+                        @if (item.IsActive)
+                        {
+                            <a asp-action="ActivateNurse" asp-controller="SuperAdmin" asp-route-id="@item.Id" class="btn btn-primary">Desactiver compte</a>
+                        }
+                        else
+                        {
+                            <a asp-action="ActivateNurse" asp-controller="SuperAdmin" asp-route-id="@item.Id" class="btn btn-danger">Activer compte</a>
+                        }
+                        <a asp-action="Index" asp-controller="Appointments"  asp-route-id="@item.Id" class="btn btn-info">Rdvs</a>
                     </div>
                 </td>
             </tr>

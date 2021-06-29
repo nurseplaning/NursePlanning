@@ -80,7 +80,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.DateTime)]
+            [DataType(DataType.Date)]
             [Display(Name = "Date naissance")]
             public DateTime BirthDay { get; set; }
 
@@ -116,7 +116,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             {
                 var user = new Nurse
                 {
-                    UserName = Input.Email,
+                    UserName = $"{Input.LastName}{Input.FirstName}{DateTime.Now:yyyyymmddHHmmss}",
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
