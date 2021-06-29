@@ -11,14 +11,14 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateStart)
+            @Html.DisplayName("Date de début")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateStart)
             @Html.DisplayFor(model => model.DateStart.TimeOfDay)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateEnd)
+            @Html.DisplayName("Date de fin")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateEnd)
@@ -31,7 +31,7 @@
             @Html.DisplayFor(model => model.Motif)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nurse)
+            @Html.DisplayName("Infirmier(e)")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nurse.LastName)
@@ -39,6 +39,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste des absences</a>
 </div>

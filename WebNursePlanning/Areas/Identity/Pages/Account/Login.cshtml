@@ -14,13 +14,13 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
+                    <label>E-mail</label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                     <small id="Input.Password" class="form-text text-muted">super admin = eljefe@nurse.fr | nurse = lolalopez@nurse.fr | patient = estoymalito@patient.fr</small>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
+                    <label >Mot de passe</label>
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                     <small id="Input.Password" class="form-text text-muted">mdp = Superpassword.0</small>
@@ -30,9 +30,9 @@
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
+                        <label >
                             <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            @Html.DisplayName("Enregistrer les informations ?")
                         </label>
                     </div>
                 </div>
