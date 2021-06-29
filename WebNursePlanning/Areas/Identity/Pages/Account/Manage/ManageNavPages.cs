@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 {
@@ -26,6 +23,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+
         public static string IndexNurseNavClass(ViewContext viewContext) => PageNavClass(viewContext, IndexNurse);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);

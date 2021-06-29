@@ -44,6 +44,12 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public class InputModel
         {
             [Required]
@@ -80,7 +86,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.DateTime)]
+            [DataType(DataType.Date)]
             [Display(Name = "Date naissance")]
             public DateTime BirthDay { get; set; }
 
@@ -116,7 +122,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             {
                 var user = new Nurse
                 {
-                    UserName = Input.Email,
+                    UserName = $"{Input.LastName}{Input.FirstName}{DateTime.Now:yyyyymmddHHmmss}",
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
@@ -126,6 +132,35 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     PhoneNumber = Input.Phonenumber,
                     IsActive = false
                 };
+                var mailExiste = await _userManager.FindByEmailAsync(Input.Email);
+                if (mailExiste is not null)
+                {
+                    ErrorMessage = "Ce mail existe deja.";
+                    return Page();
+                }
+
+                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_ADMIN");
+                var admins = await _userManager.GetUsersInRoleAsync("ROLE_SUPER_ADMIN");
+
+                foreach (var item in nurses)
+                {
+                    var nurse = item as Nurse;
+                    if (nurse.SiretNumber == Input.SiretNumber)
+                    {
+                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        return Page();
+                    }
+                }
+                foreach (var item in admins)
+                {
+                    var nurse = item as Nurse;
+                    if (nurse.SiretNumber == Input.SiretNumber)
+                    {
+                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        return Page();
+                    }
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -151,8 +186,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        StatusMessage = "Votre compte a bien été créé vous pourriez vous connecter après l'activation pour votre administrateur";
+                        return Page();
                     }
                 }
                 foreach (var error in result.Errors)

@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
+@inject WebNursePlanning.Services.AppointmentsService MyAppointment
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,13 +13,15 @@
 <h4>Rendez-Vous</h4>
 <hr />
 <div class="row">
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            @await Component.InvokeAsync("EditAppointmentCalendar", new { personId = UserManager.GetUserId(User), appToEdit = new List<DomainModel.Appointment> { Model } })
-        </div>
-        <div class="col-4">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -36,16 +39,20 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="PatientId" class="control-label"></label>
-                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                    <select asp-for="PatientId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListPatientsAsync(Model.PatientId).GetAwaiter().GetResult()"></select>
                 </div>
             }
             else if (User.IsInRole("ROLE_USER"))
             {//Si l'utilisateur est un patient (role user)
                 <div class="form-group">
                     <label asp-for="NurseId" class="control-label"></label>
-                    <select asp-for="NurseId" class="form-control" asp-items="ViewBag.NurseId"></select>
+                    <select asp-for="NurseId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListNursesAsync(Model.NurseId).GetAwaiter().GetResult()"></select>
                 </div>
                 <div class="form-group">
+                    @*<label asp-for="PatientId" class="control-label"></label>*@
+                    @*<select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>*@
                     <input asp-for="PatientId" class="form-control" style="display:none;" value="@UserManager.GetUserId(User)" />
                 </div>
             }
@@ -55,10 +62,10 @@
                 <span asp-validation-for="StatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Modifier Rdv" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <div>

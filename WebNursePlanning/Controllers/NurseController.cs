@@ -1,22 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Repository.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebNursePlanning.Controllers;
 
 namespace WebApiNursePlanning.Controllers
 {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN")]
     public class NurseController : Controller
     {
-        private readonly INurseRepository repository;
+        private readonly ILogger<NurseController> logger;
+        private readonly UserManager<Person> userManager;
+        private readonly SignInManager<Person> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public NurseController(INurseRepository nurseRepository)
+        public NurseController(ILogger<NurseController> logger,
+            UserManager<Person> userManager,
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<Person> signInManager)
         {
-            repository = nurseRepository;
+            this.logger = logger;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            this.signInManager = signInManager;
         }
 
         // GET: NurseController
         public async Task<ActionResult> IndexAsync()
         {
-            return View(await repository.ListNurses());
+            var people = await userManager.GetUsersInRoleAsync("ROLE_ADMIN");
+            var nurses = new List<Nurse>();
+            foreach (var item in people)
+                nurses.Add(item as Nurse);
+
+            return View(nurses);
         }
 
         // GET: NurseController/Details/5
@@ -27,7 +48,7 @@ namespace WebApiNursePlanning.Controllers
                 return BadRequest();
             }
 
-            var nurse = await repository.Details(id);
+            var nurse = await userManager.FindByIdAsync(id) as Nurse;
             if (nurse is null)
             {
                 return NotFound();

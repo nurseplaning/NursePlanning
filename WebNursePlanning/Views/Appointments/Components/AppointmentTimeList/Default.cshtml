@@ -1,6 +1,8 @@
-﻿@model DomainModel.Appointment
+﻿@model WebNursePlanning.Models.AppointmentViewModel
 
-<table class="table">
+<h1>Calendrier des RDVs</h1>
+
+<table class="table table-responsive-md">
     <thead classe="thead-light">
         @{int maxLength = 0;}
         <tr>
@@ -24,23 +26,10 @@
                 {
                     @if (item.Value[appTime] != new TimeSpan())
                     {
-                        <td class="text-center">
-                            @{ var date = DateTime.Parse(@item.Key);
-                                date = date.Add(@item.Value[appTime]);}
-                            @if (Model is not null && Model.Date == date)
-                            {
-                                <input asp-for="Date" type="radio" class="form-control" checked value="@item.Key @item.Value[appTime]">
-                                <label>@item.Value[appTime]</label>
-                                <br>
-                            }
-                            else
-                            {
-                                <input asp-for="Date" type="radio" class="form-control" value="@item.Key @item.Value[appTime]">
-                                <label asp-for="Date" class="control-label">@item.Value[appTime]</label>
-                                <br />
-                            }
+                        <td>
+                            <input asp-for="Date" type="radio" class="form-control btn btn-primary" value="@item.Key @item.Value[appTime]">
+                            <label asp-for="Date" class="control-label">@item.Value[appTime]</label><br>
                         </td>
-
                     }
                     else
                     {
@@ -53,3 +42,4 @@
         }
     </tbody>
 </table>
+

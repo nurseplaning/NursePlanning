@@ -98,7 +98,7 @@ namespace WebApiNursePlanning.Controllers
                 return NotFound();
             }
 
-            await repository.Delete(appointment.Id);
+            await repository.Delete(id);
 
             return NoContent();
         }

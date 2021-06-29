@@ -1,16 +1,18 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using WebNursePlanning.Models;
-using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
-{
+    {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER")]
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentRepository _appointmentRepository;
@@ -31,11 +33,10 @@ namespace WebNursePlanning.Controllers
         }
 
         // GET: Appointments
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index(string id = null)
+        {            
             var user = await _userManager.GetUserAsync(User);
-
-            var listAppointments = await _appointmentRepository.ListAppointmentsById(user.Id);
+            var listAppointments = await _appointmentRepository.ListAppointmentsById(id is null ? user.Id : id);
             return View(listAppointments);
         }
 
@@ -60,18 +61,10 @@ namespace WebNursePlanning.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
-            //recherche de tous les infirmiers , les patients pour creer un rdv "en cours de validation"
-            //var listNurses = ;
-            var listNurses = await _nurseRepository.ListNurses();
-            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value");
+            //ViewData["StatusId"] = await _statusRepository.GetStatusId("En cours de validation");
+            var liste = await _statusRepository.ListStatuses();
+            ViewData["StatusId"] = liste.FirstOrDefault(s => s.Name == "En attente").Id;
 
-            var listPatients = await _patientRepository.ListPatients();
-            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value");
-
-            ViewData["StatusId"] = await _statusRepository.GetStatusId("En attente");
-            
             return View();
         }
 
@@ -80,12 +73,21 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public async Task<IActionResult> Create(AppointmentViewModel appointment)
         {
             if (ModelState.IsValid)
             {
+                var a = new Appointment()
+                {
+                    Date = appointment.Date,
+                    AtHome = appointment.AtHome,
+                    NurseId = appointment.NurseId,
+                    PatientId = appointment.PatientId,
+                    Description = appointment.Reason,
+                    StatusId = appointment.StatusId
+                };
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(appointment);
+                await _appointmentRepository.Create(a);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -106,15 +108,8 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
-            var listNurses = await _nurseRepository.ListNurses();
-            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
-
-            var listPatients = await _patientRepository.ListPatients();
-            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
-           
+
             return View(appointment);
         }
 
@@ -149,14 +144,6 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-
-            var listNurses = await _nurseRepository.ListNurses();
-            var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
-
-            var listPatients = await _patientRepository.ListPatients();
-            var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
-            ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value", appointment.PatientId);
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);
