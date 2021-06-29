@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfNursePlanning"
         mc:Ignorable="d"
         Title="AppointmentList" Height="650" Width="1024" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" WindowStyle="None">
-    <Grid>
+    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}">
         <DataGrid Name="dgrRdv" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="336" Margin="56,91,0,0" VerticalAlignment="Top" Width="946" CanUserDeleteRows="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, IsAsync=True}" Width="*"/>
@@ -14,7 +14,7 @@
                 <DataGridTextColumn Header="Infirmier" Binding="{Binding Path=NurseId, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Patient" Binding="{Binding Path=patientId, IsAsync=True}" Width="*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Path=Status, IsAsync=True}" Width="*"/>
-                <DataGridTemplateColumn Header="Modification">
+                <DataGridTemplateColumn Header="Patient">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="btnDetailPatient" >Patient</Button>

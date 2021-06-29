@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
-    <Grid>
+    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}">
         <Label Content="Nom" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
         <TextBox Name="txtLastName" IsEnabled="False"  HorizontalAlignment="Left" Margin="110,182,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
@@ -55,9 +55,17 @@
         </DataGrid>
 
 
-        <Button x:Name="btRdv"  Content="Rendez-vous" Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="292,556,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button Content="Liste Patient" Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="469,556,0,0" VerticalAlignment="Top" Width="125" />
-        <Button  Click="btnQuitter" HorizontalAlignment="Left" Height="37" Margin="923,556,0,0" VerticalAlignment="Top" Width="79" >
+        <Button x:Name="btRdv"  Content="          Rendez-vous"  Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="292,556,0,0" VerticalAlignment="Top" Width="125">
+            <Button.Background>
+                <ImageBrush ImageSource="/rdv.jpg"  Stretch="Uniform" AlignmentX="Left"/>
+            </Button.Background>
+        </Button>
+        <Button Content="        Liste Patient"  Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="469,556,0,0" VerticalAlignment="Top" Width="125">
+            <Button.Background>
+                <ImageBrush ImageSource="/patient.png"  Stretch="Uniform" AlignmentX="Left"/>
+            </Button.Background>
+        </Button>
+        <Button  Click="btnQuitter" HorizontalAlignment="Left" Height="37" Margin="877,556,0,0" VerticalAlignment="Top" Width="125" >
             <Button.Background>
                 <ImageBrush ImageSource="/quitter.png" Stretch="Uniform" TileMode="None"/>
             </Button.Background>

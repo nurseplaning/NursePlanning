@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Remove="back.png" />
     <None Remove="infermiere.png" />
-    <None Remove="infirmier.jpg" />
     <None Remove="patient.png" />
     <None Remove="quitter.png" />
     <None Remove="rdv.jpg" />
@@ -28,10 +27,13 @@
   <ItemGroup>
     <Resource Include="back.png" />
     <Resource Include="infermiere.png" />
-    <Resource Include="infirmier.jpg" />
     <Resource Include="patient.png" />
     <Resource Include="quitter.png" />
     <Resource Include="rdv.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Icones\" />
   </ItemGroup>
 
 </Project>
