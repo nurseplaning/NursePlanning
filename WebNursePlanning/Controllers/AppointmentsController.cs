@@ -72,7 +72,7 @@ namespace WebNursePlanning.Controllers
             ViewData["PatientId"] = new SelectList(dicoPatients, "Key", "Value");
 
             ViewData["StatusId"] = await _statusRepository.GetStatusId("En attente");
-            
+
             return View();
         }
 
@@ -98,7 +98,7 @@ namespace WebNursePlanning.Controllers
             {
                 return NotFound();
             }
-            
+
             //var appointments = await _appointmentRepository.ListAppointments();
             var appointment = await _appointmentRepository.Details(id);
             //var list = _nurseRepository.ListNursesWithAppointment();
@@ -108,7 +108,7 @@ namespace WebNursePlanning.Controllers
             {
                 return NotFound();
             }
-            
+
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
             ViewData["NurseId"] = new SelectList(dicoNurses, "Key", "Value", appointment.NurseId);
@@ -130,17 +130,27 @@ namespace WebNursePlanning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
+
             if (id != appointment.Id)
             {
                 return NotFound();
             }
 
+            var listAppointments = await _appointmentRepository.ListAppointmentsById(appointment.NurseId);
+            var dateOfWeek = appointment.Date;
+            var isAvailable = _appointmentRepository.CheckAvailabilityAppointment2(listAppointments, dateOfWeek);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (c != true)
-                    await _appointmentRepository.Edit(appointment);
+                    if (isAvailable)
+                        await _appointmentRepository.Edit(appointment);
+                    else if (isAvailable == false)
+                    {
+                        //ViewBag["Message"]= "L'infirmier est occupé";
+                        return Content("<script language='javascript' type='text/javascript'>alert('L'infirmier est occupé');</script>");
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -155,10 +165,8 @@ namespace WebNursePlanning.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-                      
-            var listAppointments = _appointmentRepository.ListAppointmentsById(appointment.NurseId);
-            //var dateOfWeek = appointment.Date;
-            var c = _appointmentRepository.CheckAvailabilityAppointment(listAppointments, dateOfWeek);
+
+
 
             var listNurses = await _nurseRepository.ListNurses();
             var dicoNurses = listNurses.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
@@ -296,12 +304,12 @@ namespace WebNursePlanning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ValidateStatus(Guid id)
         {
-                var app = await _appointmentRepository.Details(id);
-                var statusId = await _statusRepository.GetStatusId("Validé");
-                app.StatusId = statusId;
-                await _appointmentRepository.Edit(app);
-                return RedirectToAction(nameof(Index));
-             
+            var app = await _appointmentRepository.Details(id);
+            var statusId = await _statusRepository.GetStatusId("Validé");
+            app.StatusId = statusId;
+            await _appointmentRepository.Edit(app);
+            return RedirectToAction(nameof(Index));
+
         }
         public async Task<IActionResult> RejectStatus(Guid? id)
         {
@@ -332,12 +340,7 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        //public async Task<IActionResult> CompareAppointment(Guid id, Appointment appointment)
-        //{
-        //    var app = await _appointmentRepository.Details(id);
-        //    var l = await _appointmentRepository.CheckAvailabilityAppointment(appointment);
-            
-            
-        //}
+        
+
     }
 }
