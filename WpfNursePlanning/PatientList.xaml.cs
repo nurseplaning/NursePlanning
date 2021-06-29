@@ -9,6 +9,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfNursePlanning.Model;
 namespace WpfNursePlanning
 {
@@ -29,7 +30,7 @@ namespace WpfNursePlanning
         public PatientList()
         {
             InitializeComponent();
-            btnValidPatient.IsEnabled = false;
+            dgrPatient.SelectedIndex = 0;
             LoadPatientData();
         }
 
@@ -49,9 +50,14 @@ namespace WpfNursePlanning
                         BirthDay = item.BirthDay,
                         Adress = item.Adress,
                         SocialSecurityNumber = item.SocialSecurityNumber,
+                        IsActive = item.IsActive,
+
+
                     });
             }
+
             dgrPatient.ItemsSource = list;
+
 
         }
 
@@ -66,7 +72,7 @@ namespace WpfNursePlanning
                 dpBithDay.SelectedDate = patient.BirthDay;
                 txtAdress.Text = patient.Adress;
                 txtSocialSecurityNumber.Text = patient.SocialSecurityNumber;
-                btnValidPatient.IsEnabled = true;
+
                 txtmailurl.Text = patient.UseEmailrName;
 
                 txtUserName.Text = patient.UserName;
@@ -89,6 +95,7 @@ namespace WpfNursePlanning
 
             }
 
+
         }
 
         void btnActivePatient(object sender, RoutedEventArgs e)
@@ -96,7 +103,6 @@ namespace WpfNursePlanning
             Patient patient = dgrPatient.SelectedItem as Patient;
 
             patient.IsActive = true;
-
 
             patient.LastName = txtLastName.Text;
             patient.FirstName = txtFirstName.Text;
@@ -158,6 +164,12 @@ namespace WpfNursePlanning
             MainWindow mainList = new MainWindow();
             mainList.Show();
             this.Close();
+        }
+
+        private void DataGridCheckBoxColumn_Checked(object sender, RoutedEventArgs e)
+        {
+           
+          
         }
 
 
