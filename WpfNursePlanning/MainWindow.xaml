@@ -73,7 +73,6 @@
         <Image Source="/infermiere.png" HorizontalAlignment="Left" Height="152" Margin="-29,10,0,0" VerticalAlignment="Top" Width="213" />
         <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="525,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
         <Label Name="lblMessage" HorizontalAlignment="Left" Margin="80,460,0,0" VerticalAlignment="Top" Width="178"/>
-
     </Grid>
 
 </Window>

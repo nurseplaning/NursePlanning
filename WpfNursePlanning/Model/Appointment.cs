@@ -17,7 +17,9 @@ namespace WpfNursePlanning.Model
 		public string PatientId { get; set; }
 		public Status Status { get; set; }
 		public Guid StatusId { get; set; }
-		
-	}
+
+        public string Name { get; set; }
+
+    }
 
 }

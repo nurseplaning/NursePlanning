@@ -34,7 +34,6 @@ namespace WpfNursePlanning
         public async Task LoadAppointmentData(string nurseId)
         {
             MainWindow main = new MainWindow();
-            //string Id = (string)lblPatient.Content;
             var json = await GetAppointmentAsync(nurseId);
             var data = JObject.Parse(json).ToObject<List<Appointment>>();
             foreach (var item in data)
@@ -48,7 +47,8 @@ namespace WpfNursePlanning
                         Status = item.Status,
                         Nurse = item.Nurse,
                         NurseId = item.NurseId,
-                    });
+                        //Name = item.Nurse.LastName, //+ " " + item.Nurse.FirstName
+                    }) ; 
             }
             dgrRdv.ItemsSource = list;
         }
@@ -61,13 +61,19 @@ namespace WpfNursePlanning
             dpBithDay.SelectedDate = appointment.Patient.BirthDay;
             txtAdress.Text = appointment.Patient.Adress;
             txtSsNumber.Text = appointment.Patient.SocialSecurityNumber;
+            txtPhoneNumber.Text = appointment.Patient.PhoneNumber;
+            txtEmail.Text = appointment.Patient.Email;
+            chkIsActiveRdv.IsChecked = appointment.Patient.IsActive;
+            
         }
-
+            
         private void btnRetourRdv(object sender, RoutedEventArgs e)
         {
             MainWindow mainList = new MainWindow();
             mainList.Show();
             this.Close();
         }
+
+        
     }
 }

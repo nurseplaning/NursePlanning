@@ -8,6 +8,7 @@ using WpfNursePlanning.Model;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System;
+using System.Linq;
 
 namespace WpfNursePlanning
 {
@@ -79,6 +80,8 @@ namespace WpfNursePlanning
 
             Nurse nurse = dgr.SelectedItem as Nurse;
             AppointmentList rdvList = new AppointmentList(nurse.Id);
+            rdvList.lblNurseName.Content = nurse.FirstName + " " + nurse.LastName;
+          
             rdvList.Show();
             this.Close();
 
@@ -97,5 +100,7 @@ namespace WpfNursePlanning
         {
             this.Close();
         }
+
+
     }
 }
