@@ -26,10 +26,10 @@
             @Html.DisplayFor(model => model.DateEnd.TimeOfDay)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Motif)
+            @Html.DisplayNameFor(model => model.Reason)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Motif)
+            @Html.DisplayFor(model => model.Reason)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayName("Infirmier(e)")
@@ -38,7 +38,7 @@
             @Html.DisplayFor(model => model.Nurse.LastName)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Supprimer" class="btn btn-danger" /> |

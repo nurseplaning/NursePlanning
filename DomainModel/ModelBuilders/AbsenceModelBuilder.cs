@@ -15,7 +15,7 @@ namespace DomainModel.ModelBuilders
                 .ToTable("Absences");
 
             builder.Entity<Absence>()
-                .Property(n => n.Motif)
+                .Property(n => n.Reason)
                 .IsRequired();
 
             builder.Entity<Absence>()

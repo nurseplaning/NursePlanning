@@ -1,0 +1,36 @@
+﻿@model DomainModel.Person
+
+@{
+    ViewData["Title"] = "Activate";
+}
+
+<h1>Comptes</h1>
+
+@if (Model.GetType() == typeof(DomainModel.Patient))
+{
+    <h1>Activation Patient</h1>
+    <partial name="_DetailsPatient" model="Model as DomainModel.Patient" />
+}
+else
+{
+    <h1>Activation Infirmier</h1>
+    <partial name="_DetailsNurse" model="Model as DomainModel.Nurse" />
+}
+
+<form asp-action="ActivateNurse">
+    <div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IsActive" value="@Model.IsActive " />
+        @if (Model.IsActive)
+        {
+            <input type="submit" value="Desactiver" class="btn btn-danger" />
+        }
+        else
+        {
+            <input type="submit" value="Activer" class="btn btn-primary" />
+
+        }
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>
+

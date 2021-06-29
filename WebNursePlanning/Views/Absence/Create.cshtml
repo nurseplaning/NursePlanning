@@ -1,4 +1,4 @@
-﻿@model DomainModel.AbsenceViewModel
+﻿@model WebNursePlanning.Models.AbsenceViewModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
@@ -62,7 +62,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
+    <script>
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1; //January is 0!
@@ -76,5 +76,5 @@
 
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("Input_Date").setAttribute("min", today);
-</script>
+    </script>
 }
