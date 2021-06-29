@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
+	[Authorize(Roles = "ROLE_SUPERADMIN, ROLE_ADMIN")]
 	public class AbsenceController : Controller
 	{
 		private readonly IAbsenceRepository _absenceRepository;

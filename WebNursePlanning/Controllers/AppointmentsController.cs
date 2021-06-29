@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
-{
+    {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER")]
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentRepository _appointmentRepository;
