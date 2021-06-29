@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace WebNursePlanning.Controllers
 {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN,ROLE_USER")]
+
     public class MessageController : Controller
     {
         private readonly ILogger<MessageController> _logger;

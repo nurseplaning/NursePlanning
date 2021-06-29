@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,10 +8,11 @@ using Repository.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
 {
+    [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER")]
+
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentRepository _appointmentRepository;
@@ -71,21 +73,12 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AppointmentViewModel appointment)
+        public async Task<IActionResult> Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                var a = new Appointment()
-                {
-                    Date = appointment.Date,
-                    AtHome = appointment.AtHome,
-                    NurseId = appointment.NurseId,
-                    PatientId = appointment.PatientId,
-                    Description = appointment.Reason,
-                    StatusId = appointment.StatusId
-                };
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(a);
+                await _appointmentRepository.Create(appointment);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -116,7 +109,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
             if (id != appointment.Id)
             {

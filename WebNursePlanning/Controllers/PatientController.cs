@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace WebPatientPlanning.Controllers
 {
-    public class PatientController : Controller
+    [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN")]
+        public class PatientController : Controller
     {
         private readonly ILogger<PatientController> logger;
         private readonly UserManager<Person> userManager;
