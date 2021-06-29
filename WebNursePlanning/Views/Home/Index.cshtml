@@ -8,24 +8,24 @@
 </div>
 
 @*@if (User.IsInRole("ROLE_ADMIN") || (User.IsInRole("ROLE_USER")))
-{//Si l'utilisateur connecté est infirmier(role admin)
-    <p>
-        <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un infirmier</a>
+    {//Si l'utilisateur connecté est infirmier(role admin)
+        <p>
+            <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un infirmier</a>
 
-    </p>
-    <p>
-        @if (User.IsInRole("ROLE_ADMIN"))
-        {//Si l'utilisateur connecté est infirmier(role admin)
-            <a asp-action="Index" asp-controller="Absence">Liste des absences</a>
-        }
-    </p>
-}
-else
-{
-    <p style="text-align:center"> Veuillez vous <a asp-area="Identity" asp-page="/Account/Login">connecter</a> ou vous <a asp-area="Identity" asp-page="/Account/RegisterPatient">inscrire </a> pour pouvoir gérer vos prises de rendez-vous !</p>
-}*@
+        </p>
+        <p>
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <a asp-action="Index" asp-controller="Absence">Liste des absences</a>
+            }
+        </p>
+    }
+    else
+    {
+        <p style="text-align:center"> Veuillez vous <a asp-area="Identity" asp-page="/Account/Login">connecter</a> ou vous <a asp-area="Identity" asp-page="/Account/RegisterPatient">inscrire </a> pour pouvoir gérer vos prises de rendez-vous !</p>
+    }*@
 
-@if (User.IsInRole("ROLE_ADMIN") || (User.IsInRole("ROLE_USER")))
+@if (User.IsInRole("ROLE_ADMIN") || (User.IsInRole("ROLE_USER")) || (User.IsInRole("ROLE_SUPER_ADMIN")))
 {//Si l'utilisateur connecté est infirmier(role admin)
     @if (User.IsInRole("ROLE_ADMIN"))
     {//Si l'utilisateur connecté est infirmier(role admin)
@@ -38,11 +38,19 @@ else
             </p>
         </div>
     }
-    else
+    @if (User.IsInRole("ROLE_USER"))
     {
         <div style="text-align:center">
             <p>
                 <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un(e) Infirmier(e)</a>
+            </p>
+        </div>
+    }
+    @if (User.IsInRole("ROLE_SUPER_ADMIN"))
+    {
+        <div style="text-align:center">
+            <p>
+                <a asp-controller="SuperAdmin" asp-action="Index">Gestion des comptes infirmiers et patients de l'application</a>
             </p>
         </div>
     }
