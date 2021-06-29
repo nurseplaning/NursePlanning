@@ -92,10 +92,11 @@ namespace Repository
             //Calculate how many time slots  of appointments in a day
             double nbAppointments = timeInterval.Divide(delayAppointment);
             //Get existing appointments from database
-            List<Appointment> listAppointments = (List<Appointment>)await ListAppointmentsById(personId);
+            var enumerableAppointments = await ListAppointmentsById(personId);
+            List<Appointment> listAppointments = enumerableAppointments.ToList();
             //Get existing absences from database
-            var listAbsences = (List<Absence>)await _absenceRepository.ListAbsenceById(personId);
-
+            var enumerableAbsences = await _absenceRepository.ListAbsenceById(personId);
+            List<Absence> listAbsences = enumerableAbsences.ToList();
             if (appToEdit != null)
                 if (listAppointments.Contains(appToEdit.FirstOrDefault()))
                     listAppointments.Remove(appToEdit.FirstOrDefault());
