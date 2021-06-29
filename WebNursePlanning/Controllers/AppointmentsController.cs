@@ -5,13 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using WebNursePlanning.Models;
+using System.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebNursePlanning.Models;
 
 namespace WebNursePlanning.Controllers
-    {
+{
     [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER")]
     public class AppointmentsController : Controller
     {

@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using WebApiNursePlanning.Controllers;
-using WebPatientPlanning.Controllers;
 
 namespace WebNursePlanning.Controllers
 {
