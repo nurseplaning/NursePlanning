@@ -1,4 +1,4 @@
-﻿@model WebNursePlanning.Models.AppointmentViewModel
+﻿@model DomainModel.Appointment
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
@@ -8,19 +8,17 @@
 
 }
 
-<h1>Prise de Rdv</h1>
+<h1>Prise de Rendez-Vous</h1>
 
-<h4>Rendez-Vous</h4>
-<hr />
+<h4>Veuillez selectionner un horaire parmi les propositions</h4>
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                
-                @await Component.InvokeAsync("AppointmentTimeList", UserManager.GetUserId(User))
-                
-            </div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            @await Component.InvokeAsync("CreateAppointmentCalendar", UserManager.GetUserId(User))
+        </div>
+        <div class="col-4">
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -56,10 +54,10 @@
                 <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 <div>
