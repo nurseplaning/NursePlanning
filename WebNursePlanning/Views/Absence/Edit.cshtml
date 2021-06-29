@@ -1,9 +1,9 @@
-﻿@model DomainModel.Absence
+﻿@model DomainModel.AbsenceViewModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modification Absence";
 }
 
 <h1>Modification</h1>
@@ -13,35 +13,53 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="DateStart" class="control-label"></label>
-                <input asp-for="DateStart" class="form-control" />
-                <span asp-validation-for="DateStart" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateEnd" class="control-label"></label>
-                <input asp-for="DateEnd" class="form-control" />
-                <span asp-validation-for="DateEnd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Motif" class="control-label"></label>
-                <input asp-for="Motif" class="form-control" />
-                <span asp-validation-for="Motif" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si l'utilisateur connecté est infirmier(role admin)
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label> Date début d'asbence</label>
+                    <input asp-for="DateStart" min="2021-06-24" class="form-control" />
+                    <span asp-validation-for="DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Heure du début d'absence</label>
+                    <input asp-for="TimeStart" class="form-control" />
+                    <span asp-validation-for="TimeStart" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Date de retour d'absence</label>
+                    <input asp-for="DateEnd" min="2021-06-24" class="form-control" />
+                    <span asp-validation-for="DateEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Heure de retour d'absence</label>
+                    <input asp-for="TimeEnd" class="form-control" />
+                    <span asp-validation-for="TimeEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Motif" class="control-label"></label>
+                    <input asp-for="Motif" class="form-control" />
+                    <span asp-validation-for="Motif" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Validation" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+                <div>
+                    <p>Vous n'êtes pas infirmier, vous n'avez rien à faire ici !</p>
+                </div>
+            }
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retour à la liste des absences</a>
 </div>
 
 @section Scripts {
