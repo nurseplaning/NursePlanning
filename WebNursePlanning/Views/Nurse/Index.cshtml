@@ -6,25 +6,16 @@
     <thead>
         <tr>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayName("Nom")
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayName("Prénom")
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.SiretNumber)
+                @Html.DisplayName("E-mail")
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Adress)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.BirthDay)
+                @Html.DisplayName("Téléphone")
             </th>
             <th scope="col"></th>
         </tr>
@@ -40,23 +31,14 @@
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SiretNumber)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Adress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BirthDay)
-                </td>
-                <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="">
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a>
                         @if (item.IsActive)
                         {
                             <a asp-action="ActivateNurse" asp-controller="SuperAdmin" asp-route-id="@item.Id" class="btn btn-primary">Desactiver compte</a>
