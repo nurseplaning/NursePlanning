@@ -24,13 +24,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Confidentialité</a>
                         </li>
-                        @if (User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_USER"))
+                        @if ((User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_USER"))  || (User.IsInRole("ROLE_SUPER_ADMIN")))
                         {//Si l'utilisateur connecté est infirmier(role admin)
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Rendez-vous</a>
                             </li>
                         }
-                        @if (User.IsInRole("ROLE_ADMIN"))
+                        @if ((User.IsInRole("ROLE_ADMIN")) || (User.IsInRole("ROLE_SUPER_ADMIN")))
                         {//Si l'utilisateur connecté est infirmier(role admin)
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Absence" asp-action="Index">Absences</a>
