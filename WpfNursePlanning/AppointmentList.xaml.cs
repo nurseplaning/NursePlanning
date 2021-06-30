@@ -12,7 +12,7 @@ namespace WpfNursePlanning
 
     public partial class AppointmentList : Window
     {
-        private const string API_URL = "https://nurseplanningapi.azurewebsites.net/api/Appointments";
+        private const string API_URL = "https://localhost:44307/api/Appointments";
         private static HttpClient client = new HttpClient();
         static async Task<string> GetAppointmentAsync(string Nurseid)
         {
