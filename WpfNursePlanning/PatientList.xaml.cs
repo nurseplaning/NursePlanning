@@ -14,7 +14,6 @@ using System.Windows.Input;
 using WpfNursePlanning.Model;
 namespace WpfNursePlanning
 {
-
     public partial class PatientList : Window
     {
         private const string API_URL = "https://localhost:44307/api/Patient";
@@ -66,7 +65,7 @@ namespace WpfNursePlanning
                         TwoFactorEnabled = item.TwoFactorEnabled,
                         EmailConfirmed = item.TwoFactorEnabled,
 
-            });
+                    });
             }
 
             dgrPatient.ItemsSource = list;
@@ -98,17 +97,13 @@ namespace WpfNursePlanning
             patient.Email = txtEmail.Text;
             patient.NormalizedEmail = txtNormalizedEmail.Text;
 
-
-
             this.UpdatePatient(patient);
         }
         private async void UpdatePatient(Patient patient)
         {
             await client.PutAsJsonAsync(API_URL + "/" + patient.Id, patient);
             MessageBox.Show("le/la patient(e) " + patient.LastName + " est modifié(e)");
-
             EnableDesable(false);
-            
         }
 
         private void btnRetour_Click(object sender, RoutedEventArgs e)
@@ -117,16 +112,12 @@ namespace WpfNursePlanning
             mainList.Show();
             this.Close();
         }
-
-
         private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
             var row = ItemsControl.ContainerFromElement((DataGrid)sender,
                                                 e.OriginalSource as DependencyObject) as DataGridRow;
 
             if (row == null) return;
-
             Patient patient = dgrPatient.SelectedItem as Patient;
 
             chkIsActive.IsChecked = patient.IsActive;
@@ -150,13 +141,9 @@ namespace WpfNursePlanning
             txtEmailConfirmed.Text = "true";
 
             EnableDesable(true);
-            
         }
-
-
         public void EnableDesable(bool i)
         {
-
             chkIsActive.IsEnabled = i;
             txtLastName.IsEnabled = i;
             txtFirstName.IsEnabled = i;
@@ -168,12 +155,6 @@ namespace WpfNursePlanning
             txtUserName.IsEnabled = i;
             txtEmail.IsEnabled = i;
             btnValidPatient.IsEnabled = i;
-
         }
-
-
     }
-
-
-
 }

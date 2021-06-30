@@ -11,7 +11,7 @@
         <Image Source="/patient.png" HorizontalAlignment="Left" Height="139" Margin="10,10,0,0" VerticalAlignment="Top" Width="148" />
         <DataGrid Name="dgrPatient"  ScrollViewer.CanContentScroll="True"  
                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                  AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="466" Margin="274,80,0,0" VerticalAlignment="Top" 
+                  AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="517" Margin="274,80,0,0" VerticalAlignment="Top" 
                   IsReadOnly="true"  ItemsSource="{Binding}"
               MouseDoubleClick="Row_MouseDoubleClick" SelectionMode="Extended" SelectionUnit="FullRow"
                   Width="728" CanUserDeleteRows="False" CanUserAddRows="False" MinColumnWidth="60">
@@ -72,18 +72,18 @@
         <TextBox Name="txtAdress" IsEnabled="False" HorizontalAlignment="Left" Margin="84,441,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="178" Height="44"/>
 
         <Label Content="Email :" HorizontalAlignment="Left" Margin="10,393,0,0" VerticalAlignment="Top" Width="95"/>
-        <TextBox Name="txtEmail" IsEnabled="False" HorizontalAlignment="Left" Margin="84,397,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="172"/>
+        <TextBox Name="txtEmail" IsEnabled="False" HorizontalAlignment="Left" Margin="84,397,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
 
-        <Button Name="btnValidPatient" IsEnabled="False" Content="Modifier" HorizontalAlignment="Left" Margin="84,569,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="40" Width="118"/>
+        <Button Name="btnValidPatient" IsEnabled="False" Content="Modifier" HorizontalAlignment="Left" Margin="111,506,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="40" Width="118"/>
 
 
-        <Button  HorizontalAlignment="Left" Margin="800,569,0,0" VerticalAlignment="Top" Height="56" Width="202" Click="btnRetour_Click">
+        <Button  Content="        Retour" FontWeight="Bold" HorizontalAlignment="Left" Margin="14,605,0,0" VerticalAlignment="Top" Height="35" Width="91" Click="btnRetour_Click">
             <Button.Background>
-                <ImageBrush ImageSource="/back.png" Stretch="Uniform" TileMode="Tile"/>
+                <ImageBrush ImageSource="/back.png" Stretch="Uniform" TileMode="Tile" AlignmentX="Left"/>
             </Button.Background>
         </Button>
 
-      
+
 
         <TextBox Name="txtUseEmailrName" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtUserName" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

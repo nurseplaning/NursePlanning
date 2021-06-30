@@ -27,7 +27,7 @@
         <ComboBox Name="cbxRole"  HorizontalAlignment="Left" Height="26" Margin="80,412,0,0" VerticalAlignment="Top" Width="178" SelectionChanged="cbxRole_SelectionChanged"/>-->
 
 
-        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="461" Margin="274,57,0,0" VerticalAlignment="Top" 
+        <DataGrid Name="dgr" AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="503" Margin="274,57,0,0" VerticalAlignment="Top" 
                   Width="728"
               IsReadOnly="true"
               ItemsSource="{Binding}"
@@ -55,19 +55,19 @@
         </DataGrid>
 
 
-        <Button x:Name="btRdv"  Content="          Rendez-vous"  Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="292,556,0,0" VerticalAlignment="Top" Width="125">
+        <Button x:Name="btRdv"  Content="          Rendez-vous" FontWeight="Bold" Click="btnAppointement" HorizontalAlignment="Left" Height="37" Margin="415,583,0,0" VerticalAlignment="Top" Width="126">
             <Button.Background>
                 <ImageBrush ImageSource="/rdv.jpg"  Stretch="Uniform" AlignmentX="Left"/>
             </Button.Background>
         </Button>
-        <Button Content="        Liste Patient"  Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="469,556,0,0" VerticalAlignment="Top" Width="125">
+        <Button Content="        Liste Patient" FontWeight="Bold" Click="btnListPatient" HorizontalAlignment="Left" Height="37" Margin="721,583,0,0" VerticalAlignment="Top" Width="124">
             <Button.Background>
                 <ImageBrush ImageSource="/patient.png"  Stretch="Uniform" AlignmentX="Left"/>
             </Button.Background>
         </Button>
-        <Button  Click="btnQuitter" HorizontalAlignment="Left" Height="37" Margin="877,556,0,0" VerticalAlignment="Top" Width="125" >
+        <Button  Click="btnQuitter" Content="              Quitter" FontWeight="Bold" HorizontalAlignment="Left" Height="37" Margin="14,583,0,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.484,1.324" >
             <Button.Background>
-                <ImageBrush ImageSource="/quitter.png" Stretch="Uniform" TileMode="None"/>
+                <ImageBrush ImageSource="/quitter.png" Stretch="Uniform" TileMode="None" AlignmentX="Left"/>
             </Button.Background>
         </Button>
         <Image Source="/infermiere.png" HorizontalAlignment="Left" Height="152" Margin="-29,10,0,0" VerticalAlignment="Top" Width="213" />
