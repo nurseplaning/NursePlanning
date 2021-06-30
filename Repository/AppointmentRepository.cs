@@ -137,7 +137,10 @@ namespace Repository
             foreach (var item in appointments)
             {
                 if (item.Date.Day == appointmentDate.Day && item.Date.Hour == appointmentDate.Hour && item.Date.Minute == appointmentDate.Minute)
+                {
                     isAvailable = false;
+                    break;
+                }
                 else
                     isAvailable = true;
             }
