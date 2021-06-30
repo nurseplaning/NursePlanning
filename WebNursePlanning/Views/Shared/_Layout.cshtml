@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" type="image/png" href="/css/logo.png" sizes="16x16">
 </head>
-<body style="background-image:url(/css/background.jpg); background-size:cover" >
+<body style="background-image:url(/css/background.jpg); background-size:cover">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #e8f1e3;">
             <div class="container">
-                @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PrenezMoiViteSvp</a>*@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/css/logo.png" width="140" height="120"></a>
 
-                <a asp-action="Index">
+                @*<a asp-action="Index">
                     <img src="/css/logo.png" width="140" height="120">
-                </a>
+                </a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
             </div>
         </nav>
     </header>
-    <div class="container" >
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

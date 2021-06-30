@@ -47,8 +47,9 @@
                         }
                         else
                         {
-                            <a asp-action="ActivateNurse"class="btn btn-primary" asp-controller="SuperAdmin" asp-route-id="@item.Id">  Activer compte</a>
+                            <a asp-action="ActivateNurse" class="btn btn-primary" asp-controller="SuperAdmin" asp-route-id="@item.Id">  Activer compte</a>
                         }
+                        <a asp-action="Index" asp-controller="Appointments" asp-route-id="@item.Id" class="btn btn-info">Rdvs</a>
                     </div>
                 </td>
             </tr>
