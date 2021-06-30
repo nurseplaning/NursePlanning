@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -104,6 +102,8 @@ namespace WpfNursePlanning
             await client.PutAsJsonAsync(API_URL + "/" + patient.Id, patient);
             MessageBox.Show("le/la patient(e) " + patient.LastName + " est modifié(e)");
             EnableDesable(false);
+            dgrPatient.Items.Refresh();
+            
         }
 
         private void btnRetour_Click(object sender, RoutedEventArgs e)
@@ -156,5 +156,7 @@ namespace WpfNursePlanning
             txtEmail.IsEnabled = i;
             btnValidPatient.IsEnabled = i;
         }
+
+        
     }
 }

@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="PatientList" Height="650" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None">
     <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}">
+        
         <Label Content="Liste des Patients" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="274,32,0,0" VerticalAlignment="Top" Width="281" RenderTransformOrigin="0.499,0.282"/>
         <Image Source="/patient.png" HorizontalAlignment="Left" Height="139" Margin="10,10,0,0" VerticalAlignment="Top" Width="148" />
-        <DataGrid Name="dgrPatient"  ScrollViewer.CanContentScroll="True"  
+        <DataGrid Name="dgrPatient"  ScrollViewer.CanContentScroll="True"  ItemsSource="{Binding}" 
                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                   AutoGenerateColumns="False"  HorizontalAlignment="Left" Height="517" Margin="274,80,0,0" VerticalAlignment="Top" 
-                  IsReadOnly="true"  ItemsSource="{Binding}"
+                  IsReadOnly="true"  
               MouseDoubleClick="Row_MouseDoubleClick" SelectionMode="Extended" SelectionUnit="FullRow"
                   Width="728" CanUserDeleteRows="False" CanUserAddRows="False" MinColumnWidth="60">
             <DataGrid.Columns>
