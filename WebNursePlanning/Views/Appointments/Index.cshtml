@@ -16,21 +16,18 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.AtHome)*@
-                À domicile
+                @Html.DisplayNameFor(model => model.AtHome)
             </th>
             @if (User.IsInRole("ROLE_USER"))
             {//Si l'utilisateur connecté est patient(role user)
                 <th>
-                    @*@Html.DisplayNameFor(model => model.NurseId)*@
-                    Infirmier(e)
+                    @Html.DisplayNameFor(model => model.NurseId)
                 </th>
             }
             else if (User.IsInRole("ROLE_ADMIN"))
             {//Si l'utilisateur est un infirmier (role admin)
                 <th>
-                    @*@Html.DisplayNameFor(model => model.PatientId)*@
-                    Patient(e)
+                    @Html.DisplayNameFor(model => model.PatientId)
                 </th>
             }
             <th>
