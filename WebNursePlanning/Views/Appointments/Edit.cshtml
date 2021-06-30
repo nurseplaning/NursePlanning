@@ -12,61 +12,81 @@
 
 <hr />
 <div class="row">
-    <input type="button" id="Previous" name="Previous" value="Semaine Precedent" />
-    <input type="button" id="Next" name="Next" value="Semaine Suivant" />
+
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <label asp-for="Reason" class="control-label"></label>
-            <input asp-for="Reason" class="form-control" />
-            <span asp-validation-for="Reason" class="text-danger"></span>
-        </div>
-        <div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="AtHome" /> @Html.DisplayName("A domicile")
-            </label>
-        </div>
-        @if (User.IsInRole("ROLE_ADMIN"))
-        {//Si le l'utilisateur connecté est infirmier(role admin)
-            <div class="form-group">
-                <input asp-for="NurseId" class="form-control" style="display:none;" value="@UserManager.GetUserId(User)" />
-            </div>
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control"
-                        asp-items="MyAppointment.GetSelectListPatientsAsync(Model.PatientId).GetAwaiter().GetResult()"></select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Statut</label>
-                <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
-                <span asp-validation-for="StatusId" class="text-danger"></span>
-            </div>
-        }
-        else if (User.IsInRole("ROLE_USER"))
-        {//Si l'utilisateur est un patient (role user)
-            <input asp-for="StatusId" hidden />
-            <div class="form-group">
-                <label asp-for="NurseId" class="control-label"></label>
-                <select asp-for="NurseId" class="form-control"
-                        asp-items="MyAppointment.GetSelectListNursesAsync(Model.NurseId).GetAwaiter().GetResult()"></select>
-            </div>
-            <div class="form-group">
-                <input asp-for="PatientId" class="form-control" style="display:none;" value="@UserManager.GetUserId(User)" />
-            </div>
-        }
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-5">
+                <div class="row align-content-center">
+                    <div class="col-md-2"> <label asp-for="Reason" class="control-label"></label></div>
+                    <div class="col">
+                        <input asp-for="Reason" class="form-control" />
+                        <span asp-validation-for="Reason" class="text-danger"></span>
+                    </div>
 
-        <div id="Calendar" class="form-group">
+                </div>
+            </div>
+
+            @if (User.IsInRole("ROLE_ADMIN"))
+            {//Si le l'utilisateur connecté est infirmier(role admin)
+
+
+                <div class="form-group col-md-5">
+                    <div class="row align-content-center">
+                        <div class="col-md-2"> <label asp-for="PatientId" class="control-label"></label></div>
+                        <div class="col">
+                            <select asp-for="PatientId" class="form-control"
+                                    asp-items="MyAppointment.GetSelectListPatientsAsync(Model.PatientId).GetAwaiter().GetResult()"></select>
+
+                            <span asp-validation-for="PatientId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input asp-for="NurseId" style="display:none;" value="@UserManager.GetUserId(User)" />
+
+                </div>
+
+                @*<div class="form-group">
+                        <label class="control-label">Statut</label>
+                        <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
+                        <span asp-validation-for="StatusId" class="text-danger"></span>
+                    </div>*@
+            }
+            else if (User.IsInRole("ROLE_USER"))
+            {//Si l'utilisateur est un patient (role user)
+
+                <div class="form-group col-md-5">
+                    <div class="row align-content-center">
+                        <div class="col-md-2"> <label asp-for="NurseId" class="control-label"></label></div>
+                        <div class="col">
+                            <select asp-for="NurseId" class="form-control"
+                                    asp-items="MyAppointment.GetSelectListNursesAsync(Model.NurseId).GetAwaiter().GetResult()">
+                            </select>
+                            <span asp-validation-for="NurseId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
+
+                <input asp-for="StatusId" hidden />
+            }
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="AtHome" /> @Html.DisplayName("A domicile")
+                </label>
+            </div>
+        </div>
+        <input type="button" id="Previous" name="Previous" value="Semaine Precedent" class="btn btn-primary" />
+        <input type="button" id="Next" name="Next" value="Semaine Suivant" class="btn btn-primary" />
+        <div id="Calendar" class="form-group" style="overflow:auto;  height: 500px;">
             @await Component.InvokeAsync("EditAppointmentCalendar", new { personId = UserManager.GetUserId(User), appToEdit = new List<DomainModel.Appointment> { Model } })
         </div>
         <div class="form-group">
             <input type="submit" value="Sauvegarder" class="btn btn-primary" />
         </div>
     </form>
-</div>
-
-<div>
-    <a asp-action="Index">Retour à la liste</a>
+    <a asp-action="Index" class="btn btn-info">Retour à la liste de vos rendez-vous</a>
 </div>
 
 @section Scripts {
