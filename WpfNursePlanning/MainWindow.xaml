@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
         <Label Content="Nom" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="49" Height="26" RenderTransformOrigin="-0.057,0.554"/>
         <TextBox Name="txtLastName" IsEnabled="False"  HorizontalAlignment="Left" Margin="110,182,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="20"/>
 
@@ -73,6 +76,38 @@
         <Image Source="/infermiere.png" HorizontalAlignment="Left" Height="152" Margin="-29,10,0,0" VerticalAlignment="Top" Width="213" />
         <Label Content="Liste des infirmiers(es)" Foreground="Blue" FontSize="20" HorizontalAlignment="Left" Height="32" Margin="525,10,0,0" VerticalAlignment="Top" Width="226" RenderTransformOrigin="0.499,0.282"/>
         <Label Name="lblMessage" HorizontalAlignment="Left" Margin="80,460,0,0" VerticalAlignment="Top" Width="178"/>
+
+        <Label Content="Email :" HorizontalAlignment="Left" Margin="14,439,0,0" VerticalAlignment="Top" Width="95"/>
+        <TextBox Name="txtEmail" IsEnabled="False" HorizontalAlignment="Left" Margin="84,442,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+
+
+
+        <Button Name="btnModifNurse" IsEnabled="False" Content="              Modifier"  FontWeight="Bold"  HorizontalAlignment="Left" Margin="77,505,0,0" VerticalAlignment="Top" Click="btnActiveNurse" Height="40" Width="125">
+            <Button.Background>
+                <ImageBrush ImageSource="/modifier.jpg" Stretch="Uniform" AlignmentX="Left"/>
+            </Button.Background>
+        </Button>
+
+
+
+        <TextBox Name="txtUseEmailrName" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtUserName" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPhoneNumber" Visibility="Hidden" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPasswordHash" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPhoneNumberConfirmed" Visibility="Hidden" HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtEmailConfirmed" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtSecurityStamp" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtConcurrencyStamp" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtTwoFactorEnabled" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtNormalizedUserName" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+
+        <TextBox Name="txtNormalizedEmail" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtLockoutEnabled" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtAccessFailedCount" Visibility="Hidden"  HorizontalAlignment="Left" Margin="387,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <CheckBox Name="chkIsActive" IsEnabled="False" IsChecked="{Binding Path=IsActive, IsAsync=True}" Content="Activer/Désactiver" HorizontalAlignment="Left" Margin="144,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.98,0.662"/>
+
+
     </Grid>
 
 </Window>

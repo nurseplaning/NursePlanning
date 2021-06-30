@@ -16,6 +16,8 @@
   <ItemGroup>
     <None Remove="back.png" />
     <None Remove="infermiere.png" />
+    <None Remove="Modifier.jfif" />
+    <None Remove="modifier.jpg" />
     <None Remove="patient.png" />
     <None Remove="quitter.png" />
     <None Remove="rdv.jpg" />
@@ -34,6 +36,8 @@
   <ItemGroup>
     <Resource Include="back.png" />
     <Resource Include="infermiere.png" />
+    <Resource Include="Modifier.jfif" />
+    <Resource Include="modifier.jpg" />
     <Resource Include="patient.png" />
     <Resource Include="quitter.png" />
     <Resource Include="rdv.jpg" />

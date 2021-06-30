@@ -75,9 +75,11 @@
         <Label Content="Email :" HorizontalAlignment="Left" Margin="10,393,0,0" VerticalAlignment="Top" Width="95"/>
         <TextBox Name="txtEmail" IsEnabled="False" HorizontalAlignment="Left" Margin="84,397,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
 
-        <Button Name="btnValidPatient" IsEnabled="False" Content="Modifier" HorizontalAlignment="Left" Margin="111,506,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="40" Width="118"/>
-
-
+        <Button Name="btnValidPatient" IsEnabled="False" Content="Modifier" HorizontalAlignment="Left" Margin="111,506,0,0" VerticalAlignment="Top" Click="btnActivePatient" Height="40" Width="118">
+            <Button.Background> 
+                <ImageBrush ImageSource="/modifier.jpg" Stretch="Uniform" AlignmentX="Left"/>
+            </Button.Background>
+        </Button>
         <Button  Content="        Retour" FontWeight="Bold" HorizontalAlignment="Left" Margin="14,605,0,0" VerticalAlignment="Top" Height="35" Width="91" Click="btnRetour_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/back.png" Stretch="Uniform" TileMode="Tile" AlignmentX="Left"/>
