@@ -4,46 +4,49 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayName("Nom")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayName("Prénom")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDay)
+            @Html.DisplayName("Date de naissance")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BirthDay)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adress)
+            @Html.DisplayName("Adresse")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Adress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SocialSecurityNumber)
+            @Html.DisplayName("N° sécurité sociale")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SocialSecurityNumber)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayName("E-mail")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            @Html.DisplayName("Téléphone")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
     </dl>
+</div>
+<div>
+    <a asp-area="" asp-controller="Patient" asp-action="Index">Retour à la gestion des comptes</a>
 </div>

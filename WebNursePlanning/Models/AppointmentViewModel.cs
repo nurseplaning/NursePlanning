@@ -9,6 +9,7 @@ namespace WebNursePlanning.Models
 	{
 		[Required]
 		[DataType(DataType.Date)]
+		[Display(Name = "Date du rendez-vous")]
 		public DateTime Date { get; set; }
 
 		[Required]

@@ -13,7 +13,7 @@ using WebNursePlanning.Models;
 using WebNursePlanning.Shared.Components;
 
 namespace WebNursePlanning.Controllers
-    {
+{
     [Authorize(Roles = "ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER")]
     public class AppointmentsController : Controller
     {
@@ -26,9 +26,9 @@ namespace WebNursePlanning.Controllers
 
         public AppointmentsController(IAppointmentRepository appointmentRepository,
                                         INurseRepository nurseRepository,
-                                        IPatientRepository patientRepository, 
+                                        IPatientRepository patientRepository,
                                         IStatusRepository statusRepository,
-                                        UserManager<Person> userManager, 
+                                        UserManager<Person> userManager,
                                         SignInManager<Person> signInManager)
         {
             _appointmentRepository = appointmentRepository;
@@ -41,7 +41,7 @@ namespace WebNursePlanning.Controllers
 
         // GET: Appointments
         public async Task<IActionResult> Index(string id = null)
-        {            
+        {
             var user = await _userManager.GetUserAsync(User);
             var listAppointments = await _appointmentRepository.ListAppointmentsById(id is null ? user.Id : id);
             return View(listAppointments);
@@ -84,7 +84,7 @@ namespace WebNursePlanning.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 //appointment.Id = Guid.NewGuid();
                 await _appointmentRepository.Create(appointment);
 
@@ -133,7 +133,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
 
             if (id != appointment.Id)
@@ -201,6 +201,7 @@ namespace WebNursePlanning.Controllers
                 return NotFound();
             }
 
+
             ViewData["StatusId"] = new SelectList(await _statusRepository.ListStatuses(), "Id", "Name", appointment.StatusId);
 
             return View(appointment);
@@ -211,7 +212,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
             if (id != appointment.Id)
             {
@@ -222,7 +223,26 @@ namespace WebNursePlanning.Controllers
             {
                 try
                 {
-                    await _appointmentRepository.Edit(appointment);
+                    var oldAppointment = _appointmentRepository.Details(id).GetAwaiter().GetResult();
+
+                    if (oldAppointment.Reason != appointment.Reason ||
+                        oldAppointment.Date != appointment.Date ||
+                        oldAppointment.NurseId != appointment.NurseId)
+                    {
+                                          oldAppointment.StatusId = await _statusRepository.GetStatusId("En attente");
+                    }
+                    else
+                    {
+                        oldAppointment.StatusId = appointment.StatusId;
+                    }
+
+                    oldAppointment.Reason = appointment.Reason;
+                    oldAppointment.Date = appointment.Date;
+                    oldAppointment.NurseId = appointment.NurseId;
+                    oldAppointment.PatientId = appointment.PatientId;
+                    oldAppointment.AtHome = appointment.AtHome;
+                                      
+                    await _appointmentRepository.Edit(oldAppointment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -264,7 +284,12 @@ namespace WebNursePlanning.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _appointmentRepository.Delete(id);
+            var appointment = await _appointmentRepository.Details(id);
+    
+            appointment.StatusId = await _statusRepository.GetStatusId("Annulé"); 
+
+            await _appointmentRepository.Edit(appointment);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -330,7 +355,5 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        
-
     }
 }
