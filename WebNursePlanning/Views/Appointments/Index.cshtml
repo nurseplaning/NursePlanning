@@ -76,7 +76,12 @@
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary disabled">Modifier</a> <span>  </span>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary disabled">Supprimer</a>
                     }
-
+                    @if (User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_SUPER_ADMIN"))
+                    {
+                        <a asp-action="Transfer" asp-route-id="@item.Id">Transfert</a>
+                        <a asp-action="RejectStatus" asp-route-id="@item.Id">Rejeter</a>
+                        <a asp-action="ValidateStatus" asp-route-id="@item.Id">Valider</a>
+                    }
                 </td>
             </tr>
         }
