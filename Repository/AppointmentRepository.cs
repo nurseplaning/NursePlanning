@@ -88,6 +88,7 @@ namespace Repository
             TimeSpan startTime = new(8, 0, 0);
             TimeSpan endTime = new(17, 30, 0);
             DateTime dateOfWeek = DateTime.Now.Date;
+            DateTime completeDate ;
             TimeSpan delayAppointment = new(0, 30, 0);
 
             //Get Total minutes of a day
@@ -110,16 +111,18 @@ namespace Repository
             Dictionary<string, List<TimeSpan>> dicoAppointments = new();
             for (int day = 0; day < 7; day++)
             {
+                completeDate = dateOfWeek.Add(startTime);
                 for (int timeappointment = 0; timeappointment < nbAppointments; timeappointment++)
                 {
-                    if (CheckAvailabilityAppointment(listAppointments, dateOfWeek, startTime) 
+                    if (CheckAvailabilityAppointment(listAppointments, completeDate) 
                         && CheckAvailabilityAbsences(listAbsences, dateOfWeek, startTime, delayAppointment)
                         && !IsPast(dateOfWeek, startTime))
                         listTimes.Add(startTime);
                     else
                         listTimes.Add(new TimeSpan());
-
+                    
                     startTime = startTime.Add(delayAppointment);
+                    completeDate = dateOfWeek.Add(startTime);
                 }
                 //Ajout dans le dictionnaire des dates de rdvs
                 if (!dicoAppointments.ContainsKey(dateOfWeek.ToString("dddd dd MMMM yyyy")))
@@ -135,21 +138,8 @@ namespace Repository
             return dicoAppointments;
         }
 
-        public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay, TimeSpan appointmentTime)
-        {
-            //Par default, il considere que le rdv est disponible, cas d'une comparaison avec une liste de rdvs vide passée en parametre
-            bool isAvailable = true;
-            DateTime appointmentDate = appointmentDay.Add(appointmentTime);
-            foreach (var item in appointments)
-            {
-                if (item.Date.Day == appointmentDate.Day && item.Date.Hour == appointmentDate.Hour && item.Date.Minute == appointmentDate.Minute)
-                    isAvailable = false;
-                else
-                    isAvailable = true;
-            }
-            return isAvailable;
-        }
-        public bool CheckAvailabilityAppointment2(List<Appointment> appointments, DateTime appointmentDate)
+        
+        public bool CheckAvailabilityAppointment(List<Appointment> appointments, DateTime appointmentDate)
         {
             //Par default, il considere que le rdv est disponible, cas d'une comparaison avec une liste de rdvs vide passée en parametre
             bool isAvailable = true;           

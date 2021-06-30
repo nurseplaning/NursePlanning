@@ -138,7 +138,7 @@ namespace WebNursePlanning.Controllers
 
             var listAppointments = await _appointmentRepository.ListAppointmentsById(appointment.NurseId);
             var dateOfWeek = appointment.Date;
-            var isAvailable = _appointmentRepository.CheckAvailabilityAppointment2(listAppointments, dateOfWeek);
+            var isAvailable = _appointmentRepository.CheckAvailabilityAppointment(listAppointments, dateOfWeek);
 
             if (ModelState.IsValid)
             {
