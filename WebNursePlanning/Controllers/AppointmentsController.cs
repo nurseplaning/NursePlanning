@@ -79,25 +79,17 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AppointmentViewModel appointment)
+        public async Task<IActionResult> Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                var a = new Appointment()
-                {
-                    Date = appointment.Date,
-                    AtHome = appointment.AtHome,
-                    NurseId = appointment.NurseId,
-                    PatientId = appointment.PatientId,
-                    Description = appointment.Reason,
-                    StatusId = appointment.StatusId
-                };
+               
                 //appointment.Id = Guid.NewGuid();
-                await _appointmentRepository.Create(a);
+                await _appointmentRepository.Create(appointment);
 
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction("Index");
+            return View(appointment);
         }
 
         public IActionResult GenerateCalendar(string personId, int decalage)

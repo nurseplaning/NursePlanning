@@ -1,4 +1,4 @@
-﻿@model WebNursePlanning.Models.AppointmentViewModel
+﻿@model DomainModel.Appointment
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
@@ -22,14 +22,6 @@
         <div id="Calendar" class="form-group">
             @await Component.InvokeAsync("CreateAppointmentCalendar", UserManager.GetUserId(User))
         </div>
-        @*<div class="form-group">
-                @await Component.InvokeAsync("CreateAppointmentCalendar", new { id = UserManager.GetUserId(User), decalage = 1 })
-            </div>*@
-
-
-        <a asp-action="GenerateCalendar"
-           asp-route-personId="@UserManager.GetUserId(User)"
-           asp-route-decalage="1">text</a>
 
         <div class="form-group">
             <label asp-for="Reason" class="control-label"></label>
@@ -50,7 +42,6 @@
                 <label asp-for="PatientId" class="control-label"></label>
                 <select asp-for="PatientId" class="form-control"
                         asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
-                    <option value="">Please select one</option>
                 </select>
             </div>
         }
@@ -60,7 +51,6 @@
                 <label asp-for="NurseId" class="control-label"></label>
                 <select asp-for="NurseId" class="form-control"
                         asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
-                    <option value="">Please select one</option>
                 </select>
             </div>
             <div class="form-group">

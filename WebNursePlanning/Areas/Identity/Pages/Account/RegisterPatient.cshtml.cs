@@ -140,27 +140,18 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     return Page();
                 }
 
-                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_ADMIN");
-                var admins = await _userManager.GetUsersInRoleAsync("ROLE_SUPER_ADMIN");
-
+                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_USER");
+ 
                 foreach (var item in nurses)
                 {
                     var patient = item as Patient;
                     if (patient.SocialSecurityNumber == Input.SocialSecurityNumber)
                     {
-                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        StatusMessage = "Le numéro de securité sociale est déjà enregistré en base";
                         return Page();
                     }
                 }
-                foreach (var item in admins)
-                {
-                    var patient = item as Patient;
-                    if (patient.SocialSecurityNumber == Input.SocialSecurityNumber)
-                    {
-                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
-                        return Page();
-                    }
-                }
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
