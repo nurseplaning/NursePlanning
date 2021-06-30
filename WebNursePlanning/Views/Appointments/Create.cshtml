@@ -14,8 +14,8 @@
 <hr />
 <div class="row">
 
-    <button id="Previous" name="Previous">precedent</button>
-    <input type="button" id="Next" name="Next" value="suivant" />
+    <input type="button" id="Previous" name="Previous" value="Semaine Precedent" />
+    <input type="button" id="Next" name="Next" value="Semaine Suivant" />
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -44,6 +44,7 @@
                         asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
                 </select>
             </div>
+            @*<div hidden id="Nurse">@UserManager.GetUserId(User)</div>*@
         }
         else if (User.IsInRole("ROLE_USER"))
         {//Si l'utilisateur est un patient (role user)
@@ -67,18 +68,15 @@
     </form>
 </div>
 
-
-
 <div>
     <a asp-action="Index">Retour à la liste de vos rendez-vous</a>
 </div>
-<div hidden id="User">@UserManager.GetUserId(User)</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        var user = $("#User").val();
+        var user = $("#NurseId").val();
         var decalage = 0;
         $(function () {
             $("#Next").click(function (e) {
@@ -107,6 +105,19 @@
                         });
                 }
             });
+        });
+        $(function () {
+            $('#NurseId').on('change', function (e) {
+                 user = $('#NurseId option:selected').val();
+                e.preventDefault();
+                $.get('/Appointments/GenerateCalendar', {
+                    personId: user,
+                    decalage: decalage
+                }
+                    , function (data) { // data => PartialView
+                        $('#Calendar').html(data);
+                    });
+            });    
         });
     </script>
 
