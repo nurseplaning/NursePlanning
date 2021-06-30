@@ -80,9 +80,9 @@ namespace Repository
         {
             //En mode Edition de rdv on doit garder le rdv (appToEdit) à editer dans le dico renvoyé
 
-            //En mode Create car pas de rdv à editer, c'est normal
+            //En mode Create car pas de rdv à editer, appToEdit est vide c'est normal
 
-            //En mode Edit car appToEdit existe
+            //En mode Edit appToEdit existe
 
             //Define start time and end time for taking appointments
             TimeSpan startTime = new(8, 0, 0);
