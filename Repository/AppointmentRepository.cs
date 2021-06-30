@@ -88,7 +88,7 @@ namespace Repository
             TimeSpan startTime = new(8, 0, 0);
             TimeSpan endTime = new(17, 30, 0);
             DateTime dateOfWeek = DateTime.Now.Date.AddDays(decalage*7);
-            DateTime completeDate ;
+            DateTime completeDate= dateOfWeek.Add(startTime);
             TimeSpan delayAppointment = new(0, 30, 0);
 
             //Get Total minutes of a day
@@ -111,7 +111,7 @@ namespace Repository
             Dictionary<string, List<TimeSpan>> dicoAppointments = new();
             for (int day = 0; day < 7; day++)
             {
-                completeDate = dateOfWeek.Add(startTime);
+                
                 for (int timeappointment = 0; timeappointment < nbAppointments; timeappointment++)
                 {
                     if (CheckAvailabilityAppointment(listAppointments, completeDate) 
@@ -132,6 +132,7 @@ namespace Repository
                 listTimes = new List<TimeSpan>();
                 dateOfWeek = dateOfWeek.AddDays(1);
                 startTime = new TimeSpan(8, 0, 0);
+                completeDate = dateOfWeek.Add(startTime);
             }
             //Une fois les rdvs dispo verifiés, on verifie les absences avec les rdvs dispos
 
@@ -146,7 +147,10 @@ namespace Repository
             foreach (var item in appointments)
             {
                 if (item.Date.Day == appointmentDate.Day && item.Date.Hour == appointmentDate.Hour && item.Date.Minute == appointmentDate.Minute)
+                {
                     isAvailable = false;
+                    break;
+                }
                 else
                     isAvailable = true;
             }

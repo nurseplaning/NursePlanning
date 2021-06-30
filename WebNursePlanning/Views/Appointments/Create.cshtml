@@ -20,7 +20,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div id="Calendar" class="form-group">
-            @await Component.InvokeAsync("CreateAppointmentCalendar", UserManager.GetUserId(User))
+            @await Component.InvokeAsync("CreateAppointmentCalendar", new { id = UserManager.GetUserId(User) })
         </div>
 
         <div class="form-group">
