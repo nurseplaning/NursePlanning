@@ -133,7 +133,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Transfer(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
 
             if (id != appointment.Id)
@@ -211,7 +211,7 @@ namespace WebNursePlanning.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Description,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Reason,AtHome,NurseId,PatientId,StatusId")] Appointment appointment)
         {
             if (id != appointment.Id)
             {
@@ -330,7 +330,5 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        
-
     }
 }
