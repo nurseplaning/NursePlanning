@@ -7,6 +7,7 @@
     <p></p>
 </div>
 
+
 @*@if (User.IsInRole("ROLE_ADMIN") || (User.IsInRole("ROLE_USER")))
     {//Si l'utilisateur connecté est infirmier(role admin)
         <p>
@@ -31,10 +32,16 @@
     {//Si l'utilisateur connecté est infirmier(role admin)
         <div style="text-align:center">
             <p>
-                <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un(e) Patient(e)</a>
+                @*<a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un(e) Patient(e)</a>*@
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" asp-action="Create" asp-controller="Appointments">
+                    Prendre RDV avec un(e) Patient(e)
+                </button>
             </p>
             <p>
-                <a asp-action="Index" asp-controller="Absence">Liste des absences</a>
+                @*<a asp-action="Index" asp-controller="Absence">Liste des absences</a>*@
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" asp-action="Index" asp-controller="Absence">
+                    Liste des absences
+                </button>
             </p>
         </div>
     }
@@ -42,7 +49,10 @@
     {
         <div style="text-align:center">
             <p>
-                <a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un(e) Infirmier(e)</a>
+                @*<a asp-action="Create" asp-controller="Appointments">Prendre RDV avec un(e) Infirmier(e)</a>*@
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" asp-action="Create" asp-controller="Appointments">
+                    Prendre RDV avec un(e) Patient(e)
+                </button>
             </p>
         </div>
     }
