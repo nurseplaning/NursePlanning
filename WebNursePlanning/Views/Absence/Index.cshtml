@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Liste de vos asbences</h1>
+<h1>Liste des asbences</h1>
 
 <p>
     <a asp-action="Create">Création d'une absence</a>
@@ -13,19 +13,16 @@
     <thead>
         <tr>
             <th>
-                @*Html.DisplayNameFor(model => model.DateStart)*@
-                @Html.DisplayName("Date début")
+                @Html.DisplayNameFor(model => model.DateStart)
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.DateEnd)*@
-                @Html.DisplayName("Date fin")
+                @Html.DisplayNameFor(model => model.DateEnd)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reason)
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.NurseId)*@
-                @Html.DisplayName("Infirmier(e)")
+                @Html.DisplayNameFor(model => model.NurseId)
             </th>
             <th></th>
         </tr>

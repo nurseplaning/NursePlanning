@@ -16,21 +16,18 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.AtHome)*@
-                À domicile
+                @Html.DisplayNameFor(model => model.AtHome)
             </th>
             @if (User.IsInRole("ROLE_USER"))
             {//Si l'utilisateur connecté est patient(role user)
                 <th>
-                    @*@Html.DisplayNameFor(model => model.NurseId)*@
-                    Infirmier(e)
+                    @Html.DisplayNameFor(model => model.NurseId)
                 </th>
             }
             else if (User.IsInRole("ROLE_ADMIN"))
             {//Si l'utilisateur est un infirmier (role admin)
                 <th>
-                    @*@Html.DisplayNameFor(model => model.PatientId)*@
-                    Patient(e)
+                    @Html.DisplayNameFor(model => model.PatientId)
                 </th>
             }
             <th>
@@ -67,20 +64,19 @@
                     @Html.DisplayFor(modelItem => item.Status.Name)
                 </td>
                 <td>
-                    @* @{string class = item.Status.Name != "Annulé" ? "auth" : "anon";}*@
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a>
 
-                    @if (item.Status.Name == "Annulé"|| item.Status.Name == "Fermé" ||item.Status.Name == "Rejeté")
+                    @if (item.Status.Name != "Annulé" && item.Status.Name != "Fermé" && item.Status.Name != "Rejeté")
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary disabled">Modifier</a> <span> | </span>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Modifier</a> <span>  </span>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
                     }
                     else
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Modifier</a> <span> | </span>
-
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary disabled">Modifier</a> <span>  </span>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary disabled">Supprimer</a>
                     }
 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
                 </td>
             </tr>
         }

@@ -15,22 +15,22 @@
             {//Si l'utilisateur connecté est infirmier(role admin)
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label> Date début d'asbence</label>
+                    <label asp-for="DateStart" class="control-label"></label>
                     <input asp-for="DateStart" min="2021-06-24" class="form-control" />
                     <span asp-validation-for="DateStart" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>Heure du début d'absence</label>
+                    <label asp-for="TimeStart" class="control-label"></label>
                     <input asp-for="TimeStart" class="form-control" />
                     <span asp-validation-for="TimeStart" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>Date de retour d'absence</label>
+                    <label asp-for="DateEnd" class="control-label"></label>
                     <input asp-for="DateEnd" min="2021-06-24" class="form-control" />
                     <span asp-validation-for="DateEnd" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>Heure de retour d'absence</label>
+                    <label asp-for="TimeEnd" class="control-label"></label>
                     <input asp-for="TimeEnd" class="form-control" />
                     <span asp-validation-for="TimeEnd" class="text-danger"></span>
                 </div>
