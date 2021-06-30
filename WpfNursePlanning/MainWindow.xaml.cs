@@ -15,7 +15,7 @@ namespace WpfNursePlanning
 
     public partial class MainWindow : Window
     {
-        private const string API_URL = "https://localhost:44307/api/Nurses";
+        private const string API_URL = "https://nurseplanningapi.azurewebsites.net/api/Nurses";
         private static HttpClient client = new HttpClient();
         static async Task<string> GetGlobalDataAsync()
         {
