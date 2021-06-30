@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces
 {
-	public interface IStatusRepository
-	{
-		public Task<Status> GetStatusId(string statusname);
-
-		public Task<IEnumerable<Status>> ListStatuses();
-	}
+    public interface IStatusRepository
+    {
+        public Task<Guid> GetStatusId(string statusname);
+        public Task Edit(Status status);
+        public Task<IEnumerable<Status>> ListStatuses();
+    }
 }

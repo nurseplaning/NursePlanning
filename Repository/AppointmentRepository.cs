@@ -52,6 +52,12 @@ namespace Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task Transfer(Appointment appointment)
+        {
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Delete(Guid? id)
         {
             var appointment = await _context.Appointments.FindAsync(id);
@@ -65,7 +71,7 @@ namespace Repository
             return _context.Appointments.Any(a => a.Id == id);
         }
         [Authorize]
-        public async Task<IEnumerable<Appointment>> ListAppointmentsById(string idPerson)
+        public async Task<List<Appointment>> ListAppointmentsById(string idPerson)
         {
             return await _context.Appointments.Include(a => a.Nurse).Include(a => a.Patient).Include(a => a.Status).Where(p => p.NurseId == idPerson || p.PatientId == idPerson).ToListAsync();
         }
@@ -82,6 +88,7 @@ namespace Repository
             TimeSpan startTime = new(8, 0, 0);
             TimeSpan endTime = new(17, 30, 0);
             DateTime dateOfWeek = DateTime.Now.Date.AddDays(decalage*7);
+            DateTime completeDate ;
             TimeSpan delayAppointment = new(0, 30, 0);
 
             //Get Total minutes of a day
@@ -104,16 +111,18 @@ namespace Repository
             Dictionary<string, List<TimeSpan>> dicoAppointments = new();
             for (int day = 0; day < 7; day++)
             {
+                completeDate = dateOfWeek.Add(startTime);
                 for (int timeappointment = 0; timeappointment < nbAppointments; timeappointment++)
                 {
-                    if (CheckAvailabilityAppointment(listAppointments, dateOfWeek, startTime)
+                    if (CheckAvailabilityAppointment(listAppointments, completeDate) 
                         && CheckAvailabilityAbsences(listAbsences, dateOfWeek, startTime, delayAppointment)
                         && !IsPast(dateOfWeek, startTime))
                         listTimes.Add(startTime);
                     else
                         listTimes.Add(new TimeSpan());
-
+                    
                     startTime = startTime.Add(delayAppointment);
+                    completeDate = dateOfWeek.Add(startTime);
                 }
                 //Ajout dans le dictionnaire des dates de rdvs
                 if (!dicoAppointments.ContainsKey(dateOfWeek.ToString("dddd dd MMMM yyyy")))
@@ -129,11 +138,11 @@ namespace Repository
             return dicoAppointments;
         }
 
-        public bool CheckAvailabilityAppointment(IEnumerable<Appointment> appointments, DateTime appointmentDay, TimeSpan appointmentTime)
+        
+        public bool CheckAvailabilityAppointment(List<Appointment> appointments, DateTime appointmentDate)
         {
             //Par default, il considere que le rdv est disponible, cas d'une comparaison avec une liste de rdvs vide passée en parametre
-            bool isAvailable = true;
-            DateTime appointmentDate = appointmentDay.Add(appointmentTime);
+            bool isAvailable = true;           
             foreach (var item in appointments)
             {
                 if (item.Date.Day == appointmentDate.Day && item.Date.Hour == appointmentDate.Hour && item.Date.Minute == appointmentDate.Minute)

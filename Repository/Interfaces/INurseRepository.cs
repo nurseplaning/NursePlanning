@@ -7,6 +7,7 @@ namespace Repository.Interfaces
 	public interface INurseRepository
 	{
 		public Task<IEnumerable<Nurse>> ListNurses();
+		public Task<IEnumerable<Nurse>> ListNursesWithAppointment();
 
 		public Task<Nurse> Details(string id);
 	}

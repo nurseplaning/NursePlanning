@@ -1,0 +1,60 @@
+﻿@model DomainModel.Appointment
+
+@{
+    ViewData["Title"] = "ValidateStatus";
+}
+
+<h1>Validation de RDV</h1>
+
+<h3>Etes vous sur de vouloir valider ceci?</h3>
+<div>
+    <hr />
+    <h4>Rendez-vous</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AtHome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AtHome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NurseId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nurse.LastName)
+            @Html.DisplayFor(model => model.Nurse.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Patient.LastName)
+            @Html.DisplayFor(model => model.Patient.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+    </dl>
+
+    <form asp-action="ValidateStatus">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Valider" class="btn btn-dark" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

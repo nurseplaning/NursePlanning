@@ -67,9 +67,16 @@
                     @Html.DisplayFor(modelItem => item.Status.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>  |
+                    @if (User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_SUPER_ADMIN"))
+                    {
+                        <a asp-action="Transfer" asp-route-id="@item.Id">Transfert</a>
+                        <a asp-action="RejectStatus" asp-route-id="@item.Id">Rejeter</a>
+                        <a asp-action="ValidateStatus" asp-route-id="@item.Id">Valider</a>
+                    }
+
                 </td>
             </tr>
         }

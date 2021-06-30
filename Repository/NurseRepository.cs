@@ -20,6 +20,10 @@ namespace Repository
 		{
 			return await _context.Nurses.ToListAsync();
 		}
+		public async Task<IEnumerable<Nurse>> ListNursesWithAppointment()
+		{
+			return await _context.Nurses.Include(a => a.Appointments).ToListAsync();
+		}
 
 		public async Task<Nurse> Details(string id)
 		{
