@@ -128,7 +128,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
-                    SiretNumber = Input.SiretNumber,
+                    AdeliNumber = Input.SiretNumber,
                     PhoneNumber = Input.Phonenumber,
                     IsActive = false
                 };
@@ -145,7 +145,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in nurses)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.SiretNumber == Input.SiretNumber)
+                    if (nurse.AdeliNumber == Input.SiretNumber)
                     {
                         StatusMessage = "Le numéro de siret est déjà enregistré en base";
                         return Page();
@@ -154,7 +154,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in admins)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.SiretNumber == Input.SiretNumber)
+                    if (nurse.AdeliNumber == Input.SiretNumber)
                     {
                         StatusMessage = "Le numéro de siret est déjà enregistré en base";
                         return Page();

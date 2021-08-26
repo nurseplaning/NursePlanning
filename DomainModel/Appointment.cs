@@ -13,6 +13,12 @@ namespace DomainModel
         public string Reason { get; set; }
         [Display(Name = "A domicile")]
         public bool AtHome { get; set; }
+        [Display(Name = "Prise de Sang")]
+        public string BloodSample { get; set; }
+        [Display(Name = "Depistage Covid")]
+        public string CovidTest { get; set; }
+        [Display(Name = "Pansements")]
+        public string Bandage { get; set; }
         public Nurse Nurse { get; set; }
         [Display(Name = "Infirmier(e)")]
         public string NurseId { get; set; }
@@ -22,6 +28,7 @@ namespace DomainModel
         public Status Status { get; set; }
         [Display(Name = "Statut")]
         public Guid StatusId { get; set; }
+        
         public ICollection<Message> Messages { get; set; }
     }
 }

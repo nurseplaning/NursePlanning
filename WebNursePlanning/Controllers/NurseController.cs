@@ -46,7 +46,7 @@ namespace WebApiNursePlanning.Controllers
                 return BadRequest();
             }
 
-            var nurse = await userManager.FindByIdAsync(id) as Nurse;
+            Nurse nurse = await userManager.FindByIdAsync(id) as Nurse;
             if (nurse is null)
             {
                 return NotFound();
