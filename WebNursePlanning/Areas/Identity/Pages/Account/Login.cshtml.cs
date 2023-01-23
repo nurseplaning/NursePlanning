@@ -85,7 +85,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
                 var user = _context.People.FirstOrDefault(p => p.Email == Input.Email);
-                if (user.IsActive)
+                if ((user != null) && (user.IsActive))
                 {
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
@@ -111,7 +111,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Votre compte a été desativée. Contactez l'administratreur pour reactivation");
+                    ModelState.AddModelError(string.Empty, "Votre compte a été desactivé ou n'existe pas. Contactez l'administratreur");
                     return Page();
                 }
             }
