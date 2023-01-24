@@ -9,7 +9,9 @@ namespace DomainModel
         public Guid Id { get; set; }
         [Display(Name = "Date du rendez-vous")]
         public DateTime Date { get; set; }
+        [Display(Name = "Motif")]
         public string Reason { get; set; }
+        [Display(Name = "A domicile")]
         public bool AtHome { get; set; }
         public Nurse Nurse { get; set; }
         [Display(Name = "Infirmier(e)")]
