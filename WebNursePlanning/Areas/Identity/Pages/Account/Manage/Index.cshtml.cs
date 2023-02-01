@@ -61,9 +61,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Securité Sociale")]
-            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string SocialSecurityNumber { get; set; }
+            [Display(Name = "Régime Social")]
+            public string SocialRegime { get; set; }
         }
 
         private async Task LoadAsync(Patient user)
@@ -81,7 +80,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 LastName = patient.LastName,
                 BirthDay = patient.BirthDay,
                 Adress = patient.Adress,
-                SocialSecurityNumber = patient.SocialSecurityNumber
+                SocialRegime = patient.SocialRegime
             };
         }
 
@@ -120,7 +119,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             patient.LastName = Input.LastName;
             patient.BirthDay = Input.BirthDay;
             patient.Adress = Input.Adress;
-            patient.SocialSecurityNumber = Input.SocialSecurityNumber;
+            patient.SocialRegime = Input.SocialRegime;
 
             var setPatientResult = await _userManager.UpdateAsync(patient);
             if (!setPatientResult.Succeeded)

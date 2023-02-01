@@ -13,39 +13,39 @@ namespace WebNursePlanning.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
+        //private readonly ILogger<HomeController> logger;
         private readonly UserManager<Person> userManager;
-        private readonly SignInManager<Person> signInManager;
+        //private readonly SignInManager<Person> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeController(//ILogger<HomeController> logger,
             UserManager<Person> userManager,
-            RoleManager<IdentityRole> roleManager,
-            SignInManager<Person> signInManager)
+            RoleManager<IdentityRole> roleManager
+            /*SignInManager<Person> signInManager*/)
         {
-            this.logger = logger;
+            //this.logger = logger;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.signInManager = signInManager;
+            //this.signInManager = signInManager;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
             #region Roles Generation
 
-            IdentityRole roleSuperAdmin = new IdentityRole()
+            IdentityRole roleSuperAdmin = new()
             {
                 Name = "ROLE_SUPER_ADMIN"
             };
             await roleManager.CreateAsync(roleSuperAdmin);
 
-            IdentityRole roleAdmin = new IdentityRole()
+            IdentityRole roleAdmin = new()
             {
                 Name = "ROLE_ADMIN"
             };
             await roleManager.CreateAsync(roleAdmin);
 
-            IdentityRole roleUser = new IdentityRole()
+            IdentityRole roleUser = new()
             {
                 Name = "ROLE_USER"
             };
@@ -77,7 +77,8 @@ namespace WebNursePlanning.Controllers
                     AccessFailedCount = 0,
                     IsActive = true
                 };
-                IdentityResult chkSuperNurse = await userManager.CreateAsync(superNurse, password);
+                //Création d'un nouvel user Admin(Nurse) avec role super_admin et son mot de passe
+                _ = await userManager.CreateAsync(superNurse, password);
 
                 await userManager.AddToRoleAsync(superNurse, "ROLE_SUPER_ADMIN");
 
@@ -99,8 +100,8 @@ namespace WebNursePlanning.Controllers
                     AccessFailedCount = 0,
                     IsActive = true
                 };
-
-                IdentityResult chkNurse = await userManager.CreateAsync(nurse, password);
+                //Création d'un nouvel user Nurse avec son mot de passe
+                _ = await userManager.CreateAsync(nurse, password);
                 await userManager.AddToRoleAsync(nurse, "ROLE_ADMIN");
 
                 var patient = new Patient()
@@ -110,7 +111,7 @@ namespace WebNursePlanning.Controllers
                     LastName = "Malito",
                     BirthDay = new DateTime(1980, 12, 12),
                     Adress = "3, rue diagonale 34000 Montpellier",
-                    SocialSecurityNumber = "1234567898765",
+                    SocialRegime = "Securité Sociale/Harmonie Mutuelle",
                     Email = "estoymalito@patient.fr",
                     PasswordHash = "mdpPatient",
                     PhoneNumber = "0600000002",
@@ -121,8 +122,8 @@ namespace WebNursePlanning.Controllers
                     AccessFailedCount = 0,
                     IsActive = true
                 };
-
-                IdentityResult chkPatient = await userManager.CreateAsync(patient, password);
+                //Création d'un nouvel user Patient avec son mot de passe
+                _ = await userManager.CreateAsync(patient, password);
                 await userManager.AddToRoleAsync(patient, "ROLE_USER");
             }
 

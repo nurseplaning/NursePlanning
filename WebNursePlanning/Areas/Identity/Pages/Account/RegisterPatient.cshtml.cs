@@ -104,9 +104,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Securité Sociale")]
-            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string SocialSecurityNumber { get; set; }
+            [Display(Name = "Régime Social et/ou Mutuelle")]
+            public string SocialRegime { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -129,7 +128,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
-                    SocialSecurityNumber = Input.SocialSecurityNumber,
+                    SocialRegime = Input.SocialRegime,
                     PhoneNumber = Input.Phonenumber,
                     IsActive = true
                 };
@@ -139,15 +138,15 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     ErrorMessage = "Ce mail existe deja.";
                     return Page();
                 }
-
-                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_USER");
+                //a verifier le contenu de patientsList
+                var patientList = await _userManager.GetUsersInRoleAsync("ROLE_USER");
  
-                foreach (var item in nurses)
+                foreach (var item in patientList)
                 {
                     var patient = item as Patient;
-                    if (patient.SocialSecurityNumber == Input.SocialSecurityNumber)
+                    if (patient.SocialRegime == Input.SocialRegime)
                     {
-                        StatusMessage = "Le numéro de securité sociale est déjà enregistré en base";
+                        StatusMessage = "Le numéro de sécurité sociale est déjà enregistré en base";
                         return Page();
                     }
                 }

@@ -10,13 +10,10 @@ namespace DomainModel.ModelBuilders
 				   .ToTable("Patients");
 
 			builder.Entity<Patient>()
-				   .Property(p => p.SocialSecurityNumber)
-				   .HasMaxLength(13)
+				   .Property(p => p.SocialRegime)
+				   .HasMaxLength(100)
 				   .IsRequired();
 
-			builder.Entity<Patient>()
-				   .HasIndex(p => p.SocialSecurityNumber)
-				   .IsUnique();
 		}
 	}
 }

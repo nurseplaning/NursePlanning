@@ -4,7 +4,7 @@ namespace DomainModel
 {
     public class Patient : Person
     {
-        public string SocialSecurityNumber { get; set; }
+        public string SocialRegime { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }
