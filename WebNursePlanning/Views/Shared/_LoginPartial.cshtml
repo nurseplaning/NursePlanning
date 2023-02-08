@@ -9,7 +9,7 @@
             <li class="nav-item">
                 @if (User.IsInRole("ROLE_USER"))
                 {
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@person.LastName @person.FirstName!</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/IndexPatient" title="Manage">@person.LastName @person.FirstName!</a>
                 }
 
                 @if (User.IsInRole("ROLE_ADMIN") || User.IsInRole("ROLE_SUPER_ADMIN"))
