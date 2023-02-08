@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+    public partial class IndexPatientModel : PageModel
     {
         private readonly UserManager<Person> _userManager;
         private readonly SignInManager<Person> _signInManager;
 
-        public IndexModel(
+        public IndexPatientModel(
             UserManager<Person> userManager,
             SignInManager<Person> signInManager)
         {
@@ -33,12 +33,12 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Nom")]
+            [Display(Name = "Prénom")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Prenom")]
+            [Display(Name = "Nom de Famille")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string LastName { get; set; }
 
@@ -50,7 +50,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Adress")]
+            [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
             [Phone]

@@ -33,13 +33,13 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Nom")]
+            [Display(Name = "Prénom")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Prenom")]
+            [Display(Name = "Nom de Famille")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string LastName { get; set; }
 
@@ -50,7 +50,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Adress")]
+            [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
             [Phone]
@@ -61,9 +61,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Siret")]
+            [Display(Name = "N° Adeli")]
             [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string SiretNumber { get; set; }
+            public string AdeliNumber { get; set; }
         }
 
         private async Task LoadAsync(Nurse user)
@@ -82,7 +82,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 LastName = nurse.LastName,
                 BirthDay = nurse.BirthDay,
                 Adress = nurse.Adress,
-                SiretNumber = nurse.SiretNumber
+                AdeliNumber = nurse.AdeliNumber
             };
         }
 
@@ -121,7 +121,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             nurse.LastName = Input.LastName;
             nurse.BirthDay = Input.BirthDay;
             nurse.Adress = Input.Adress;
-            nurse.SiretNumber = Input.SiretNumber;
+            nurse.AdeliNumber = Input.AdeliNumber;
 
             var setPhoneResult = await _userManager.UpdateAsync(nurse);
             if (!setPhoneResult.Succeeded)

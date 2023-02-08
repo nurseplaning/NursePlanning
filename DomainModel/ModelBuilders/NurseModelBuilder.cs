@@ -10,12 +10,12 @@ namespace DomainModel.ModelBuilders
 				   .ToTable("Nurses");
 
 			builder.Entity<Nurse>()
-				   .Property(n => n.SiretNumber)
+				   .Property(n => n.AdeliNumber)
 				   .HasMaxLength(14)
 				   .IsRequired();
 
 			builder.Entity<Nurse>()
-				   .HasIndex(n => n.SiretNumber)
+				   .HasIndex(n => n.AdeliNumber)
 				   .IsUnique();
 		}
 	}

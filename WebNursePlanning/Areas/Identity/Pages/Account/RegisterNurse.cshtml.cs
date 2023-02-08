@@ -103,9 +103,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° de Siret")]
+            [Display(Name = "N° Adeli")]
             [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string SiretNumber { get; set; }
+            public string AdeliNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -128,7 +128,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
-                    SiretNumber = Input.SiretNumber,
+                    AdeliNumber = Input.AdeliNumber,
                     PhoneNumber = Input.Phonenumber,
                     IsActive = false
                 };
@@ -145,7 +145,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in nurses)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.SiretNumber == Input.SiretNumber)
+                    if (nurse.AdeliNumber == Input.AdeliNumber)
                     {
                         StatusMessage = "Le numéro de siret est déjà enregistré en base";
                         return Page();
@@ -154,7 +154,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in admins)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.SiretNumber == Input.SiretNumber)
+                    if (nurse.AdeliNumber == Input.AdeliNumber)
                     {
                         StatusMessage = "Le numéro de siret est déjà enregistré en base";
                         return Page();

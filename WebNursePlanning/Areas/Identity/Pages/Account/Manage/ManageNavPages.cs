@@ -5,7 +5,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
-        public static string Index => "Index";
+        public static string IndexPatient => "IndexPatient";
         public static string IndexNurse => "IndexNurse";
 
         public static string Email => "Email";
@@ -22,7 +22,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
-        public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+        public static string IndexPatientNavClass(ViewContext viewContext) => PageNavClass(viewContext, IndexPatient);
 
         public static string IndexNurseNavClass(ViewContext viewContext) => PageNavClass(viewContext, IndexNurse);
 
