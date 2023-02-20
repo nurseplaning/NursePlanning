@@ -69,30 +69,30 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirmation password")]
+            [Display(Name = "Confirmation mot de passe")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Nom")]
+            [Display(Name = "Prénom")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Prenom")]
+            [Display(Name = "Nom")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string LastName { get; set; }
 
             [Required]
             [DataType(DataType.Date)]
-            [Display(Name = "Date naissance")]
+            [Display(Name = "Date de naissance")]
             public DateTime BirthDay { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Adress")]
+            [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
             [Required]
@@ -147,7 +147,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     var nurse = item as Nurse;
                     if (nurse.AdeliNumber == Input.AdeliNumber)
                     {
-                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        StatusMessage = "Le numéro Adéli est déjà enregistré en base";
                         return Page();
                     }
                 }
@@ -156,7 +156,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     var nurse = item as Nurse;
                     if (nurse.AdeliNumber == Input.AdeliNumber)
                     {
-                        StatusMessage = "Le numéro de siret est déjà enregistré en base";
+                        StatusMessage = "Le numéro Adéli est déjà enregistré en base";
                         return Page();
                     }
                 }

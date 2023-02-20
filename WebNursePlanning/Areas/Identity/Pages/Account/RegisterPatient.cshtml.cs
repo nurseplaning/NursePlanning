@@ -18,14 +18,14 @@ using System.Threading.Tasks;
 namespace WebNursePlanning.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterPatienModel : PageModel
+    public class RegisterPatientModel : PageModel
     {
         private readonly SignInManager<Person> _signInManager;
         private readonly UserManager<Person> _userManager;
         private readonly ILogger<RegisterNurseModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterPatienModel(
+        public RegisterPatientModel(
             UserManager<Person> userManager,
             SignInManager<Person> signInManager,
             ILogger<RegisterNurseModel> logger,
@@ -69,31 +69,31 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirmation password")]
+            [Display(Name = "Confirmation mot de passe")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Nom")]
+            [Display(Name = "Prénom")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Prenom")]
+            [Display(Name = "Nom")]
             [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
 
             public string LastName { get; set; }
 
             [Required]
             [DataType(DataType.Date)]
-            [Display(Name = "Date naissance")]
+            [Display(Name = "Date de naissance")]
             public DateTime BirthDay { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Adress")]
+            [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
             [DataType(DataType.PhoneNumber)]
@@ -139,17 +139,17 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     return Page();
                 }
                 //a verifier le contenu de patientsList
-                var patientList = await _userManager.GetUsersInRoleAsync("ROLE_USER");
+                //var patientList = await _userManager.GetUsersInRoleAsync("ROLE_USER");
  
-                foreach (var item in patientList)
-                {
-                    var patient = item as Patient;
-                    if (patient.SocialRegime == Input.SocialRegime)
-                    {
-                        StatusMessage = "Le numéro de sécurité sociale est déjà enregistré en base";
-                        return Page();
-                    }
-                }
+                //foreach (var item in patientList)
+                //{
+                //    var patient = item as Patient;
+                //    if (patient.SocialRegime == Input.SocialRegime)
+                //    {
+                //        StatusMessage = "Le numéro de sécurité sociale est déjà enregistré en base";
+                //        return Page();
+                //    }
+                //}
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -177,7 +177,8 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect("/Appointments/Create");
+                        //return LocalRedirect(returnUrl);
                     }
                 }
                 foreach (var error in result.Errors)
