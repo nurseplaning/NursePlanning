@@ -33,6 +33,14 @@ namespace DomainModel.ModelBuilders
 			builder.Entity<Appointment>()
 			  .Property(a => a.StatusId)
 			  .IsRequired();
-		}
+
+            builder.Entity<Appointment>()
+              .Property(a => a.HealthCareId)
+              .IsRequired();
+
+            builder.Entity<Appointment>()
+              .Property(a => a.HealthCareCategoryId)
+              .IsRequired();
+        }
 	}
 }
