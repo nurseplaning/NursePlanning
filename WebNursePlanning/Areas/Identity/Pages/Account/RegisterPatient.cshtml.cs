@@ -96,6 +96,16 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Ville")]
+            public string City { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Code Postal")]
+            public string PostalCode { get; set; }
+
             [DataType(DataType.PhoneNumber)]
             [Required]
             [Display(Name = "N° Téléphone")]

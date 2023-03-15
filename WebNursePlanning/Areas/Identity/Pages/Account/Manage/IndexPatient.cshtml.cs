@@ -44,14 +44,29 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
 
             [Required]
             [DataType(DataType.Date)]
-            [Display(Name = "Date naissance")]
-            [RegularExpression(@"^[a-zA-Z''-'\s]{3,30}$", ErrorMessage = "Characters are not allowed.")]
+            [Display(Name = "Date de naissance")]
+            [RegularExpression(@"^[0-9\s]{4}-[0-9\s]{1,2}-[0-9\s]{1,2}$", ErrorMessage = "Characters are not really allowed.")]
             public DateTime BirthDay { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Adresse")]
             public string Adress { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Ville")]
+            public string City { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Code Postal")]
+            [RegularExpression(@"\d{5,6}", ErrorMessage = "Entrez uniquement jusqu'à 6 chiffres.")]
+            public string PostalCode { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Informations complémentaires Adresse")]
+            public string ComplementaryAdressInformation { get; set; }
 
             [Phone]
             [Required]
@@ -63,6 +78,11 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Text)]
             [Display(Name = "Régime Social")]
             public string SocialRegime { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Stationnement à proximité ?")]
+            public bool IsParkingAvailable { get; internal set; }
         }
 
         private async Task LoadAsync(Patient user)
@@ -80,6 +100,9 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 LastName = patient.LastName,
                 BirthDay = patient.BirthDay,
                 Adress = patient.Adress,
+                PostalCode = patient.PostalCode,
+                City = patient.City,
+                ComplementaryAdressInformation = patient.ComplementaryAdressInformation,
                 SocialRegime = patient.SocialRegime
             };
         }
@@ -119,6 +142,10 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             patient.LastName = Input.LastName;
             patient.BirthDay = Input.BirthDay;
             patient.Adress = Input.Adress;
+            patient.PostalCode = Input.PostalCode;
+            patient.City = Input.City;
+            patient.IsParkingAvailable = Input.IsParkingAvailable;
+            patient.ComplementaryAdressInformation = Input.ComplementaryAdressInformation;
             patient.SocialRegime = Input.SocialRegime;
 
             var setPatientResult = await _userManager.UpdateAsync(patient);
