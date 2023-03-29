@@ -17,17 +17,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
         <div class="form-row  align-content-center">
-            <div class="form-group col-md-5">
-                <div class="row align-content-center">
-                    <div class="col-md-2"> <label asp-for="Reason" class="control-label"></label></div>
-                    <div class="col">
-                        <input asp-for="Reason" class="form-control" />
-                        <span asp-validation-for="Reason" class="text-danger"></span>
-                    </div>
-
-                </div>
-            </div>
-
+            
             @if (User.IsInRole("ROLE_ADMIN"))
             {//Si le l'utilisateur connecté est infirmier(role admin)
 

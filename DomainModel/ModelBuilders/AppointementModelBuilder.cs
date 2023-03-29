@@ -10,10 +10,6 @@ namespace DomainModel.ModelBuilders
 				.ToTable("Appointments");
 
 			builder.Entity<Appointment>()
-				.Property(a => a.Reason)
-				.IsRequired();
-
-			builder.Entity<Appointment>()
 				.Property(a => a.Date)
 				.HasColumnType("datetime")
 				.IsRequired();
@@ -35,12 +31,23 @@ namespace DomainModel.ModelBuilders
 			  .IsRequired();
 
             builder.Entity<Appointment>()
-              .Property(a => a.HealthCareId)
+              .Property(a => a.HealthCarePrimaryId)
               .IsRequired();
 
             builder.Entity<Appointment>()
-              .Property(a => a.HealthCareCategoryId)
+              .Property(a => a.HealthCareSecondaryId)
               .IsRequired();
-        }
+
+			builder.Entity<Appointment>()
+				.HasOne(d => d.HealthCarePrimary)
+				.WithMany()
+				.OnDelete(DeleteBehavior.Restrict);
+
+			builder.Entity<Appointment>()
+				.HasOne(d => d.HealthCareSecondary)
+				.WithMany()
+				.OnDelete(DeleteBehavior.Restrict);
+
+		}
 	}
 }

@@ -207,5 +207,20 @@ namespace Repository
 
             return firstDayInWeek;
         }
-    }
+
+        public async Task<List<HealthCarePrimary>> GetHealthCarePrimaryList()
+        {
+			return await _context.HealthCarePrimaries.ToListAsync();
+        }
+
+		public async Task<List<HealthCareSecondary>> GetHealthCareSecondaryList()
+		{
+			return await _context.HealthCareSecondaries.ToListAsync();
+		}
+
+		public async Task<List<HealthCareSecondary>> GetHealthCareSecondaryList(int healthCarePrimaryid)
+		{
+		    return await _context.HealthCareSecondaries.Where(h=>h.HealthCarePrimaryId == healthCarePrimaryid).ToListAsync();
+		}
+	}
 }

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Inscription Infirmier";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"] - Création d'un nouveau compte</h1>
 
-<h4>Création d'un nouveau compte</h4>
 <hr />
 
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -32,9 +31,9 @@
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label asp-for="Input.ConfirmEmail"></label>
-            <input asp-for="Input.ConfirmEmail" class="form-control" />
-            <span asp-validation-for="Input.ConfirmEmail" class="text-danger"></span>
+            <label asp-for="Input.Phonenumber"></label>
+            <input asp-for="Input.Phonenumber" class="form-control" />
+            <span asp-validation-for="Input.Phonenumber" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row">
@@ -51,11 +50,7 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="Input.Phonenumber"></label>
-            <input asp-for="Input.Phonenumber" class="form-control" />
-            <span asp-validation-for="Input.Phonenumber" class="text-danger"></span>
-        </div>
+        
         <div class="form-group col-md-6">
             <label>Adresse</label>
             <input asp-for="Input.Adress" class="form-control" />

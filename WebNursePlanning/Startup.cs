@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Repository;
 using Repository.Interfaces;
 using WebNursePlanning.Services;
+using WebNursePlanning.Services.Interfaces;
 
 namespace WebNursePlanning
 {
@@ -30,7 +31,7 @@ namespace WebNursePlanning
 			services.AddScoped<IPatientRepository, PatientRepository>();
 			services.AddScoped<IStatusRepository, StatusRepository>();
 			services.AddScoped<IAbsenceRepository, AbsenceRepository>();
-			services.AddScoped<AppointmentsService>();
+			services.AddScoped<IAppointmentsService, AppointmentsService>();
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(

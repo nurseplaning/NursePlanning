@@ -1,0 +1,12 @@
+﻿@model WebNursePlanning.Models.HealthCareSecondaryViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="col-md-auto"> <label asp-for="HealthCareSecondaryId" class="control-label"></label> </div>
+<div class="col">
+	<select asp-for="HealthCareSecondaryId" class="form-control"
+			asp-items="@Model.HealthCareSecondaries">
+	</select>
+</div>

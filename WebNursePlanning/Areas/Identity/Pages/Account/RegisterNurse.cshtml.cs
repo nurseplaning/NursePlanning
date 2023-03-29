@@ -57,11 +57,6 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [EmailAddress]
-            [Display(Name = "Confirmation E-mail")]
-            [Compare("Email", ErrorMessage = "L'e-mail et la confiramtion d'e-mail ne correspondent pas.")]
-            public string ConfirmEmail { get; set; }
-
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -95,7 +90,18 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
             [Display(Name = "Adresse")]
             public string Adress { get; set; }
 
-            [Required]
+
+			[Required]
+			[DataType(DataType.Text)]
+			[Display(Name = "Ville")]
+			public string City { get; set; }
+
+			[Required]
+			[DataType(DataType.Text)]
+			[Display(Name = "Code Postal")]
+			public string PostalCode { get; set; }
+
+			[Required]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "N° Téléphone")]
             [RegularExpression(@"\d{10}|\+33\d{9}|\+33\s\d{1}\s\d{2}\s\d{2}\s\d{2}\s\d{2}|\d{2}\s\d{2}\s\d{2}\s\d{2}\s\d{2}", ErrorMessage = "Characters are not allowed.")]
