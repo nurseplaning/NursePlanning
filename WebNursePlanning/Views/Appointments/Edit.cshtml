@@ -67,6 +67,13 @@
                 </label>
             </div>
         </div>
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="TimeSpanHealthCare"></label>
+                <input asp-for="TimeSpanHealthCare" class="form-control" />
+                <span asp-validation-for="TimeSpanHealthCare" class="text-danger"></span>
+            </div>
+        </div>
         <input type="button" id="Previous" name="Previous" value="Semaine Precedent" class="btn btn-primary" />
         <input type="button" id="Next" name="Next" value="Semaine Suivant" class="btn btn-primary" />
         <div id="Calendar" class="form-group" style="overflow:auto;  height: 500px;">

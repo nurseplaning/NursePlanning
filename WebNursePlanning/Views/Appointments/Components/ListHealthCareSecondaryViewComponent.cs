@@ -12,7 +12,7 @@ namespace WebNursePlanning.Views.Appointments.Components
 		{
 			_appointmentsService = appointmentsService;
 		}
-		public async Task<IViewComponentResult> InvokeAsync(int id)
+		public async Task<IViewComponentResult> InvokeAsync(int id = 1)
 		{
 			var healthCareSecondariesList = new HealthCareSecondaryViewModel();
 			healthCareSecondariesList.HealthCareSecondaries = await _appointmentsService.GetSelectListHealthCareSecondaryAsync(id);

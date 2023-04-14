@@ -17,10 +17,28 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayName("À domicile")
+            @Html.DisplayNameFor(model => model.HealthCarePrimary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HealthCarePrimary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HealthCareSecondary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HealthCareSecondary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AtHome)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AtHome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeSpanHealthCare)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TimeSpanHealthCare)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NurseId)

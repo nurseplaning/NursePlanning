@@ -11,6 +11,10 @@ namespace DomainModel
         [Display(Name = "Date du rendez-vous")]
         public DateTime Date { get; set; }
 
+        [Required(ErrorMessage = "La Durée du soin doit être renseignée")]
+        [Display(Name = "Durée du Soin")]
+        public int TimeSpanHealthCare { get; set; }
+
         [Display(Name = "A domicile")]
         public bool AtHome { get; set; }
 
@@ -30,9 +34,8 @@ namespace DomainModel
         public virtual HealthCarePrimary HealthCarePrimary { get; set; }
         [Display(Name = "Soin")]
         public virtual int HealthCarePrimaryId { get; set; }
-
         public virtual HealthCareSecondary HealthCareSecondary { get; set; }
-        [Display(Name = "Catégorie de Soin")]
+        [Display(Name = "Type de Soin")]
         public virtual int HealthCareSecondaryId { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }

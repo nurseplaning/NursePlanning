@@ -28,10 +28,6 @@ namespace WebNursePlanning.Models
 		[Display(Name = "Patient(e)")]
 		public string PatientId { get; set; }
 
-		[Required]
-		[Display(Name = "Motif du rendez-vous")]
-		public string Reason { get; set; }
-
 		public Guid StatusId { get; set; }
 
 		public ICollection<Message> Messages { get; set; }

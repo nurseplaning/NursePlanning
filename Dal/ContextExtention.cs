@@ -10,15 +10,8 @@ namespace Dal
 		{
 			if (dropAlways)
 				context.Database.EnsureDeleted();
-			try
-			{
-				context.Database.EnsureCreated();
-
-			}
-			catch (Exception ex)
-			{
-				Console.Error.WriteLine(ex.ToString());
-			}
+			
+			context.Database.EnsureCreated();
 
 			if (context.Statuses.Any())
 				return;
@@ -34,7 +27,7 @@ namespace Dal
 			context.SaveChanges();
 
 			var healthCarePrimaries = new HealthCarePrimary[] {
-				new HealthCarePrimary { Name = "Soins d'hygiène" },// HealthCareSecondaries = new HealthCareSecondary[] { new HealthCareSecondary{ Name = "Aide à la toilette" } } },
+				new HealthCarePrimary { Name = "Soins d'hygiène" },
                 new HealthCarePrimary { Name = "Injections intraveineuses" },
 				new HealthCarePrimary { Name = "Prélèvements sanguins, urinaires, bactériologiques, cytologiques" },
 				new HealthCarePrimary { Name = "Surveillance des paramètres vitaux" },
@@ -61,7 +54,7 @@ namespace Dal
 				new HealthCareSecondary { Name = "Pose et retrait des bas de contention" , HealthCarePrimaryId = 1},
 				new HealthCareSecondary { Name = "Sous-cutanées" , HealthCarePrimaryId = 2},
 				new HealthCareSecondary { Name = "Intramusculaires" , HealthCarePrimaryId = 2},
-				new HealthCareSecondary { Name = "Aucun" , HealthCarePrimaryId = 3},
+				new HealthCareSecondary { Name = "Aucun disponible" , HealthCarePrimaryId = 3},
 				new HealthCareSecondary { Name = "Tension, Pouls, Température, Saturation" , HealthCarePrimaryId = 4},
 				new HealthCareSecondary { Name = "Avec ou sans réfection des piluliers" , HealthCarePrimaryId = 5},
 				new HealthCareSecondary { Name = "Gestion des stocks" , HealthCarePrimaryId = 5},
@@ -91,8 +84,8 @@ namespace Dal
 				new HealthCareSecondary { Name = "Pansements" , HealthCarePrimaryId = 12},
 				new HealthCareSecondary { Name = "Injection anti coagulant" , HealthCarePrimaryId = 12},
 				new HealthCareSecondary { Name = "Bilan sanguin" , HealthCarePrimaryId = 12},
-				new HealthCareSecondary { Name = "Aucun" , HealthCarePrimaryId = 13},
-				new HealthCareSecondary { Name = "Aucun" , HealthCarePrimaryId = 14},
+				new HealthCareSecondary { Name = "Aucun disponible" , HealthCarePrimaryId = 13},
+				new HealthCareSecondary { Name = "Aucun disponible" , HealthCarePrimaryId = 14},
 			};
 
 			context.HealthCareSecondaries.AddRange(healthCareSecondaries);
