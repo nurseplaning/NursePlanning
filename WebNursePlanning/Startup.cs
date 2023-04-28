@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository;
 using Repository.Interfaces;
+using System;
 using WebNursePlanning.Services;
 using WebNursePlanning.Services.Interfaces;
 
@@ -26,6 +27,7 @@ namespace WebNursePlanning
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			
 			services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 			services.AddScoped<INurseRepository, NurseRepository>();
 			services.AddScoped<IPatientRepository, PatientRepository>();
@@ -35,8 +37,8 @@ namespace WebNursePlanning
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
-						Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDatabaseDeveloperPageExceptionFilter();
+						Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
 			services.AddIdentity<Person, IdentityRole>()
 					.AddRoles<IdentityRole>()
@@ -54,7 +56,7 @@ namespace WebNursePlanning
 			using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
 			{
 				var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-				context.Initialize(true);
+				context.Initialize(false);
 			}
 
 			if (!env.IsDevelopment())

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainModel
 {
@@ -21,22 +22,22 @@ namespace DomainModel
         public Nurse Nurse { get; set; }
 
         [Display(Name = "Infirmier(e)")]
-        public string NurseId { get; set; }
+        public string NurseId { get; set; }// Foreign Key
 
         public Patient Patient { get; set; }
         [Display(Name = "Patient(e)")]
-        public string PatientId { get; set; }
+        public string PatientId { get; set; } // Foreign Key
 
         public Status Status { get; set; }
         [Display(Name = "Statut")]
-        public Guid StatusId { get; set; }
+        public Guid StatusId { get; set; }// Foreign Key
 
         public virtual HealthCarePrimary HealthCarePrimary { get; set; }
         [Display(Name = "Soin")]
-        public virtual int HealthCarePrimaryId { get; set; }
+        public virtual int HealthCarePrimaryId { get; set; }// Foreign Key
         public virtual HealthCareSecondary HealthCareSecondary { get; set; }
         [Display(Name = "Type de Soin")]
-        public virtual int HealthCareSecondaryId { get; set; }
+        public virtual int HealthCareSecondaryId { get; set; }// Foreign Key
 
         public virtual ICollection<Message> Messages { get; set; }
     }

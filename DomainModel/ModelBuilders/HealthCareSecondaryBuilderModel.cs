@@ -9,10 +9,7 @@ namespace DomainModel.ModelBuilders
 			builder.Entity<HealthCareSecondary>()
 				.ToTable("HealthCareSecondaries");
 
-			builder.Entity<HealthCareSecondary>()
-				.HasOne(d => d.HealthCarePrimary)
-				.WithMany()
-				.OnDelete(DeleteBehavior.Restrict);
+			
 		}
 	}
 }

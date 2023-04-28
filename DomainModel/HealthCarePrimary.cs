@@ -12,6 +12,6 @@ namespace DomainModel
 
         public string Description { get; set; }
 
-		public ICollection<HealthCareSecondary> HealthCareSecondaries { get; set; }
+		public HealthCareSecondary HealthCareSecondaries { get; set; }
     }
 }

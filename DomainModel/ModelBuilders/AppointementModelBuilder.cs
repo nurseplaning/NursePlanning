@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace DomainModel.ModelBuilders
 {
@@ -43,15 +45,19 @@ namespace DomainModel.ModelBuilders
               .IsRequired();
 
             builder.Entity<Appointment>()
-                .HasOne(d => d.HealthCarePrimary)
+                .HasOne(a => a.HealthCarePrimary)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Appointment>()
-                .HasOne(d => d.HealthCareSecondary)
+                .HasOne(a => a.HealthCareSecondary)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Appointment>()
+                .HasOne(e => e.Patient)
+                .WithMany(e => e.Appointments)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
