@@ -32,7 +32,7 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label asp-for="Input.SocialRegime"></label>
-			<input asp-for="Input.SocialRegime" minlength="13" maxlength="13" class="form-control" />
+			<input asp-for="Input.SocialRegime" maxlength="100" class="form-control" />
 			<span asp-validation-for="Input.SocialRegime" class="text-danger"></span>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label asp-for="Input.Phonenumber"></label>
-			<input asp-for="Input.Phonenumber" class="form-control" />
+			<input asp-for="Input.Phonenumber" maxlength="10"  class="form-control" />
 			<span asp-validation-for="Input.Phonenumber" class="text-danger"></span>
 		</div>
 	</div>
@@ -74,7 +74,7 @@
 		</div>
 		<div class="form-group col-md-6">
 			<label asp-for="Input.PostalCode"></label>
-			<input asp-for="Input.PostalCode" class="form-control" />
+			<input asp-for="Input.PostalCode" maxlength="6" class="form-control" />
 			<span asp-validation-for="Input.PostalCode" class="text-danger"></span>
 		</div>
 	</div>
