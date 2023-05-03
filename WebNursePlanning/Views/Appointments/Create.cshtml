@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
-@inject WebNursePlanning.Services.AppointmentsService MyAppointment
+@inject WebNursePlanning.Services.Interfaces.IAppointmentsService MyAppointment
 @addTagHelper *,WebNursePlanning
 
 @{
@@ -19,26 +19,14 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-row  align-content-center">
-
-            <div class="form-group col-md-5">
-                <div class="row align-content-center">
-                    <div class="col-md-2"> <label asp-for="Reason" class="control-label"></label></div>
-                    <div class="col">
-                        <input asp-for="Reason" class="form-control" />
-                        <span asp-validation-for="Reason" class="text-danger"></span>
-                    </div>
-
-                </div>
-            </div>
-
             @if (User.IsInRole("ROLE_ADMIN"))
             {//Si l'utilisateur connecté est infirmier(role admin)
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-auto">
                     <div class="row align-content-center">
-                        <div class="col-md-2"> <label asp-for="PatientId" class="control-label"></label></div>
+                        <div class="col-md-auto"> <label asp-for="PatientId" class="control-label"></label></div>
                         <div class="col">
                             <select asp-for="PatientId" class="form-control"
-                                    asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
+                                asp-items="MyAppointment.GetSelectListPatientsAsync().GetAwaiter().GetResult()">
                             </select>
 
                             <span asp-validation-for="PatientId" class="text-danger"></span>
@@ -52,43 +40,99 @@
             }
             else if (User.IsInRole("ROLE_USER"))
             {//Si l'utilisateur est un patient (role user)
-                <div class="form-group col-md-5">
-                    <div class="row align-content-center">
-                        <div class="col-md-2"> <label asp-for="NurseId" class="control-label"></label></div>
-                        <div class="col">
-                            <select asp-for="NurseId" class="form-control"
-                                    asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
-                            </select>
-                            <span asp-validation-for="NurseId" class="text-danger"></span>
-                        </div>
+                <div class="form-group col-md-auto">
+                    <div class="col-md-auto"> <label asp-for="NurseId" class="control-label"></label></div>
+                    <div class="col">
+                        <select asp-for="NurseId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListNursesAsync().GetAwaiter().GetResult()">
+                        </select>
+                        <span asp-validation-for="NurseId" class="text-danger"></span>
                     </div>
                 </div>
                 <input asp-for="PatientId" style="display:none;" value="@UserManager.GetUserId(User)" />
             }
-            <div class="form-group  form-check col-md-2 text-right">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AtHome" />@Html.DisplayNameFor(model => model.AtHome)
-                </label>
+
+        </div>
+
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-auto">
+                <div class="col-md-auto"> <label asp-for="HealthCarePrimaryId" class="control-label"></label> </div>
+                <div class="col">
+                    <select asp-for="HealthCarePrimaryId" class="form-control"
+                            asp-items="MyAppointment.GetSelectListHealthCarePrimaryAsync().GetAwaiter().GetResult()">
+                    </select>
+                    <span asp-validation-for="HealthCarePrimaryId" class="text-danger"></span>
+                </div>
             </div>
         </div>
-        <input type="button" id="Previous" name="Previous" value="Semaine Precedent" class="btn btn-primary" />
-        <input type="button" id="Next" name="Next" value="Semaine Suivant" class="btn btn-primary" />
-        <div id="Calendar" class="form-group" style="overflow:auto;  height: 500px;">
-            @await Component.InvokeAsync("CreateAppointmentCalendar", new { id = UserManager.GetUserId(User) })
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-auto">
+                <div id="HealthCareSecondaryList">
+                    @await Component.InvokeAsync("ListHealthCareSecondary")
+                </div>
+            </div>
         </div>
+        <div class="form-row  align-content-center">
+            <div class="form-group form-check col-md-auto">
+                <div class="col">
+                    <label class="form-check-label">@Html.DisplayNameFor(model => model.AtHome)</label>
+                    <input asp-for="AtHome" />
+                </div>
+            </div>
+        </div>
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-auto">
+                <div class="col">
+                    <label asp-for="TimeSpanHealthCare"></label>
+                    <div class="flex">
+                        <input asp-for="TimeSpanHealthCare" class="form-control" />
+                        <label class="margin-label"> jour(s)</label>
+                    </div>
+                    <span asp-validation-for="TimeSpanHealthCare" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div id="accordion" class="card text-center  align-content-center">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Cliquer pour choisir un horaire
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="form-group btn-group" role="group" aria-label="First group">
+                            <input type="button" id="Previous" name="Previous" value="Semaine Précédente" class="btn btn-primary" />
+                        </div>
+                        <div class="form-group btn-group" role="group" aria-label="Second group">
+                            <input type="button" id="Next" name="Next" value="Semaine Suivante" class="btn btn-primary" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Créer" class="btn btn-primary" />
+                    <div id="Calendar" class="form-group" style="overflow:auto;  height: 500px;">
+                        @await Component.InvokeAsync("CreateAppointmentCalendar", new { id = UserManager.GetUserId(User) })
+                    </div>
+
+                    <div class="form-group">
+                        <input asp-for="StatusId" style="display:none;" value="@ViewBag.StatusId" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Créer" class="btn btn-success btn-lg btn-block" />
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
+</div>
+<div class="row my-3">
     <a asp-action="Index" class="btn btn-info">Retour à la liste de vos rendez-vous</a>
 </div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script>
         var user = $("#NurseId").val();
@@ -131,6 +175,19 @@
                 }
                     , function (data) { // data => PartialView
                         $('#Calendar').html(data);
+                    });
+            });
+        });
+        $(function () {
+            $('#HealthCarePrimaryId').on('change', function (e) {
+                var id = $('#HealthCarePrimaryId option:selected').val();
+                e.preventDefault();
+                console.log(id);
+                $.get('/Appointments/GetFilteredHealthCareSecondaries', {
+                    id: id
+                }
+                    , function (data) { // data => PartialView
+                        $('#HealthCareSecondaryList').html(data);
                     });
             });
         });

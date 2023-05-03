@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -66,7 +65,9 @@ namespace WebNursePlanning.Controllers
                     FirstName = "El",
                     LastName = "Jefe",
                     BirthDay = new DateTime(1980, 10, 10),
-                    Adress = "1 bis rue parallele 34000 Montpellier",
+                    Adress = "1 bis rue parallele",
+                    City = "Montpellier",
+                    PostalCode = "34000",
                     AdeliNumber = "12345678987654",
                     Email = "eljefe@nurse.fr",
                     PhoneNumber = "0600000001",
@@ -88,7 +89,9 @@ namespace WebNursePlanning.Controllers
                     FirstName = "Lola",
                     LastName = "Lopez",
                     BirthDay = new DateTime(1990, 12, 12),
-                    Adress = "1 rue principale 34000 Montpellier",
+                    Adress = "1 rue principale",
+                    City = "Montpellier",
+                    PostalCode = "34000",
                     AdeliNumber = "12345678987658",
                     Email = "lolalopez@nurse.fr",
                     PhoneNumber = "0600000000",
@@ -110,7 +113,9 @@ namespace WebNursePlanning.Controllers
                     FirstName = "Estoy",
                     LastName = "Malito",
                     BirthDay = new DateTime(1980, 12, 12),
-                    Adress = "3, rue diagonale 34000 Montpellier",
+                    Adress = "3, rue diagonale",
+                    City = "Montpellier",
+                    PostalCode = "34000",
                     SocialRegime = "Securité Sociale/Harmonie Mutuelle",
                     Email = "estoymalito@patient.fr",
                     PasswordHash = "mdpPatient",

@@ -14,6 +14,7 @@ namespace DomainModel.ModelBuilders
 				   .HasMaxLength(100)
 				   .IsRequired();
 
-		}
+            
+        }
 	}
 }

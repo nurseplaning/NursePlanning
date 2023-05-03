@@ -7,10 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebNursePlanning.Models;
-using WebNursePlanning.Shared.Components;
 
 namespace WebNursePlanning.Controllers
 {
@@ -225,18 +222,17 @@ namespace WebNursePlanning.Controllers
                 {
                     var oldAppointment = _appointmentRepository.Details(id).GetAwaiter().GetResult();
 
-                    if (oldAppointment.Reason != appointment.Reason ||
+                    if (oldAppointment.PatientId != appointment.PatientId ||
                         oldAppointment.Date != appointment.Date ||
                         oldAppointment.NurseId != appointment.NurseId)
                     {
-                                          oldAppointment.StatusId = await _statusRepository.GetStatusId("En attente");
+                        oldAppointment.StatusId = await _statusRepository.GetStatusId("En attente");
                     }
                     else
                     {
                         oldAppointment.StatusId = appointment.StatusId;
                     }
 
-                    oldAppointment.Reason = appointment.Reason;
                     oldAppointment.Date = appointment.Date;
                     oldAppointment.NurseId = appointment.NurseId;
                     oldAppointment.PatientId = appointment.PatientId;
@@ -355,5 +351,10 @@ namespace WebNursePlanning.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-    }
+
+		public IActionResult GetFilteredHealthCareSecondaries(int id)
+		{
+			return ViewComponent("ListHealthCareSecondary", new { id });
+		}
+	}
 }

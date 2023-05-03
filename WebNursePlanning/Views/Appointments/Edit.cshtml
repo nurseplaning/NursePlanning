@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<DomainModel.Person> SignInManager
 @inject UserManager<DomainModel.Person> UserManager
-@inject WebNursePlanning.Services.AppointmentsService MyAppointment
+@inject WebNursePlanning.Services.Interfaces.IAppointmentsService MyAppointment
 
 @{
     ViewData["Title"] = "Modification Rendez-vous";
@@ -17,17 +17,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
         <div class="form-row  align-content-center">
-            <div class="form-group col-md-5">
-                <div class="row align-content-center">
-                    <div class="col-md-2"> <label asp-for="Reason" class="control-label"></label></div>
-                    <div class="col">
-                        <input asp-for="Reason" class="form-control" />
-                        <span asp-validation-for="Reason" class="text-danger"></span>
-                    </div>
-
-                </div>
-            </div>
-
+            
             @if (User.IsInRole("ROLE_ADMIN"))
             {//Si le l'utilisateur connecté est infirmier(role admin)
 
@@ -75,6 +65,13 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="AtHome" /> @Html.DisplayName("A domicile")
                 </label>
+            </div>
+        </div>
+        <div class="form-row  align-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="TimeSpanHealthCare"></label>
+                <input asp-for="TimeSpanHealthCare" class="form-control" />
+                <span asp-validation-for="TimeSpanHealthCare" class="text-danger"></span>
             </div>
         </div>
         <input type="button" id="Previous" name="Previous" value="Semaine Precedent" class="btn btn-primary" />

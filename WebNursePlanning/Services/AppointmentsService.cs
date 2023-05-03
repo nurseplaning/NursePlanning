@@ -5,18 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebNursePlanning.Services.Interfaces;
 
 namespace WebNursePlanning.Services
 {
-	public class AppointmentsService
+	public class AppointmentsService : IAppointmentsService
 	{
 		private readonly INurseRepository _nurseRepository;
 		private readonly IPatientRepository _patientRepository;
+		private readonly IAppointmentRepository _appointmentRepository;
 
-		public AppointmentsService(INurseRepository nurseRepository, IPatientRepository patientRepository)
+		public AppointmentsService(INurseRepository nurseRepository, IPatientRepository patientRepository, IAppointmentRepository appointmentRepository)
 		{
 			_nurseRepository = nurseRepository;
 			_patientRepository = patientRepository;
+			_appointmentRepository = appointmentRepository;
 		}
 
 		public async Task<SelectList> GetSelectListNursesAsync(string id = null)
@@ -31,6 +34,20 @@ namespace WebNursePlanning.Services
 			var listPatients = await _patientRepository.ListPatients();
 			var dicoPatients = listPatients.ToDictionary(b => b.Id, b => b.LastName + " " + b.FirstName);
 			return new SelectList(dicoPatients, "Key", "Value", id);
+		}
+
+		public async Task<SelectList> GetSelectListHealthCarePrimaryAsync()
+		{
+			var listHealthCarePrimaries = await _appointmentRepository.GetHealthCarePrimaryList();
+			var dicoHealthCarePrimaries = listHealthCarePrimaries.ToDictionary(b => b.Id, b => b.Name);
+			return new SelectList(dicoHealthCarePrimaries, "Key", "Value");
+		}
+
+		public async Task<SelectList> GetSelectListHealthCareSecondaryAsync(int id = 1)
+		{
+			var listHealthCareSecondaries = await _appointmentRepository.GetHealthCareSecondaryList(id);
+			var dicoHealthCareSecondaries = listHealthCareSecondaries.ToDictionary(b => b.Id, b => b.Name);
+			return new SelectList(dicoHealthCareSecondaries, "Key", "Value", id);
 		}
 	}
 }

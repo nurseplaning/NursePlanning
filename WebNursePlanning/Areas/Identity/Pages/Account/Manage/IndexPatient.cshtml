@@ -35,13 +35,33 @@
                 <span asp-validation-for="Input.Adress" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Input.PostalCode"></label>
+                <input asp-for="Input.PostalCode" class="form-control" />
+                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.IsParkingAvailable"></label>
+                <input asp-for="Input.IsParkingAvailable" type="checkbox" class="form-control small-checkbox" />
+                <span asp-validation-for="Input.IsParkingAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ComplementaryAdressInformation"></label>
+                <input asp-for="Input.ComplementaryAdressInformation" class="form-control" />
+                <span asp-validation-for="Input.ComplementaryAdressInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.BirthDay"></label>
                 <input asp-for="Input.BirthDay" max='2000-13-13' class="form-control" />
                 <span asp-validation-for="Input.BirthDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.SocialRegime"></label>
-                <input asp-for="Input.SocialRegime" minlength="13" maxlength="13" class="form-control" />
+                <input asp-for="Input.SocialRegime" class="form-control" />
                 <span asp-validation-for="Input.SocialRegime" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
