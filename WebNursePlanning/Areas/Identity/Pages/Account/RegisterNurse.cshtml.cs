@@ -146,7 +146,11 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
+                    City= Input.City,
+                    PostalCode= Input.PostalCode,
                     Siret = Input.Siret,
+                    Rpps = Input.Rpps,
+                    Ordinal = Input.Ordinal,
                     PhoneNumber = Input.Phonenumber,
                     IsActive = false
                 };

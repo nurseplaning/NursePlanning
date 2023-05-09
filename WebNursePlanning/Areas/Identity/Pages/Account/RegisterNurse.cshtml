@@ -41,12 +41,25 @@
         <div class="form-group col-md-6">
             <label asp-for="Input.BirthDay"></label>
             <input asp-for="Input.BirthDay" class="form-control" />
-            <span asp-validation-for="Input.BirthDay" max='2000-13-13' class="text-danger"></span>
+            <span asp-validation-for="Input.BirthDay" min='2000-13-13' class="text-danger"></span>
         </div>
+    </div>
+    <hr class="hrbold" />
+    <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Adresse</label>
+            <label asp-for="Input.Adress"></label>
             <input asp-for="Input.Adress" class="form-control" />
             <span asp-validation-for="Input.Adress" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Input.City"></label>
+            <input asp-for="Input.City" class="form-control" />
+            <span asp-validation-for="Input.City" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Input.PostalCode"></label>
+            <input asp-for="Input.PostalCode" maxlength="6" class="form-control" />
+            <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
         </div>
     </div>
     <hr class="hrbold" />
