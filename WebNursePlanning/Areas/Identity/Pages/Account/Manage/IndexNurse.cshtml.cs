@@ -63,7 +63,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Text)]
             [Display(Name = "N° Adeli")]
             [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string AdeliNumber { get; set; }
+            public string Siret { get; set; }
         }
 
         private async Task LoadAsync(Nurse user)
@@ -82,7 +82,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
                 LastName = nurse.LastName,
                 BirthDay = nurse.BirthDay,
                 Adress = nurse.Adress,
-                AdeliNumber = nurse.AdeliNumber
+                Siret = nurse.Siret
             };
         }
 
@@ -121,7 +121,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account.Manage
             nurse.LastName = Input.LastName;
             nurse.BirthDay = Input.BirthDay;
             nurse.Adress = Input.Adress;
-            nurse.AdeliNumber = Input.AdeliNumber;
+            nurse.Siret = Input.Siret;
 
             var setPhoneResult = await _userManager.UpdateAsync(nurse);
             if (!setPhoneResult.Succeeded)

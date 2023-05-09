@@ -1,52 +1,56 @@
 ﻿@{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-	<h1 class="display-4">Bienvenue</h1>
-	<p></p>
+    <h1 class="display-4">Bienvenue</h1>
+    <p></p>
 </div>
 
 @if (User.IsInRole("ROLE_ADMIN"))
 {//Si l'utilisateur connecté est infirmier(role admin)
-		<div style="text-align:center">
-			<p>
-				<a asp-action="Create" asp-controller="Appointments" class="btn btn-primary">Prendre RDV avec un(e) Patient(e)</a>
-			</p>
-			<p>
-				<a asp-action="Index" asp-controller="Absence" class="btn btn-primary">Liste des absences</a>
-			</p>
-		</div>
+    <div style="text-align:center">
+        <p>
+            <a asp-action="Create" asp-controller="Appointments" class="btn btn-primary">Prendre RDV avec un(e) Patient(e)</a>
+        </p>
+        <p>
+            <a asp-action="Index" asp-controller="Absence" class="btn btn-primary">Liste des absences</a>
+        </p>
+    </div>
 }
 else if (User.IsInRole("ROLE_USER"))
 {
-		<div style="text-align:center">
-			<p>
-				<label>On vous connait ? : </label>
-				<a asp-action="Create" asp-controller="Appointments" class="btn btn-primary">Prendre RDV avec un(e) Infirmier(e)</a>
-			</p>
-			
-		</div>
+    <div style="text-align:center">
+        <p>
+            <label>On vous connait ? : </label>
+            <a asp-action="Create" asp-controller="Appointments" class="btn btn-primary">Prendre RDV avec un(e) Infirmier(e)</a>
+        </p>
+
+    </div>
 }
 else if (User.IsInRole("ROLE_SUPER_ADMIN"))
 {
-		<div style="text-align:center">
-			<p>
-				<a asp-controller="SuperAdmin" asp-action="Index">Gestion des comptes infirmiers et patients de l'application</a>
-			</p>
-		</div>
+    <div style="text-align:center">
+        <p>
+            <a asp-controller="SuperAdmin" asp-action="Index">Gestion des comptes infirmiers et patients de l'application</a>
+        </p>
+    </div>
 }
 else
 {
-		<div style="text-align:center">
-				
-				<p>
-					<label>Nouveau Patient => : </label>
-						<a asp-area="Identity" asp-page="/Account/RegisterPatient" class="btn btn-primary">Prendre RDV avec un(e) Infirmier(e)</a>
-				</p>
-			</div>
-		@*<p style="text-align:center"> Veuillez vous 
-			<a asp-area="Identity" asp-page="/Account/Login">connecter</a> ou vous 
+    <div style="text-align:center">
+
+        <p>
+            <label>Nouveau Patient => : </label>
+            <a asp-area="Identity" asp-page="/Account/RegisterPatient" class="btn btn-primary">Prendre RDV avec un(e) Infirmier(e)</a>
+        </p>
+        <p>
+            <label>Inscription Infirmier => : </label>
+            <a asp-area="Identity" asp-page="/Account/RegisterNurse" class="btn btn-primary">Créer votre compte</a>
+        </p>
+    </div>
+    @*<p style="text-align:center"> Veuillez vous
+			<a asp-area="Identity" asp-page="/Account/Login">connecter</a> ou vous
 			<a asp-area="Identity" asp-page="/Account/RegisterPatient">inscrire </a> pour pouvoir gérer vos prises de rendez-vous !
 		</p>*@
 }

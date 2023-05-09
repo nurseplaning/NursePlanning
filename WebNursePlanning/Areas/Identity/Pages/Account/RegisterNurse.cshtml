@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"] - Création d'un nouveau compte</h1>
 
-<hr />
+<hr class="hrbold" />
 
 <div asp-validation-summary="All" class="text-danger"></div>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
@@ -19,7 +19,7 @@
             <span asp-validation-for="Input.FirstName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label>Prénom</label>
+            <label asp-for="Input.LastName"></label>
             <input asp-for="Input.LastName" class="form-control" />
             <span asp-validation-for="Input.LastName" class="text-danger"></span>
         </div>
@@ -36,6 +36,38 @@
             <span asp-validation-for="Input.Phonenumber" class="text-danger"></span>
         </div>
     </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Input.BirthDay"></label>
+            <input asp-for="Input.BirthDay" class="form-control" />
+            <span asp-validation-for="Input.BirthDay" max='2000-13-13' class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Adresse</label>
+            <input asp-for="Input.Adress" class="form-control" />
+            <span asp-validation-for="Input.Adress" class="text-danger"></span>
+        </div>
+    </div>
+    <hr class="hrbold" />
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Input.Rpps"></label>
+            <input asp-for="Input.Rpps" minlength="11" maxlength="11" class="form-control" />
+            <span asp-validation-for="Input.Rpps" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Input.Siret"></label>
+            <input asp-for="Input.Siret" minlength="14" maxlength="14" class="form-control" />
+            <span asp-validation-for="Input.Siret" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Input.Ordinal"></label>
+            <input asp-for="Input.Ordinal" minlength="7" maxlength="7" class="form-control" />
+            <span asp-validation-for="Input.Ordinal" class="text-danger"></span>
+        </div>
+    </div>
+    <hr class="hrbold" />
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Input.Password"></label>
@@ -49,27 +81,6 @@
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-row">
-        
-        <div class="form-group col-md-6">
-            <label>Adresse</label>
-            <input asp-for="Input.Adress" class="form-control" />
-            <span asp-validation-for="Input.Adress" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="Input.BirthDay"></label>
-            <input asp-for="Input.BirthDay" class="form-control" />
-            <span asp-validation-for="Input.BirthDay" max='2000-13-13' class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-6">
-            <label asp-for="Input.AdeliNumber"></label>
-            <input asp-for="Input.AdeliNumber" minlength="14" maxlength="14" class="form-control" />
-            <span asp-validation-for="Input.AdeliNumber" class="text-danger"></span>
-        </div>
-    </div>
-
     <button type="submit" class="btn btn-primary">Validation</button>
 </form>
 

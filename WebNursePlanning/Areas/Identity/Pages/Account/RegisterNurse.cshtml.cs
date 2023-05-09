@@ -109,9 +109,21 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "N° Adeli")]
+            [Display(Name = "N° Siret")]
             [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
-            public string AdeliNumber { get; set; }
+            public string Siret { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "N° Rpps")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
+            public string Rpps { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "N° Ordinal")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Characters are not allowed.")]
+            public string Ordinal { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -134,7 +146,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     BirthDay = Input.BirthDay,
                     Adress = Input.Adress,
-                    AdeliNumber = Input.AdeliNumber,
+                    Siret = Input.Siret,
                     PhoneNumber = Input.Phonenumber,
                     IsActive = false
                 };
@@ -151,7 +163,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in nurses)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.AdeliNumber == Input.AdeliNumber)
+                    if (nurse.Siret == Input.Siret)
                     {
                         StatusMessage = "Le numéro Adéli est déjà enregistré en base";
                         return Page();
@@ -160,7 +172,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                 foreach (var item in admins)
                 {
                     var nurse = item as Nurse;
-                    if (nurse.AdeliNumber == Input.AdeliNumber)
+                    if (nurse.Siret == Input.Siret)
                     {
                         StatusMessage = "Le numéro Adéli est déjà enregistré en base";
                         return Page();

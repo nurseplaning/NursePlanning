@@ -10,12 +10,22 @@ namespace DomainModel.ModelBuilders
 				   .ToTable("Nurses");
 
 			builder.Entity<Nurse>()
-				   .Property(n => n.AdeliNumber)
-				   .HasMaxLength(14)
+				   .Property(n => n.Rpps)
+				   .HasMaxLength(11)
 				   .IsRequired();
 
-			builder.Entity<Nurse>()
-				   .HasIndex(n => n.AdeliNumber)
+            builder.Entity<Nurse>()
+                   .Property(n => n.Ordinal)
+                   .HasMaxLength(7)
+                   .IsRequired();
+
+            builder.Entity<Nurse>()
+                   .Property(n => n.Siret)
+                   .HasMaxLength(14)
+                   .IsRequired();
+
+            builder.Entity<Nurse>()
+				   .HasIndex(n => n.Siret)
 				   .IsUnique();
 		}
 	}

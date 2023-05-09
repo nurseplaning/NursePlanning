@@ -61,14 +61,16 @@ namespace WebNursePlanning.Controllers
 
                 var superNurse = new Nurse()
                 {
-                    UserName = $"eljefe{DateTime.Now.ToString("yyyyymmddHHmmss")}",
+                    UserName = $"eljefe{DateTime.Now:yyyyymmddHHmmss}",
                     FirstName = "El",
                     LastName = "Jefe",
                     BirthDay = new DateTime(1980, 10, 10),
                     Adress = "1 bis rue parallele",
                     City = "Montpellier",
                     PostalCode = "34000",
-                    AdeliNumber = "12345678987654",
+                    Ordinal = "1234567",
+                    Rpps="12345678901",
+                    Siret = "12345678987654",
                     Email = "eljefe@nurse.fr",
                     PhoneNumber = "0600000001",
                     EmailConfirmed = true,
@@ -85,14 +87,16 @@ namespace WebNursePlanning.Controllers
 
                 var nurse = new Nurse()
                 {
-                    UserName = $"lopezlola{DateTime.Now.ToString("yyyyymmddHHmmss")}",
+                    UserName = $"lopezlola{DateTime.Now:yyyyymmddHHmmss}",
                     FirstName = "Lola",
                     LastName = "Lopez",
                     BirthDay = new DateTime(1990, 12, 12),
                     Adress = "1 rue principale",
                     City = "Montpellier",
                     PostalCode = "34000",
-                    AdeliNumber = "12345678987658",
+                    Ordinal="1234567",
+                    Siret = "12345678987658",
+                    Rpps = "12345678901",
                     Email = "lolalopez@nurse.fr",
                     PhoneNumber = "0600000000",
                     PasswordHash = "mdpNurse",
@@ -109,7 +113,7 @@ namespace WebNursePlanning.Controllers
 
                 var patient = new Patient()
                 {
-                    UserName = $"malitoestoy{DateTime.Now.ToString("yyyyymmddHHmmss")}",
+                    UserName = $"malitoestoy{DateTime.Now:yyyyymmddHHmmss}",
                     FirstName = "Estoy",
                     LastName = "Malito",
                     BirthDay = new DateTime(1980, 12, 12),
