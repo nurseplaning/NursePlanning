@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository;
 using Repository.Interfaces;
-using System;
 using WebNursePlanning.Services;
 using WebNursePlanning.Services.Interfaces;
 
