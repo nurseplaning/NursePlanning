@@ -7,15 +7,15 @@ namespace WebNursePlanning.Views.Appointments.Components
 {
 	public class ListHealthCareSecondaryViewComponent : ViewComponent
 	{
-		private readonly IAppointmentsService _appointmentsService;
-		public ListHealthCareSecondaryViewComponent(IAppointmentsService appointmentsService)
+		private readonly IHealthCareSecondaryService _healthCareSecondaryService;
+		public ListHealthCareSecondaryViewComponent(IHealthCareSecondaryService healthCareSecondaryService)
 		{
-			_appointmentsService = appointmentsService;
+            _healthCareSecondaryService = healthCareSecondaryService;
 		}
 		public async Task<IViewComponentResult> InvokeAsync(int id = 1)
 		{
 			var healthCareSecondariesList = new HealthCareSecondaryViewModel();
-			healthCareSecondariesList.HealthCareSecondaries = await _appointmentsService.GetSelectListHealthCareSecondaryAsync(id);
+			healthCareSecondariesList.HealthCareSecondaries = await _healthCareSecondaryService.GetSelectListHealthCareSecondaryAsync(id);
 			
 			return View(healthCareSecondariesList);
 		}

@@ -40,8 +40,8 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Input.BirthDay"></label>
-            <input asp-for="Input.BirthDay" class="form-control" />
-            <span asp-validation-for="Input.BirthDay" min='2000-13-13' class="text-danger"></span>
+            <input asp-for="Input.BirthDay" min='1900-01-01' class="form-control" />
+            <span asp-validation-for="Input.BirthDay" class="text-danger"></span>
         </div>
     </div>
     <hr class="hrbold" />
@@ -94,7 +94,7 @@
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Validation</button>
+    <button type="submit" class="btn btn-primary">Terminer</button>
 </form>
 
 @section Scripts {

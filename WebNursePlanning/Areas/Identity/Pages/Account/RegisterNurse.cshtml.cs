@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using NuGet.Packaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -161,27 +162,27 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     return Page();
                 }
 
-                var nurses = await _userManager.GetUsersInRoleAsync("ROLE_ADMIN");
-                var admins = await _userManager.GetUsersInRoleAsync("ROLE_SUPER_ADMIN");
+                var allNurses = await _userManager.GetUsersInRoleAsync("ROLE_ADMIN");
+                allNurses = allNurses.Concat(await _userManager.GetUsersInRoleAsync("ROLE_SUPER_ADMIN")).ToList();
 
-                foreach (var item in nurses)
+                foreach (var item in allNurses)
                 {
                     var nurse = item as Nurse;
                     if (nurse.Siret == Input.Siret)
                     {
-                        StatusMessage = "Le numéro Adéli est déjà enregistré en base";
+                        StatusMessage = "Le numéro Siret entré est déjà utilisé par un autre infirmier, veuillez corriger la saisie";
                         return Page();
                     }
                 }
-                foreach (var item in admins)
-                {
-                    var nurse = item as Nurse;
-                    if (nurse.Siret == Input.Siret)
-                    {
-                        StatusMessage = "Le numéro Adéli est déjà enregistré en base";
-                        return Page();
-                    }
-                }
+                //foreach (var item in admins)
+                //{
+                //    var nurse = item as Nurse;
+                //    if (nurse.Siret == Input.Siret)
+                //    {
+                //        StatusMessage = "Le numéro Siret entré est déjà utilisé par un autre infirmier, veuillez corriger la saisie";
+                //        return Page();
+                //    }
+                //}
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -208,7 +209,7 @@ namespace WebNursePlanning.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        StatusMessage = "Votre compte a bien été créé vous pourriez vous connecter après l'activation pour votre administrateur";
+                        StatusMessage = "Bonne nouvelle, Votre compte a bien été créé. Vous pourrez vous connecter après l'activation pour votre administrateur";
                         return Page();
                     }
                 }

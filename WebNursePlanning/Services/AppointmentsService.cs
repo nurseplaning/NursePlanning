@@ -43,11 +43,6 @@ namespace WebNursePlanning.Services
 			return new SelectList(dicoHealthCarePrimaries, "Key", "Value");
 		}
 
-		public async Task<SelectList> GetSelectListHealthCareSecondaryAsync(int id = 1)
-		{
-			var listHealthCareSecondaries = await _appointmentRepository.GetHealthCareSecondaryList(id);
-			var dicoHealthCareSecondaries = listHealthCareSecondaries.ToDictionary(b => b.Id, b => b.Name);
-			return new SelectList(dicoHealthCareSecondaries, "Key", "Value", id);
-		}
+		
 	}
 }

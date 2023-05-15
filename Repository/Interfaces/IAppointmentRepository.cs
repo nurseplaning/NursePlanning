@@ -22,8 +22,7 @@ namespace Repository.Interfaces
         public DateTime GetFirstDayOfWeek(DateTime dayInWeek);
         public DateTime GetFirstDateOfWeek(DateTime dayInWeek, CultureInfo cultureInfo);
         public Task<List<HealthCarePrimary>> GetHealthCarePrimaryList();
-        public Task<List<HealthCareSecondary>> GetHealthCareSecondaryList();
-        public Task<List<HealthCareSecondary>> GetHealthCareSecondaryList(int healthCarePrimaryid);
+        
 
 
 	}

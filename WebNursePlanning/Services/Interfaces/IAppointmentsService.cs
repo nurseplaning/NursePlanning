@@ -11,6 +11,6 @@ namespace WebNursePlanning.Services.Interfaces
 
 		public Task<SelectList> GetSelectListHealthCarePrimaryAsync();
 
-		public Task<SelectList> GetSelectListHealthCareSecondaryAsync(int id = 1);
+		
 	}
 }
