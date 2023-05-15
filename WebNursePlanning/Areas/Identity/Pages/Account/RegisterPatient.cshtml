@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterPatientModel
 @{
 	ViewData["Title"] = "Inscription Patient";
@@ -27,7 +27,7 @@
 	<div class="form-row">
 		<div class="form-group col-md-6">
 			<label asp-for="Input.BirthDay"></label>
-			<input asp-for="Input.BirthDay" max='2000-13-13' class="form-control" />
+			<input asp-for="Input.BirthDay" min='1900-01-01' class="form-control" />
 			<span asp-validation-for="Input.BirthDay" class="text-danger"></span>
 		</div>
 		<div class="form-group col-md-6">
