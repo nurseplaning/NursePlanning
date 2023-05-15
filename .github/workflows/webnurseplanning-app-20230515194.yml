@@ -2,7 +2,7 @@ name: Build and deploy .NET application to container app webnurseplanning-app-20
 on:
   push:
     branches:
-    - main
+    - enhancement/AzureDevops_15052023
 env:
   CONTAINER_APP_CONTAINER_NAME: webnurseplanning
   CONTAINER_APP_NAME: webnurseplanning-app-20230515194
