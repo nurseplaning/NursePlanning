@@ -1,57 +1,57 @@
-name: Build and deploy .NET application to container app webnurseplanning-app-20230515194
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP.Net Core app to Azure Web App - WebNursePlanning
+
 on:
   push:
     branches:
-    - enhancement/AzureDevops_15052023
-env:
-  CONTAINER_APP_CONTAINER_NAME: webnurseplanning
-  CONTAINER_APP_NAME: webnurseplanning-app-20230515194
-  CONTAINER_APP_RESOURCE_GROUP_NAME: nurseplanningResourceGroup
-  CONTAINER_REGISTRY_LOGIN_SERVER: webnurseplanning20230515194643.azurecr.io
-  DOTNET_CORE_VERSION: 7.0.x
-  PROJECT_NAME_FOR_DOCKER: webnurseplanning
+      - enhancement/AzureDevops_15052023
+  workflow_dispatch:
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+
     steps:
-    - name: Checkout to the branch
-      uses: actions/checkout@v3
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v1.8.0
-      with:
-        include-prerelease: True
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    - name: Log in to container registry
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.WebNursePlanning20230515194643_USERNAME_8DB2 }}
-        password: ${{ secrets.WebNursePlanning20230515194643_PASSWORD_8DB2 }}
-    - name: Build and push container image to registry
-      run: dotnet publish -c Release -r linux-x64 -p:PublishProfile=DefaultContainer -p:ContainerImageTag=${{ github.sha }} --no-self-contained -p:ContainerRegistry=${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} -bl
-    - name: Upload binlog for investigation
-      uses: actions/upload-artifact@v3
-      with:
-        if-no-files-found: error
-        name: binlog
-        path: msbuild.binlog
+      - uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x'
+          include-prerelease: true
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
     steps:
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.webnurseplanning_app_20230515194_SPN }}
-    - name: Deploy to containerapp
-      uses: azure/CLI@v1
-      with:
-        inlineScript: >
-          az config set extension.use_dynamic_install=yes_without_prompt
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
 
-          az containerapp registry set --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --server ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} --username ${{ secrets.WebNursePlanning20230515194643_USERNAME_8DB2 }} --password ${{ secrets.WebNursePlanning20230515194643_PASSWORD_8DB2 }}
-
-          az containerapp update --name ${{ env.CONTAINER_APP_NAME }} --container-name ${{ env.CONTAINER_APP_CONTAINER_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --image ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }}
-    - name: logout
-      run: >
-        az logout
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'WebNursePlanning'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E828F49A6B6F45A7BEE49DDC066D77C0 }}
+          package: .
