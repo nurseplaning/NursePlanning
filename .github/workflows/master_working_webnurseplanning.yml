@@ -6,8 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - WebNursePlanning
 on:
   push:
     branches:
-      - master_working
-      - enhacement/AzureDevops_15052023
+      - enhancement/AzureDevops_15052023
   workflow_dispatch:
 
 jobs:
