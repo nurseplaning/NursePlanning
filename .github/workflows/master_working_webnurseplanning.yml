@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - master_working
+      - enhacement/AzureDevops_15052023
   workflow_dispatch:
 
 jobs:
