@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'WebNursePlanning'
+          app-name: 'WebNursePlanning2'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E828F49A6B6F45A7BEE49DDC066D77C0 }}
           package: .
