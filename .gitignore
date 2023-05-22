@@ -362,3 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Dal/Migrations/
+
+.vscode/
+
+.idea/.idea.NursePlanning/.idea/
+
+dotnet-install.sh
