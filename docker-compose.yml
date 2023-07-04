@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webnurseplanning:
+    image: ${DOCKER_REGISTRY-}webnurseplanning
+    build:
+      context: .
+      dockerfile: WebNursePlanning/Dockerfile

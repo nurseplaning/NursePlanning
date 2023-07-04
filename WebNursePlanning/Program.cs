@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using WebNursePlanning;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
