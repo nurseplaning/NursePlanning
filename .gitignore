@@ -362,3 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Dal/Migrations/
+
+.idea/.idea.NursePlanning/.idea/
+
+.vscode/
+
+WebNursePlanning/published/
