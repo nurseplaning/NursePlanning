@@ -37,7 +37,7 @@ namespace WebNursePlanning
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
-						Configuration.GetConnectionString("DockerConnection")));
+						Configuration.GetConnectionString("DockerConnectionProd")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
 			services.AddIdentity<Person, IdentityRole>()
