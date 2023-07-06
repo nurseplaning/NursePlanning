@@ -3,6 +3,7 @@ using DomainModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,9 +34,11 @@ namespace WebNursePlanning
 			services.AddScoped<IPatientRepository, PatientRepository>();
 			services.AddScoped<IStatusRepository, StatusRepository>();
 			services.AddScoped<IAbsenceRepository, AbsenceRepository>();
-			services.AddScoped<IAppointmentsService, AppointmentsService>();
+            services.AddScoped<IHealthCareSecondaryRepository, HealthCareSecondaryRepository>();
+            services.AddScoped<IAppointmentsService, AppointmentsService>();
+            services.AddScoped<IHealthCareSecondaryService, HealthCareSecondaryService>();
 
-			services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
 						Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -46,8 +49,19 @@ namespace WebNursePlanning
 					.AddDefaultUI()
 					.AddTokenProvider<DataProtectorTokenProvider<Person>>(TokenOptions.DefaultProvider);
 
+			services.Configure<IdentityOptions>(options =>
+			{
+				// Default SignIn settings.
+				options.SignIn.RequireConfirmedAccount = true;
+				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedPhoneNumber = false;
+			});
 			services.AddControllersWithViews();
 			services.AddRazorPages();
+
+			//Email Config
+			services.AddTransient<IEmailSender, EmailSender>();
+			services.Configure<AuthMessageSenderOptions>(Configuration);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +70,7 @@ namespace WebNursePlanning
 			using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
 			{
 				var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-				context.Initialize(false);
+				context.Initialize(true);
 			}
 
 			if (!env.IsDevelopment())
