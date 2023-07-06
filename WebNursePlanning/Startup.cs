@@ -37,7 +37,7 @@ namespace WebNursePlanning
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
-						Configuration.GetConnectionString("AzureConnection")));
+						Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
 			services.AddIdentity<Person, IdentityRole>()
