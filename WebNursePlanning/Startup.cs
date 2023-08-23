@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository;
 using Repository.Interfaces;
-using System;
 using WebNursePlanning.Services;
 using WebNursePlanning.Services.Interfaces;
 
@@ -34,10 +33,12 @@ namespace WebNursePlanning
 			services.AddScoped<IStatusRepository, StatusRepository>();
 			services.AddScoped<IAbsenceRepository, AbsenceRepository>();
 			services.AddScoped<IAppointmentsService, AppointmentsService>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(Configuration.GetConnectionString("MySqlConnection"), ServerVersion.AutoDetect(Configuration.GetConnectionString("MySqlConnection"))));
 
-			services.AddDbContext<ApplicationDbContext>(options =>
-					options.UseSqlServer(
-						Configuration.GetConnectionString("DefaultConnection")));
+            //       services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseSqlServer(
+            //	Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
 			services.AddIdentity<Person, IdentityRole>()
