@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  webnurseplanning:
+    image: ${DOCKER_REGISTRY-}webnurseplanning
+    build:
+      context: .
+      dockerfile: WebNursePlanning/Dockerfile
+    networks:
+      - soar-network
+  db: # the service hosting your MySQL instance
+    image: mysql:8.0 # the image and tag docker will pull from docker hub
+    volumes: # this section allows you to configure persistence within multiple restarts
+        - db_data:/var/lib/mysql
+    restart: always # if the db crash somehow, restart it
+    ports:
+        - "3000:3000"
+    networks:
+      - soar-network
+volumes:
+  db_data: # this tells docker-compose to save your data in a generic docker volume. You can see existing volumes typing 'docker volume ls'
+networks:
+  soar-network:
+    driver: bridge
