@@ -368,3 +368,21 @@ Dal/Migrations/
 .idea/.idea.NursePlanning/.idea/
 
 dotnet-install.sh
+
+CachedData/
+
+User/
+
+Cookies
+
+Cookies-journal
+
+languagepacks.json
+
+machineid
+
+Network Persistent State
+
+Preferences
+
+TransportSecurity
